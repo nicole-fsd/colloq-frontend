@@ -61,7 +61,6 @@ export default function Register() {
 
     return (
       <>
-       
         <Grid container direction="column" className={classes.container}>
           <Grid item container xs={12} sm={10} direction="column">
             <Grid item xs={12}>
@@ -124,7 +123,7 @@ export default function Register() {
                       variant="contained"
                       color="secondary"
                     >
-                      Submit
+                      Register
                     </Button>
                     <Link className={classes.link} to="/login">Already have an account? </Link>
                     </div>
