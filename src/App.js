@@ -1,10 +1,14 @@
 import React from "react";
-// import { useSelector } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Landing from './components/Landing'
 import Layout from './components/layout/Layout'
 import Login from './components/Login'
 import Register from './components/Register'
+import Dashboard from './components/dashboard/Dashboard'
+import Cookie from "js-cookie";
+
+
 
 
 function App() {
@@ -12,6 +16,9 @@ function App() {
   // const user = useSelector((state) => state.user.loggedIn);
   // const theme = createMuiTheme(themeData);
   // const loggedIn = user;
+
+  // check if user is logged in
+const loggedIn = Cookie.get("JWT") === undefined ? false : true;
 
   return (
     <>
@@ -24,13 +31,13 @@ function App() {
               return <Landing />;
             }}
           />
-          <Route
+          {/* <Route
             exact
             path="/login"
             render={() => {
               return <Login />;
             }}
-          />
+          /> */}
           <Route
             exact
             path="/register"
@@ -38,6 +45,20 @@ function App() {
               return <Register />;
             }}
           />
+          <Route
+            exact
+            path="/dashboard"
+            render={() => {
+              return <Dashboard />;
+            }}
+          />
+          <Route
+          exact
+          path="/login"
+          render={() => {
+          return loggedIn ? <Redirect to="/dashboard" /> : <Login />;
+        }}
+      />
         </Switch>
       </Layout>
     </> 

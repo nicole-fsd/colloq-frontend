@@ -1,6 +1,7 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
+import { loggedIn } from "../helpers/auth";
 /* INITIAL STATE */
 export const initialState = {
   user: {
@@ -104,6 +105,8 @@ export default (state = initialState, { type, payload }) => {
     case USER_SUCCESS_LOGIN:
       const user = jwt_decode(payload);
       Cookies.set("jwt", payload);
+      const cookie = JSON.stringify(Cookies.get())
+      console.log('Cookie:' + cookie);
       return {
         ...state,
         user: {

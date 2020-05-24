@@ -12,6 +12,7 @@ import {
 
 
 import { loginUser } from "./../data/user";
+import { loggedIn } from "../helpers/auth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,6 +57,7 @@ export default function Login() {
         setError("All fields are required");
       } else {
         dispatch(loginUser(email, password));
+        
       }
     };
 
