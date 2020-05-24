@@ -123,7 +123,7 @@ export default function Register() {
                       variant="contained"
                       color="secondary"
                     >
-                      Register
+                      Submit
                     </Button>
                     <Link className={classes.link} to="/login">Already have an account? </Link>
                     </div>
