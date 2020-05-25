@@ -3,13 +3,14 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Router} from "react-router-dom";
 import { PersistGate } from "redux-persist/es/integration/react";
 import { store, persistor } from "./data/index";
 import { CircularProgress } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from './theme'
 import { ThemeProvider } from "@material-ui/core";
+import {history} from './helpers/history'
 
 ReactDOM.render(
   <BrowserRouter>

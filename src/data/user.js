@@ -1,7 +1,10 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import JWT from 'jsonwebtoken'
 import Cookies from "js-cookie";
 import { loggedIn } from "../helpers/auth";
+import { history } from '../helpers/history';
+
 /* INITIAL STATE */
 export const initialState = {
   user: {
@@ -47,6 +50,7 @@ export const loginUser = (username, password) => (dispatch) => {
       password: password,
     })
     .then((response) => dispatch(successLogin(response.data.token)))
+    // .then((response) => console.log(response.data.JWT))
     .catch((error) => console.log(error));
 };
 
@@ -91,6 +95,10 @@ export const errorRegister = (message) => ({
   payload: message,
 });
 
+export const logoutUser = () => ({
+  type: USER_LOGOUT,
+});
+
 /* REDUCER */
 export default (state = initialState, { type, payload }) => {
   switch (type) {
@@ -104,16 +112,19 @@ export default (state = initialState, { type, payload }) => {
       };
     case USER_SUCCESS_LOGIN:
       const user = jwt_decode(payload);
-      Cookies.set("jwt", payload);
-      const cookie = JSON.stringify(Cookies.get())
-      console.log('Cookie:' + cookie);
+      localStorage.setItem('token', payload)
+      const decoded = JWT.decode(payload, { complete: true })
+      console.log(decoded)
+      
+    
+      // Cookies.set("jwt", payload);
+      // const cookie = JSON.stringify(Cookies.get())
+      // console.log('Cookie:' + cookie);
       return {
         ...state,
         user: {
-          firstName: user.first_name,
-          lastName: user.last_name,
-          id: user.id,
-          email: user.email,
+          ...state.user,
+          email: decoded.payload.username,
         },
         login: {
           ...state.login,
@@ -166,6 +177,13 @@ export default (state = initialState, { type, payload }) => {
           loading: false,
         },
       };
+
+    case USER_LOGOUT:
+      localStorage.removeItem('token');
+    return {
+      ...state,
+      loggedIn: false,
+    };
 
     default:
       return state;

@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
       <div className={classes.root}>
       <Container container disableGutters maxWidth="xl">
         <Typography className={classes.heading} variant="h3">Find locals who want to share their language and culture with YOU</Typography>
-      <GridList container spacing={40} cellHeight={300} className={classes.gridList}>
+      <GridList spacing={40} cellHeight={300} className={classes.gridList}>
         {/* <GridListTile key="Subheader" cols={2} style={{ height: '150px', width: '100px', margin: "20px" }}>
           <ListSubheader component="div">Improve your speaking skills with locals who want to meet YOU</ListSubheader>
         </GridListTile> */}

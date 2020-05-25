@@ -44,8 +44,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
     const classes = useStyles();
-    const [email, setEmail] = useState("admin");
-    const [password, setPassword] = useState("test");
+    const [email, setEmail] = useState("test@example.com");
+    const [password, setPassword] = useState("authenticate");
     const [error, setError] = useState("");
     const dispatch = useDispatch();
     const loginError = useSelector((state) => state.user.login.error);

@@ -13,22 +13,19 @@ import Cookie from "js-cookie";
 
 function App() {
   // const themeData = useSelector((state) => state.theme);
-  // const user = useSelector((state) => state.user.loggedIn);
+  const user = useSelector((state) => state.user.loggedIn);
   // const theme = createMuiTheme(themeData);
-  // const loggedIn = user;
+  const loggedIn = user;
 
-  // check if user is logged in
-const loggedIn = Cookie.get("JWT") === undefined ? false : true;
 
   return (
     <>
        <Layout>
-        <Switch>
           <Route
             exact
             path="/"
             render={() => {
-              return <Landing />;
+              return loggedIn ? <Redirect to="/dashboard" /> : <Landing />;
             }}
           />
           {/* <Route
@@ -46,10 +43,13 @@ const loggedIn = Cookie.get("JWT") === undefined ? false : true;
             }}
           />
           <Route
-            exact
             path="/dashboard"
             render={() => {
-              return <Dashboard />;
+              return !loggedIn ? (
+              <Redirect to="/" /> 
+              ): ( 
+              <Dashboard />
+              );
             }}
           />
           <Route
@@ -59,7 +59,6 @@ const loggedIn = Cookie.get("JWT") === undefined ? false : true;
           return loggedIn ? <Redirect to="/dashboard" /> : <Login />;
         }}
       />
-        </Switch>
       </Layout>
     </> 
   );
