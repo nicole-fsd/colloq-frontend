@@ -71,7 +71,7 @@ export default function Nav() {
         open={isMenuOpen}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={handleMenuClose}>Search</MenuItem>
+        <MenuItem component={Link} to={"/search"}>Search</MenuItem>
         <MenuItem onClick={handleLogOut}>Log out</MenuItem>
         
       </Menu>
@@ -89,7 +89,6 @@ export default function Nav() {
             <Link className={classes.link} to="/">Colloq </Link>
             </Typography>
             <IconButton
-              edge="false"
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"

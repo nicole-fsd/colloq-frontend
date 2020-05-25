@@ -6,6 +6,7 @@ import Layout from './components/layout/Layout'
 import Login from './components/Login'
 import Register from './components/Register'
 import Dashboard from './components/dashboard/Dashboard'
+import Search from './components/Search'
 import Cookie from "js-cookie";
 
 
@@ -59,6 +60,13 @@ function App() {
           return loggedIn ? <Redirect to="/dashboard" /> : <Login />;
         }}
       />
+        <Route
+            exact
+            path="/search"
+            render={() => {
+              return <Search />;
+            }}
+          />
       </Layout>
     </> 
   );

@@ -1,8 +1,11 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Container , Paper, Grid, Typography} from '@material-ui/core';
+import { Box, Container , Paper, Grid, Typography, IconButton, Button, TextField} from '@material-ui/core';
 import Footer from '../layout/Footer'
+import Avatar from '@material-ui/core/Avatar';
+import morgan from './images/Morgan-cat.jpg'
+import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -70,11 +73,29 @@ const useStyles = makeStyles(theme => ({
         height: "200px",
         width: "200px",
         borderRadius: "50%"
-    }
+    },
+    large: {
+        width: theme.spacing(25),
+        height: theme.spacing(25),
+      },
+      input: {
+        display: 'none',
+      },
+      form: {
+          paddingTop: "50px",
+        '& .MuiTextField-root': {
+              margin: theme.spacing(1),
+              width: '34ch',
+            },
+      }
   }));
 
 export default function Dashboard() {
     const classes = useStyles()
+    const [name, setName] = React.useState('');
+    const handleChange = (event) => {
+    setName(event.target.value);
+  };
 
   return (
     // <Container className={classes.container}>
@@ -101,7 +122,23 @@ export default function Dashboard() {
         <Container className={classes.container}>
       <Grid className={classes.grid1} justify="space-evenly" container spacing={4}>
         <Grid item s>
-          <Paper className={classes.photo} elevation={3}></Paper>
+          <Paper className={classes.photo} elevation={3}>
+              
+              <Avatar alt="user profile photo" src={morgan} className={classes.large} />
+              </Paper>
+              <input
+                accept="image/*"
+                className={classes.input}
+                id="contained-button-file"
+                multiple
+                type="file"
+                />
+                <label htmlFor="contained-button-file">
+                <Button variant="contained" color="secondary" component="span">
+                Upload
+                </Button>
+                </label>
+              
         </Grid>
         <Grid item s>
           <Paper className={classes.paperAbout} elevation={3}><Typography className={classes.typeAbout}>Hello how are you doing I am a great person who likes to travel wide and far and it would be grand to make acwuantance.</Typography></Paper>
@@ -110,18 +147,45 @@ export default function Dashboard() {
       <Grid className={classes.grid2} justify="center" alignItems="center" container direction="row" spacing={0}>
           <Grid className={classes.gridBottomLeft}>
             <Grid item xs>
-            <Paper className={classes.paperInfo} elevation={3}>INFO</Paper>
+            <Paper className={classes.paperInfo} elevation={3}>
+            <form className={classes.form} noValidate autoComplete="off">
+                <div>
+                    <TextField 
+                    id="standard-name" 
+                    label="Name" 
+                    value={name} 
+                    onChange={handleChange} 
+                    />
+                </div>
+                <div>
+                    <TextField
+                    id="filled-name"
+                    label="City"
+                    value={name}
+                    onChange={handleChange}
+                    />
+                </div>
+                <div>
+                    <TextField
+                    id="outlined-name"
+                    label="Native Language"
+                    value={name}
+                    onChange={handleChange}
+                    />
+                </div>
+                </form>
+            </Paper>
             </Grid>
           </Grid>
             <Grid className={classes.gridBottomRight}>
             <Grid item xs>
-            <Paper className={classes.paper} elevation={3}>COMMENTS</Paper>
+            <Paper className={classes.paper} elevation={3}>MEETUPS</Paper>
             </Grid>
             <Grid item xs={6}>
             <Paper className={classes.paper} elevation={3}>MESSAGES</Paper>
             </Grid>
             <Grid item xs>
-            <Paper className={classes.paper} elevation={3}>xs</Paper>
+            <Paper className={classes.paper} elevation={3}>FAVORITES</Paper>
             </Grid>
           </Grid>
         
