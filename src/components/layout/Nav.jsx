@@ -9,7 +9,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { logoutUser } from "../../data/user";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { loggedIn } from '../../helpers/auth';
 
 
   const useStyles = makeStyles((theme) => ({
@@ -37,11 +38,13 @@ import { useDispatch } from "react-redux";
     },
     accountCircle: {
       color: "white",
-     
       fontSize: "50px"
     },
     iconButton: {
-      marginRight: "20vw",
+      marginRight: "5vw",
+    },
+    currentUser: {
+      color: "white"
     }
   }));
 
@@ -51,6 +54,9 @@ export default function Nav() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const isMenuOpen = Boolean(anchorEl);
     const menuId = 'primary-search-account-menu';
+    const loggedIn = useSelector((state) => state.user.loggedIn);
+    const userEmail = useSelector((state) => state.user.user.email);
+  
 
     const handleMenuClose = () => {
       setAnchorEl(null);
@@ -63,6 +69,7 @@ export default function Nav() {
 
     const renderMenu = (
       <Menu
+      elevation={3}
         anchorEl={anchorEl}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         id={menuId}
@@ -88,6 +95,8 @@ export default function Nav() {
             <Typography variant="h2" className={classes.logo}>
             <Link className={classes.link} to="/">Colloq </Link>
             </Typography>
+            {loggedIn ? (
+              <>
             <IconButton
               aria-label="account of current user"
               aria-controls={menuId}
@@ -98,6 +107,10 @@ export default function Nav() {
             >
               <AccountCircle className={classes.accountCircle} fontSize="large"/>
             </IconButton>
+            <Typography className={classes.currentUser}>{loggedIn ?  "Logged in as: " + userEmail : ""}</Typography>
+            </>
+            ) : "" }
+            
             </Toolbar>
         </AppBar>
         {renderMenu}

@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
    
     return (
       <div className={classes.root}>
-      <Container container disableGutters maxWidth="xl">
+      <Container disableGutters maxWidth="xl">
         <Typography className={classes.heading} variant="h3">Find locals who want to share their language and culture with YOU</Typography>
       <GridList spacing={40} cellHeight={300} className={classes.gridList}>
         {/* <GridListTile key="Subheader" cols={2} style={{ height: '150px', width: '100px', margin: "20px" }}>

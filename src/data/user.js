@@ -1,9 +1,9 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import JWT from 'jsonwebtoken'
-import Cookies from "js-cookie";
-import { loggedIn } from "../helpers/auth";
-import { history } from '../helpers/history';
+// import Cookies from "js-cookie";
+// import { loggedIn } from "../helpers/auth";
+// import { history } from '../helpers/history';
 
 /* INITIAL STATE */
 export const initialState = {

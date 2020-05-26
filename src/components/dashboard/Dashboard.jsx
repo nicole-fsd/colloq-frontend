@@ -1,11 +1,11 @@
 import React from "react";
-import { Redirect, Route } from "react-router-dom";
+// import { Redirect, Route } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Container , Paper, Grid, Typography, IconButton, Button, TextField} from '@material-ui/core';
-import Footer from '../layout/Footer'
+import { Container , Paper, Grid, Typography, Button, TextField} from '@material-ui/core';
+import Footer from '../landing/Footer'
 import Avatar from '@material-ui/core/Avatar';
 import morgan from './images/Morgan-cat.jpg'
-import EditIcon from '@material-ui/icons/Edit';
+// import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -16,6 +16,10 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.secondary,
+        backgroundColor: "#c6a3ff",
+        height: "150px",
+        width: "400px",
+        margin: "30px"
       },
     // root: {
     //   padding: "250px",
@@ -47,12 +51,6 @@ const useStyles = makeStyles(theme => ({
         // border: "1px solid green"
         marginLeft: "90px"
     },
-    paper: {
-        backgroundColor: "#c6a3ff",
-        height: "150px",
-        width: "400px",
-        margin: "30px"
-    },
     paperInfo: {
         backgroundColor: "#c6a3ff",
         height: "600px",
@@ -78,10 +76,10 @@ const useStyles = makeStyles(theme => ({
         width: theme.spacing(25),
         height: theme.spacing(25),
       },
-      input: {
+    input: {
         display: 'none',
       },
-      form: {
+    form: {
           paddingTop: "50px",
         '& .MuiTextField-root': {
               margin: theme.spacing(1),
@@ -98,32 +96,11 @@ export default function Dashboard() {
   };
 
   return (
-    // <Container className={classes.container}>
-    //     <Grid container direction="column">
-        
-    //         <Grid className={classes.photo} item>
-    //             <Typography>PHOTO HERE</Typography>
-    //         </Grid> 
-    //         <Grid item>
-    //         <Paper className={classes.paper} elevation={3} />
-    //         </Grid>
-    //         <Grid item>
-    //         <Paper className={classes.paper} elevation={3} />
-    //         </Grid>
-    //         <Grid item>
-    //         <Paper className={classes.paper} elevation={3} />
-    //         </Grid>
-        
-        
-    //     </Grid>
-        
-    // </Container>
     <div className={classes.root}>
         <Container className={classes.container}>
       <Grid className={classes.grid1} justify="space-evenly" container spacing={4}>
-        <Grid item s>
+        <Grid item>
           <Paper className={classes.photo} elevation={3}>
-              
               <Avatar alt="user profile photo" src={morgan} className={classes.large} />
               </Paper>
               <input
@@ -140,7 +117,7 @@ export default function Dashboard() {
                 </label>
               
         </Grid>
-        <Grid item s>
+        <Grid item>
           <Paper className={classes.paperAbout} elevation={3}><Typography className={classes.typeAbout}>Hello how are you doing I am a great person who likes to travel wide and far and it would be grand to make acwuantance.</Typography></Paper>
         </Grid>
       </Grid>
@@ -191,6 +168,7 @@ export default function Dashboard() {
         
       </Grid>
       </Container>
+      <Footer />
     </div>
   );
 };

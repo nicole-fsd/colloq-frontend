@@ -1,15 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import Landing from './components/Landing'
 import Layout from './components/layout/Layout'
 import Login from './components/Login'
 import Register from './components/Register'
 import Dashboard from './components/dashboard/Dashboard'
 import Search from './components/Search'
-import Cookie from "js-cookie";
-
-
 
 
 function App() {
