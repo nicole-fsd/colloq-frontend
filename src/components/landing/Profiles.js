@@ -9,8 +9,8 @@ import profileData from './profileData';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: "200px",
-    minHeight: "900px",
+    padding: "400px",
+    minHeight: "800px",
     // backgroundImage: `url(${Background})`,
     backgroundColor: "#ff7043",
     color: "white",
@@ -36,9 +36,9 @@ const useStyles = makeStyles(theme => ({
    
    
     return (
-      <div className={classes.root}>
-      <Container disableGutters maxWidth="xl">
-        <Typography className={classes.heading} variant="h3">Find locals who want to share their language and culture with YOU</Typography>
+      <div >
+      <Container className={classes.root} disableGutters maxWidth="xl">
+        <Typography className={classes.heading} variant="h3"></Typography>
       <GridList spacing={40} cellHeight={300} className={classes.gridList}>
         {/* <GridListTile key="Subheader" cols={2} style={{ height: '150px', width: '100px', margin: "20px" }}>
           <ListSubheader component="div">Improve your speaking skills with locals who want to meet YOU</ListSubheader>

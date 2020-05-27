@@ -1,8 +1,79 @@
-import React from 'react'
+import React, {useState} from 'react'
+import { Container } from '@material-ui/core'
+import { fade, makeStyles } from '@material-ui/core/styles';
+import SearchIcon from '@material-ui/icons/Search';
+import InputBase from '@material-ui/core/InputBase';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        backgroundColor: "#65499c",
+        justifyContent: "center",
+        alignItems: "center",
+        display: 'flex',
+        height: "100vh"
+    },
+    search: {
+        height: "7ch",
+        position: 'relative',
+        backgroundColor: fade(theme.palette.common.white, 0.25),
+        '&:hover': {
+          backgroundColor: fade(theme.palette.common.white, 0.35),
+        },
+        width: '80ch',
+        [theme.breakpoints.up('sm')]: {
+          marginLeft: theme.spacing(3),
+          width: 'auto',
+        },
+      },
+      searchIcon: {
+        padding: theme.spacing(0, 2),
+        height: '100%',
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      inputRoot: {
+        color: 'inherit',
+      },
+      inputInput: {
+        padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('md')]: {
+          width: '20ch',
+        },
+    }
+  }));
 
 
 export default function Search() {
+    const classes = useStyles();
+    const [searchInput, setSearchInput] = useState("")
+
     return (
-        <div>SEARCH PAGE</div>
+        
+        <Container disableGutters maxWidth="xl" className={classes.root}>
+        <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <form>
+                <InputBase
+                placeholder="Search a city"
+                classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+                value={searchInput}
+                />
+            </form>
+            
+          </div>
+        </Container>
     )
 }

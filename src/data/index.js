@@ -4,7 +4,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
-import userReducer from "./user";
+import userReducer from "./auth";
 
 
 const persistedUser = persistReducer({ key: "user", storage }, userReducer);

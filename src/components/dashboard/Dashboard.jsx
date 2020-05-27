@@ -118,7 +118,7 @@ export default function Dashboard() {
               
         </Grid>
         <Grid item>
-          <Paper className={classes.paperAbout} elevation={3}><Typography className={classes.typeAbout}>Hello how are you doing I am a great person who likes to travel wide and far and it would be grand to make acwuantance.</Typography></Paper>
+          <Paper className={classes.paperAbout} elevation={3}><Typography className={classes.typeAbout}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ultricies gravida maximus. Fusce neque tellus, mollis et pulvinar et, auctor sed urna. Donec finibus vulputate metus, sit amet mollis orci suscipit varius. Nullam sit amet finibus orci.</Typography></Paper>
         </Grid>
       </Grid>
       <Grid className={classes.grid2} justify="center" alignItems="center" container direction="row" spacing={0}>

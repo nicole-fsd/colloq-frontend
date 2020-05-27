@@ -8,7 +8,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { logoutUser } from "../../data/user";
+import { logoutUser } from "../../data/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { loggedIn } from '../../helpers/auth';
 
