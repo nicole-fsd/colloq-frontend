@@ -58,7 +58,7 @@ export const logoutUser = () => ({
   type: LOGOUT,
 });
 
-export const registerUser = (email, password, firstName, lastName, age, city, meetupCity, meetupType, startDate, endDate, role) => (dispatch) => {
+export const registerUser = (email, password, firstName, lastName, age, city, nativeLang, targetLang, meetupCity, meetupType, startDate, endDate, role) => (dispatch) => {
   axios.post(`http://localhost:8000/api2/register`, {
       email: email,
       password: password,
@@ -66,6 +66,8 @@ export const registerUser = (email, password, firstName, lastName, age, city, me
       lastName: lastName,
       age: age,
       city: city,
+      nativeLang: nativeLang,
+      targetLang: targetLang,
       meetupCity: meetupCity,
       meetupType: meetupType,
       startDate: startDate,

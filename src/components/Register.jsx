@@ -86,6 +86,8 @@ export default function Register() {
     const [firstname, setFirstName] = useState("");
     const [lastname, setLastName] = useState("");
     const [city, setCity] = useState("");
+    const [nativeLang, setNativeLang] = useState("");
+    const [targetLang, setTargetLang] = useState("");
     const [meetupCity, setMeetupCity] = useState("");
     const [meetupType, setMeetupType] = useState("");
     const [age, setAge] = useState("");
@@ -112,7 +114,7 @@ export default function Register() {
   
     const submitHandler = (e) => {
       e.preventDefault();
-      dispatchEvent(registerUser(firstname, lastname, email, password, age, city, meetupCity, meetupType, startDate, endDate, radioValue))
+      dispatchEvent(registerUser(firstname, lastname, email, password, age, city, nativeLang, targetLang, meetupCity, meetupType, startDate, endDate, radioValue))
     };
 
     return (
@@ -157,6 +159,18 @@ export default function Register() {
                           onChange={(e) => {
                             setError("");
                             setCity(e.target.value);
+                          }}
+                        />
+                        <TextField variant="standard" margin="normal" required fullWidth name="nativeLang" label="Native Language" type="text" id="nativeLang" value={nativeLang}
+                          onChange={(e) => {
+                            setError("");
+                            setNativeLang(e.target.value);
+                          }}
+                        />
+                        <TextField variant="standard" margin="normal" required fullWidth name="targetLang" label="Meetup Language" type="text" id="targetLang" value={targetLang}
+                          onChange={(e) => {
+                            setError("");
+                            setTargetLang(e.target.value);
                           }}
                         />
                         <TextField variant="standard" margin="normal" required fullWidth name="meetup_city" label="City of meetup" type="text" id="meetup_city" value={meetupCity}
