@@ -13,7 +13,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import FormLabel from '@material-ui/core/FormLabel';
-import { registerUser } from '../data/auth'
+import { registerUser } from '../data/auth';
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -97,6 +97,15 @@ export default function Register() {
     const [isTutor, setIsTutor] = useState(false);
     const [startDate, setStartDate] = useState(new Date('2014-08-18T21:11:54'));
     const [endDate, setEndDate] = useState(new Date('2014-08-18T21:11:54'));
+    
+
+  const handleStartDateChange = (date) => {
+    setStartDate(date);
+  };
+
+  const handleEndDateChange = (date) => {
+    setEndDate(date);
+  };
    
 
 
@@ -105,26 +114,26 @@ export default function Register() {
       console.log(radioValue)
     };
 
-    const handleStartDateChange = (date) => {
-      setStartDate(date);
-    };
-    const handleEndDateChange = (date) => {
-      setEndDate(date);
-    };
+    // const handleStartDateChange = (date) => {
+    //   setStartDate(date);
+    // };
+    // const handleEndDateChange = (date) => {
+    //   setEndDate(date);
+    // };
   
     const submitHandler = (e) => {
       e.preventDefault();
-      dispatchEvent(registerUser(firstname, lastname, email, password, age, city, nativeLang, targetLang, meetupCity, meetupType, startDate, endDate, radioValue))
+      dispatchEvent(registerUser(firstname, lastname, email, password, age, meetupType, startDate, endDate, radioValue))
     };
 
     return (
       <>
         <div className={classes.root}>
-          <Paper className={classes.paper} component="div" variant="elevated" elevation={3}>
+          <Paper className={classes.paper} component="div" elevation={3}>
             <Typography variant="h4" component="h2" className={classes.title}>
               Register
             </Typography>
-            <form className={classes.form}>
+            <form className={classes.form} method="POST">
                           <TextField variant="standard" margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" value={email}
                           onChange={(e) => {
                             setError("");
@@ -187,28 +196,45 @@ export default function Register() {
                         />
                   <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <Grid container justify="space-around">
-                    <TextField
-                    id="date"
+                    {/* <TextField
+                    id="startdate"
                     label="Start Date"
                     type="date"
+                    defaultValue="2017-05-24"
                     value={startDate}
                     onChange={handleStartDateChange}
                     className={classes.textField}
                     InputLabelProps={{
                       shrink: true,
                     }}
-                  />
-                  <TextField
-                    id="date"
-                    label="End Date"
-                    type="date"
-                    value={endDate}
-                    onChange={handleEndDateChange}
-                    className={classes.textField}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
+                  /> */}
+                  
+                    <KeyboardDatePicker
+                      disableToolbar
+                      variant="inline"
+                      format="MM/dd/yyyy"
+                      margin="normal"
+                      id="date-picker-inline"
+                      label="Date-picker-inline1"
+                      value={startDate}
+                      onChange={handleStartDateChange}
+                      KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                      }}
+                    />
+                    <KeyboardDatePicker
+                      disableToolbar
+                      variant="inline"
+                      format="MM/dd/yyyy"
+                      margin="normal"
+                      id="date-picker-inline2"
+                      label="Date picker inline"
+                      value={endDate}
+                      onChange={handleEndDateChange}
+                      KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                      }}
+                    />
                       
                       <FormControl className={classes.formControl}>
                       <InputLabel id="demo-simple-select-label">Role</InputLabel>

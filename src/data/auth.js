@@ -34,7 +34,7 @@ export const REGISTER_ERROR = "REGISTER_ERROR"
 /* ACTION CREATORS *//////////////////////////////////////
 
 export const loginUser = (username, password) => (dispatch) => {
-  axios.post(`http://localhost:8000/api2/login_check`, {
+  axios.post(`http://localhost:8000/api/login_check`, {
       username: username,
       password: password,
     })
@@ -58,28 +58,30 @@ export const logoutUser = () => ({
   type: LOGOUT,
 });
 
-export const registerUser = (email, password, firstName, lastName, age, city, nativeLang, targetLang, meetupCity, meetupType, startDate, endDate, role) => (dispatch) => {
-  axios.post(`http://localhost:8000/api2/register`, {
+export const registerUser = (email, password, firstName, lastName, age, meetupType, startDate, endDate, role) => (dispatch) => {
+  // axios.post(`http://localhost:8000/api/register`, {
+    axios.post(`http://127.0.0.1:8000/swagger-api/users`, {
       email: email,
       password: password,
       firstName: firstName,
       lastName: lastName,
       age: age,
-      city: city,
-      nativeLang: nativeLang,
-      targetLang: targetLang,
-      meetupCity: meetupCity,
       meetupType: meetupType,
       startDate: startDate,
       endDate: endDate,
       role: role,
+    },{
+      headers : {
+        'Content-Type': 'application/json; charset=UTF-8'
+        }
     })
     .then((response) => dispatch(registerSuccess(response.data)))
     .catch((error) => console.log(error));
 };
 
-export const registerSuccess = () => ({
+export const registerSuccess = (data) => ({
   type: REGISTER_SUCCESS,
+  payload: data,
 });
 
 export const registerError = (msg) => ({
@@ -112,6 +114,14 @@ export default (state = initialState, { type, payload }) => {
     return {
       ...state,
       loggedIn: false,
+    };
+
+    case REGISTER_SUCCESS:
+    return {
+      ...state,
+      register: {
+        ...state.register,
+      },
     };
 
     default:
