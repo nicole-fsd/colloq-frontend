@@ -10,7 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { logoutUser } from "../../data/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { loggedIn } from '../../helpers/auth';
+
 
 
   const useStyles = makeStyles((theme) => ({

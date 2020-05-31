@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { Grid, Typography, TextField, Container, Button } from "@material-ui/core";
 import { loginUser } from "../data/auth";
-import { loggedIn } from "../helpers/auth";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,7 +39,7 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
-    const loginError = useSelector((state) => state.user.login.error);
+  
     
     const submitHandler = (e) => {
       e.preventDefault();

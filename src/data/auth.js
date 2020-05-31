@@ -1,7 +1,7 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import JWT from 'jsonwebtoken'
-// import { history } from '../helpers/history';
+
 
 /* INITIAL STATE *////////////////////////////
 export const initialState = {
@@ -10,12 +10,15 @@ export const initialState = {
     email: "",
     firstname: "",
     lastname: "",
+    age: "",
+    isTourist: "",
+    istutor: ""
   },
-  login: {
+  register: {
     error: false,
     loading: false,
   },
-  register: {
+  login: {
     error: false,
     loading: false,
   },
@@ -59,23 +62,25 @@ export const logoutUser = () => ({
 });
 
 export const registerUser = (email, password, firstName, lastName, age, meetupType, startDate, endDate, role) => (dispatch) => {
-  // axios.post(`http://localhost:8000/api/register`, {
-    axios.post(`http://127.0.0.1:8000/swagger-api/users`, {
+    const config = {
+      headers: {
+      'Content-Type': "application/json;charset=UTF-8"
+      },
+    };
+    const data = {
       email: email,
       password: password,
       firstName: firstName,
       lastName: lastName,
       age: age,
       meetupType: meetupType,
-      startDate: startDate,
-      endDate: endDate,
-      role: role,
-    },{
-      headers : {
-        'Content-Type': 'application/json; charset=UTF-8'
-        }
+      role: role
+    }
+    axios.post("http://localhost:8000/api/register", data, config)
+    .then((response) => {
+      dispatch(registerSuccess(response.data))
+      console.log(response.headers)
     })
-    .then((response) => dispatch(registerSuccess(response.data)))
     .catch((error) => console.log(error));
 };
 
@@ -104,6 +109,7 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         user: {
           ...state.user,
+          // firstName: decoded.payload.
           email: decoded.payload.username,
         },
         loggedIn: true,
@@ -120,7 +126,8 @@ export default (state = initialState, { type, payload }) => {
     return {
       ...state,
       register: {
-        ...state.register,
+        error: false,
+        loading: false
       },
     };
 

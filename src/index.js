@@ -10,7 +10,7 @@ import { CircularProgress } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from './theme'
 import { ThemeProvider } from "@material-ui/core";
-// import {history} from './helpers/history'
+
 
 ReactDOM.render(
   <BrowserRouter>

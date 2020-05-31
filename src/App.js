@@ -10,11 +10,7 @@ import Search from './components/Search'
 
 
 function App() {
-  // const themeData = useSelector((state) => state.theme);
-  const user = useSelector((state) => state.user.loggedIn);
-  // const theme = createMuiTheme(themeData);
-  const loggedIn = user;
-
+  const Authenticated = useSelector((state) => state.user.loggedIn);
 
   return (
     <>
@@ -23,16 +19,9 @@ function App() {
             exact
             path="/"
             render={() => {
-              return loggedIn ? <Redirect to="/dashboard" /> : <Landing />;
+              return Authenticated ? <Redirect to="/dashboard" /> : <Landing />;
             }}
           />
-          {/* <Route
-            exact
-            path="/login"
-            render={() => {
-              return <Login />;
-            }}
-          /> */}
           <Route
             exact
             path="/register"
@@ -43,7 +32,7 @@ function App() {
           <Route
             path="/dashboard"
             render={() => {
-              return !loggedIn ? (
+              return !Authenticated ? (
               <Redirect to="/" /> 
               ): ( 
               <Dashboard />
@@ -54,7 +43,7 @@ function App() {
           exact
           path="/login"
           render={() => {
-          return loggedIn ? <Redirect to="/dashboard" /> : <Login />;
+          return Authenticated ? <Redirect to="/dashboard" /> : <Login />;
         }}
       />
         <Route
