@@ -6,7 +6,6 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { PersistGate } from "redux-persist/es/integration/react";
 import { store, persistor } from "./data/index";
-import { CircularProgress } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from './theme'
 import { ThemeProvider } from "@material-ui/core";
@@ -15,15 +14,11 @@ import { ThemeProvider } from "@material-ui/core";
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
-      <PersistGate
-        loading={<CircularProgress color="secondary" size="1.8em" />}
-        persistor={persistor}
-      >
-        
+      <PersistGate persistor={persistor}>
         <React.StrictMode>
-        <ThemeProvider theme={theme}>
-        <CssBaseline />
-          <App />
+          <ThemeProvider theme={theme}>
+          <CssBaseline />
+           <App />
           </ThemeProvider>
         </React.StrictMode>
       </PersistGate>
