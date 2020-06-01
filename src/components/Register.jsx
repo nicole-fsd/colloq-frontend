@@ -109,7 +109,7 @@ export default function Register() {
 
     const submitHandler = (e) => {
       e.preventDefault();
-      dispatch(registerUser(firstname, lastname, email, password, age, meetupType, startDate, endDate, radioValue))
+      dispatch(registerUser(email, password, firstname, lastname, age, meetupType, startDate, endDate, radioValue))
     };
 
     return (
