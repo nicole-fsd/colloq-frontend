@@ -2,7 +2,10 @@ import React, {useState} from 'react'
 import { Container } from '@material-ui/core'
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
+import Button from '@material-ui/core/Button';
 import InputBase from '@material-ui/core/InputBase';
+import {useDispatch, useSelector} from 'react-redux'
+import { getUsers } from '../data/search';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -52,6 +55,18 @@ const useStyles = makeStyles((theme) => ({
 export default function Search() {
     const classes = useStyles();
     const [searchInput, setSearchInput] = useState("")
+    const dispatch = useDispatch();
+    const users = useSelector((state) => state.search.users);
+
+    const handleSearchFormSubmit = (e) => {
+      e.preventDefault();
+      dispatch(getUsers())
+      console.log('handlesearchformsub')
+    }
+
+    const handleChange = (e) => {
+      setSearchInput(e.target.value)
+    }
 
     return (
         
@@ -60,7 +75,7 @@ export default function Search() {
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
-            <form>
+            <form onSubmit={handleSearchFormSubmit}>
                 <InputBase
                 placeholder="Search a city"
                 classes={{
@@ -68,9 +83,18 @@ export default function Search() {
                     input: classes.inputInput,
                 }}
                 inputProps={{ 'aria-label': 'search' }}
+                onChange={handleChange}
                 value={searchInput}
                 />
+                <Button type="submit" variant="contained" color="secondary">
+                    Submit
+                </Button>
             </form>
+            <div>
+                {users.map((user) => (
+                  <li>{user.email}</li>
+                ))}
+            </div>
             
           </div>
         </Container>
