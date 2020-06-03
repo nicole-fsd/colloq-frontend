@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 // import { Redirect, Route } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container , Paper, Grid, Typography, Button, TextField} from '@material-ui/core';
 import Footer from '../landing/Footer'
 import Avatar from '@material-ui/core/Avatar';
 import morgan from './images/Morgan-cat.jpg'
+import { getPhoto } from "../../data/photos";
+import { useDispatch, useSelector } from "react-redux";
 // import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles(theme => ({
@@ -90,10 +92,20 @@ const useStyles = makeStyles(theme => ({
 
 export default function Dashboard() {
     const classes = useStyles()
-    const [name, setName] = React.useState('');
+    const [name, setName] = useState('');
+    const dispatch = useDispatch();
+    const userFirstName = useSelector((state) => state.auth.user.firstName);
+    const userAge = useSelector((state) => state.auth.user.age);
+    const userMeetupType = useSelector((state) => state.auth.user.meetupType);
+    const userPublicMessage = useSelector((state) => state.auth.user.publicMessage);
+
     const handleChange = (event) => {
     setName(event.target.value);
   };
+
+  const handleGetPhotoClick = () => {
+    dispatch(getPhoto());
+  }
 
   return (
     <div className={classes.root}>
@@ -114,11 +126,16 @@ export default function Dashboard() {
                 <Button variant="contained" color="secondary" component="span">
                 Upload
                 </Button>
+                
                 </label>
+                <Button variant="contained" color="secondary" component="span" onClick={handleGetPhotoClick}>
+                Get photo
+                </Button>
+                <div></div>
               
         </Grid>
         <Grid item>
-          <Paper className={classes.paperAbout} elevation={3}><Typography className={classes.typeAbout}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ultricies gravida maximus. Fusce neque tellus, mollis et pulvinar et, auctor sed urna. Donec finibus vulputate metus, sit amet mollis orci suscipit varius. Nullam sit amet finibus orci.</Typography></Paper>
+  <Paper className={classes.paperAbout} elevation={3}><Typography className={classes.typeAbout}>{userPublicMessage}</Typography></Paper>
         </Grid>
       </Grid>
       <Grid className={classes.grid2} justify="center" alignItems="center" container direction="row" spacing={0}>
@@ -130,23 +147,23 @@ export default function Dashboard() {
                     <TextField 
                     id="standard-name" 
                     label="Name" 
-                    value={name} 
+                    value={userFirstName} 
                     onChange={handleChange} 
                     />
                 </div>
                 <div>
                     <TextField
                     id="filled-name"
-                    label="City"
-                    value={name}
+                    label="Age"
+                    value={userAge}
                     onChange={handleChange}
                     />
                 </div>
                 <div>
                     <TextField
                     id="outlined-name"
-                    label="Native Language"
-                    value={name}
+                    label="Meetup Type"
+                    value={userMeetupType}
                     onChange={handleChange}
                     />
                 </div>

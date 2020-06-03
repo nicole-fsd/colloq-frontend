@@ -10,7 +10,7 @@ import Search from './components/Search'
 
 
 function App() {
-  const Authenticated = useSelector((state) => state.user.loggedIn);
+  const Authenticated = useSelector((state) => state.auth.loggedIn);
 
   return (
     <>

@@ -14,7 +14,7 @@ import { ThemeProvider } from "@material-ui/core";
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
-      <PersistGate persistor={persistor}>
+      <PersistGate loading={null} persistor={persistor}>
         <React.StrictMode>
           <ThemeProvider theme={theme}>
           <CssBaseline />

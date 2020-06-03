@@ -12,7 +12,9 @@ export const initialState = {
     lastname: "",
     age: "",
     isTourist: "",
-    istutor: ""
+    istutor: "",
+    meetupType: "",
+    publicMessage: "",
   },
   register: {
     error: false,
@@ -104,13 +106,17 @@ export default (state = initialState, { type, payload }) => {
       const user = jwt_decode(payload);
       localStorage.setItem('token', payload)
       const decoded = JWT.decode(payload, { complete: true })
-      console.log(decoded)
+      console.log(user)
       return {
         ...state,
         user: {
-          ...state.user,
-          // firstName: decoded.payload.
+          ...state.auth,
           email: decoded.payload.username,
+          firstName: decoded.payload.firstName,
+          lastName: decoded.payload.lastName,
+          age: decoded.payload.age,
+          meetupType: decoded.payload.meetupType,
+          publicMessage: decoded.payload.publicMessage,
         },
         loggedIn: true,
       };

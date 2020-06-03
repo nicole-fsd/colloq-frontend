@@ -54,8 +54,8 @@ export default function Nav() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const isMenuOpen = Boolean(anchorEl);
     const menuId = 'primary-search-account-menu';
-    const loggedIn = useSelector((state) => state.user.loggedIn);
-    const userEmail = useSelector((state) => state.user.user.email);
+    const loggedIn = useSelector((state) => state.auth.loggedIn);
+    const userEmail = useSelector((state) => state.auth.user.email);
   
 
     const handleMenuClose = () => {
