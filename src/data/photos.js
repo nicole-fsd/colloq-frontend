@@ -10,7 +10,7 @@ const initialState = {
   
   /* ACTION TYPES */////////////////////////////
   
-  const GET_PHOTOS = "GET_PHOTOS"
+  // const GET_PHOTOS = "GET_PHOTOS"
   const GET_PHOTO_ERROR = "GET_PHOTO_ERROR"
   const ADD_PHOTO = "ADD_PHOTO"
   

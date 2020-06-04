@@ -1,6 +1,7 @@
 import axios from "axios";
-import jwt_decode from "jwt-decode";
+// import jwt_decode from "jwt-decode";
 import JWT from 'jsonwebtoken'
+
 
 
 /* INITIAL STATE *////////////////////////////
@@ -103,14 +104,15 @@ export const registerError = (msg) => ({
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case LOGIN_SUCCESS:
-      const user = jwt_decode(payload);
+      // const user = jwt_decode(payload);
       localStorage.setItem('token', payload)
       const decoded = JWT.decode(payload, { complete: true })
-      console.log(user)
+      // console.log(decoded)
       return {
         ...state,
         user: {
           ...state.auth,
+          id: decoded.payload.id,
           email: decoded.payload.username,
           firstName: decoded.payload.firstName,
           lastName: decoded.payload.lastName,

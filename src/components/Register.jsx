@@ -10,10 +10,9 @@ import Select from '@material-ui/core/Select';
 import { registerUser } from '../data/auth';
 import {
   MuiPickersUtilsProvider,
-  KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import {Grid, Typography, TextField, Container, Button, Paper, FormControl, NativeSelect } from "@material-ui/core";
+import {Grid, Typography, TextField, Button, Paper, FormControl } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -88,8 +87,8 @@ export default function Register() {
     const [age, setAge] = useState("");
     const [error, setError] = useState("");
     const [radioValue, setRadioValue] = useState('');
-    const [isTourist, setIsTourist] = useState(false);
-    const [isTutor, setIsTutor] = useState(false);
+    // const [isTourist, setIsTourist] = useState(false);
+    // const [isTutor, setIsTutor] = useState(false);
     const [startDate, setStartDate] = useState(new Date('2014-08-18T21:11:54'));
     const [endDate, setEndDate] = useState(new Date('2014-08-18T21:11:54'));
     
