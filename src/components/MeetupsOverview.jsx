@@ -87,11 +87,22 @@ export default function Dashboard() {
     const events = [
         {
             start: moment().toDate(),
-            end: moment()
-            .add(1, "days")
-            .toDate(),
+            end: moment().toDate(),
+            // end: moment()
+            // .add(1, "days")
+            // .toDate(),
+            title: "Meetup in Lisbon"
+        },
+        {
+            start: moment().add(12, 'days').toDate(),
+            end: moment().add(12, 'days').toDate(),
+            title: "Meetup in Tokyo"
+        },
+        {
+            start: moment().add(3, 'days').toDate(),
+            end: moment().add(3, 'days').toDate(),
             title: "Meetup in Paris"
-          }
+        },
         ]
    
     
