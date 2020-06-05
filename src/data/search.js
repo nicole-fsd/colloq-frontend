@@ -101,6 +101,13 @@ const initialState = {
           singleUser: {
             
             email: payload.email,
+            firstname: payload.firstname,
+            lastname: payload.lastname,
+            age: payload.age,
+            isTourist: payload.isTourist,
+            istutor: payload.isTutor,
+            meetupType: payload.meetupType,
+            publicMessage: payload.publicMessage,
             
           },
         }
