@@ -8,6 +8,7 @@ import Register from './components/Register'
 import Dashboard from './components/dashboard/Dashboard'
 import Search from './components/Search'
 import UserProfile from './components/UserProfile'
+import MeetupsOverview from './components/MeetupsOverview'
 
 
 function App() {
@@ -58,6 +59,13 @@ function App() {
             path="/profile/:id">
               <UserProfile />
           </Route>
+          <Route
+            exact
+            path="/meetups"
+            render={() => {
+              return <MeetupsOverview />;
+            }}
+          />
             
       </Layout>
     </> 

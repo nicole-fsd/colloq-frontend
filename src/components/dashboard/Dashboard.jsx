@@ -7,6 +7,7 @@ import Avatar from '@material-ui/core/Avatar';
 import morgan from './images/Morgan-cat.jpg'
 import { getPhoto } from "../../data/photos";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation } from 'react-router-dom'
 // import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles(theme => ({
@@ -87,6 +88,10 @@ const useStyles = makeStyles(theme => ({
               margin: theme.spacing(1),
               width: '34ch',
             },
+      },
+      meetupLink: {
+        fontSize:'2rem',
+        textDecoration: 'none'
       }
   }));
 
@@ -173,7 +178,9 @@ export default function Dashboard() {
           </Grid>
             <Grid className={classes.gridBottomRight}>
             <Grid item xs>
-            <Paper className={classes.paper} elevation={3}>MEETUPS</Paper>
+              <Paper className={classes.paper} elevation={3}>
+                <Link className={classes.meetupLink} to='/meetups'>My Meetups ></Link>
+              </Paper>
             </Grid>
             <Grid item xs={6}>
             <Paper className={classes.paper} elevation={3}>MESSAGES</Paper>

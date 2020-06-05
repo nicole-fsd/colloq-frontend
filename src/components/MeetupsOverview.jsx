@@ -2,11 +2,18 @@ import React, {useState} from "react";
 // import { Redirect, Route } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container , Paper, Grid, Typography, Button, TextField} from '@material-ui/core';
-import Footer from '../landing/Footer'
+import Footer from './landing/Footer'
 import Avatar from '@material-ui/core/Avatar';
-import morgan from './images/Morgan-cat.jpg'
-import { getPhoto } from "../../data/photos";
+import morgan from './dashboard/images/Morgan-cat.jpg'
 import { useDispatch, useSelector } from "react-redux";
+import { Calendar, momentLocalizer } from "react-big-calendar";
+import moment from "moment";
+import '../style/react-big-calendar.css'
+import { Link } from 'react-router-dom'
+
+
+
+
 // import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles(theme => ({
@@ -61,12 +68,32 @@ const useStyles = makeStyles(theme => ({
         width: theme.spacing(25),
         height: theme.spacing(25),
       },
+      backLink: {
+        textDecoration: 'none',
+        fontSize: '1rem',
+        marginTop: '20px'
+      },
+      backDiv: {
+          margin: '100px',
+      }
     
   }));
 
 export default function Dashboard() {
     const classes = useStyles()
     const dispatch = useDispatch();
+    const localizer = momentLocalizer(moment);
+
+    const events = [
+        {
+            start: moment().toDate(),
+            end: moment()
+            .add(1, "days")
+            .toDate(),
+            title: "Meetup in Paris"
+          }
+        ]
+   
     
   
 
@@ -76,25 +103,25 @@ export default function Dashboard() {
 
             <Grid className={classes.grid1} justify="space-evenly" container spacing={4}>
                 <Grid item>
-                    <Paper className={classes.photo} elevation={3}>
-                        <Avatar alt="user profile photo" src={morgan} className={classes.large} />
-                    </Paper> 
                 </Grid>
             </Grid>
 
-            <Grid className={classes.grid2} justify="center" alignItems="center" container direction="row" spacing={0}>
-                <Grid className={classes.gridBottomLeft}>
+            <Grid className={classes.grid2} justify="center" alignItems="center" container direction="column" spacing={0}>
+                <div className={classes.backDiv}>
+                    <Link className={classes.backLink} to='/dashboard'>Back to my profile</Link>
+                </div>
+                
                     <Grid item xs>
-                    <Paper className={classes.paperInfo} elevation={3}>
-                    </Paper>
+                    <Calendar
+                        localizer={localizer}
+                        defaultDate={new Date()}
+                        defaultView="month"
+                        events={events}
+                        style={{ height: "50vh", width: "50vw" }}
+                        />
                     </Grid>
                 </Grid>
-                <Grid className={classes.gridBottomRight}>
-                    <Grid item xs>
-                    <Paper className={classes.paper} elevation={3}>MEETUPS</Paper>
-                    </Grid>
-                </Grid>
-            </Grid>
+            
 
       </Container>
       <Footer />

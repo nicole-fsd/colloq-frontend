@@ -132,6 +132,7 @@ export default function Search() {
         // <Container disableGutters maxWidth="xl" className={classes.root}>
         <>
         <div className={classes.root}>
+        <Link className={classes.backLink} to='/dashboard'>Back to my profile</Link>
         <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
