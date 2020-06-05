@@ -107,13 +107,21 @@ export default function Search() {
       let i;
       let idArray = []
       for (i = 0; i < users.length; i++) {
-        const first = users[i]
-        const value = first[Object.keys(first)[0]]
-        var lastChar = value.substr(value.length - 1)
+        // const first = users[i]
+        // const value = first[Object.keys(first)[0]]
+        // var lastChar = value.substr(value.length - 1)
         // console.log('lastchar:' + lastChar)
-        idArray.push(lastChar)
+      const firstObj = users[i]
+      const value = firstObj[Object.keys(firstObj)[0]]
+      
+      // console.log(value)
+      var n = value.lastIndexOf('/');
+      var result = value.substring(n + 1);
+      idArray.push(result)
       }
-      // const firstObj = users[1]
+      console.log(idArray)
+      
+      // console.log('result:' + result)
         
     
     

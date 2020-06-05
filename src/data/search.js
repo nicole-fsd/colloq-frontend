@@ -85,10 +85,6 @@ const initialState = {
   export default (state = initialState, { type, payload }) => {
     switch (type) {
       case GET_USERS:
-        // const firstObj = payload[0]
-        // const value = firstObj[Object.keys(firstObj)[0]]
-        // var lastChar = value.substr(value.length - 1)
-        // console.log(lastChar)
         return {
           error: null,
           users: [...payload],
@@ -104,7 +100,7 @@ const initialState = {
           ...state,
           singleUser: {
             
-            email: payload['email'],
+            email: payload.email,
             
           },
         }

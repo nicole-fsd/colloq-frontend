@@ -6,14 +6,15 @@ import { getUser } from '../data/search';
 
 const UserProfile = () => {
 const dispatch = useDispatch();
-// let { passedId } = useParams();
 let location = useLocation()
-// console.log(location.pathname)
+const str = location.pathname
 
-const id = location.pathname.substring(location.pathname.lastIndexOf('/') + 1)
+//get user id
+var n = str.lastIndexOf('/');
+var id = str.substring(n + 1);
+// console.log('userprofile result:' + id)
 
-// const userId = parseInt(props.match.params.number, 10)
-console.log(id)
+
 useEffect(() => {
     dispatch(getUser(id));
   }, [dispatch, id])
@@ -28,7 +29,7 @@ useEffect(() => {
       <h1>This is the Public profile of:</h1>
       <h2>{user.email}</h2>
       
-      <Link to='/'>Back</Link>
+      <Link to='/search'>Back</Link>
     </div>
   )
 }
