@@ -7,6 +7,7 @@ import { Container , Paper, Grid, Typography, Button, TextField} from '@material
 import Footer from './landing/Footer'
 import Avatar from '@material-ui/core/Avatar';
 import morgan from './dashboard/images/Morgan-cat.jpg'
+import getPhoto from '../data/photos'
 
 
 //STYLE
@@ -131,7 +132,7 @@ const str = location.pathname
   // };
 
   const handleSendMessageClick = () => {
-    // dispatch(getPhoto());
+    dispatch(getPhoto());
   }
 
 
@@ -146,6 +147,7 @@ useEffect(() => {
   }, [dispatch, id])
 
   const user = useSelector((state) => state.search.singleUser);
+ 
   
 
   return (
@@ -160,6 +162,7 @@ useEffect(() => {
         
           <Paper className={classes.photo} elevation={3}>
               <Avatar alt="user profile photo" src={morgan} className={classes.large} />
+              {/* <img src={`http://localhost:8000/image.php?${photos.image}&height=150&image=/wdev_nicole/eindwerk/system/img/albums/${photos.image}`} />) */}
               </Paper>
               <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleSendMessageClick}>
                 Send message
@@ -177,7 +180,7 @@ useEffect(() => {
               <Typography className={classes.name}>{user.firstname} {user.lastname}</Typography>
               <div className={classes.subDiv}>
                 <Typography className={classes.subInfo}>Age: {user.age}</Typography>
-                <Typography className={classes.subInfo}>Language: </Typography>
+                <Typography className={classes.subInfo}>Language:</Typography>
                 <Typography className={classes.subInfo}>City: {user.city}</Typography>
                 <Typography className={classes.subInfo}>Meetup type: {user.meetupType}</Typography>
               </div>

@@ -103,6 +103,7 @@ export default function Dashboard() {
     const userAge = useSelector((state) => state.auth.user.age);
     const userMeetupType = useSelector((state) => state.auth.user.meetupType);
     const userPublicMessage = useSelector((state) => state.auth.user.publicMessage);
+    const photos = useSelector((state) => state.photos.photos);
 
     const handleChange = (event) => {
     setName(event.target.value);
@@ -186,7 +187,7 @@ export default function Dashboard() {
             <Paper className={classes.paper} elevation={3}>MESSAGES</Paper>
             </Grid>
             <Grid item xs>
-            <Paper className={classes.paper} elevation={3}>FAVORITES</Paper>
+            <Paper className={classes.paper} elevation={3}>{photos[0].title}</Paper>
             </Grid>
           </Grid>
         

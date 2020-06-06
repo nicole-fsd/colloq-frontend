@@ -17,11 +17,15 @@ const initialState = {
  /* ACTION CREATORS *///////////////////////////
 
  export const getPhoto = () => (dispatch) => {
-   axios.get('http://localhost:8000/swagger-api/images/1')
-   .then((result) => {
+   axios.get('http://localhost:8000/api/images?user=20', {
+    headers: {
+      authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+   })
+   .then((response) => {
     //  console.log(result)
-    dispatch(addPhoto(result))
-    console.log('fetch successful')
+    dispatch(addPhoto(response.data['hydra:member']))
+    console.log('fetch successful' + response.data['hydra:member'])
   })
   .catch((error) => dispatch(addPhotoError('error fetching photo')));
 
