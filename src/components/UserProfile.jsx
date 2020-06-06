@@ -147,9 +147,7 @@ useEffect(() => {
 
   const user = useSelector((state) => state.search.singleUser);
   
-  if (!user) {
-    return <div>Sorry, but the user was not found</div>
-  }
+
   return (
     <>
       <div className={classes.root}>
@@ -179,8 +177,8 @@ useEffect(() => {
               <Typography className={classes.name}>{user.firstname} {user.lastname}</Typography>
               <div className={classes.subDiv}>
                 <Typography className={classes.subInfo}>Age: {user.age}</Typography>
-                <Typography className={classes.subInfo}>Language</Typography>
-                <Typography className={classes.subInfo}>City</Typography>
+                <Typography className={classes.subInfo}>Language: </Typography>
+                <Typography className={classes.subInfo}>City: {user.city}</Typography>
                 <Typography className={classes.subInfo}>Meetup type: {user.meetupType}</Typography>
               </div>
               

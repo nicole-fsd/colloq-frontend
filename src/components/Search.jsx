@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Grid, CardHeader} from '@material-ui/core'
+import { Grid, CardHeader, Typography} from '@material-ui/core'
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import Button from '@material-ui/core/Button';
@@ -18,12 +18,8 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         display: 'flex',
         flexDirection: 'column',
-        height: "100vh",
+        height: "100%",
     },
-    // card: {
-      
-    //   margin: 10
-    // },
     search: {
       marginTop: '8rem',
       marginBottom: '8em',
@@ -61,12 +57,13 @@ const useStyles = makeStyles((theme) => ({
           width: '20ch',
         },
       gridList: {
-        width: '1200px',
+        width: '800px',
         marginTop: '10rem'
       
       },
       searchBtn: {
-        marginTop: '5em'
+        marginTop: '5em',
+        display: "inline"
       },
       card: {
         display: 'flex',
@@ -90,8 +87,14 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(8)
     },
     grid: {
-      padding: 50
-    }
+      padding: 50,
+      width: 300,
+    },
+    linkText: {
+      textDecoration: "none",
+    },
+   
+    
   }
   }));
 
@@ -119,7 +122,7 @@ export default function Search() {
       
     const handleSearchFormSubmit = (e) => {
       e.preventDefault();
-      dispatch(getUsers())
+      dispatch(getUsers(searchInput))
       console.log('handlesearchformsubmit')
     }
 
@@ -152,7 +155,7 @@ export default function Search() {
               </div>
                 
                 <Button className={classes.searchBtn} type="submit" variant="contained" color="secondary">
-                    Submit
+                    Go
                 </Button>
                 
             </form>
@@ -166,18 +169,21 @@ export default function Search() {
                 justify="flex-start"
                 alignItems="flex-start"
                 className={classes.grid}
+                width={900}
                 
             >
                 {users.map((user, index) => (
-                    <Grid item xs={12} sm={6} md={3} key={index}>
+                    <Grid item xs={12} key={index}>
                         <Card>
                             <CardHeader
-                                title={user.email}
-                                subheader={user.id}
+                                title={user.firstname + ' ' + user.lastname}
+                                subheader={user.age}
+                                // subheader={user.city}
                             />
-                            <CardContent>
-                            <Link to={`/profile/${idArray[index]}`}>View Profile</Link>
-                            
+                            <CardContent className={classes.cardContent}>
+                              <Link  to={`/profile/${idArray[index]}`}>
+                                <Typography className={classes.linkText}>View Profile</Typography>
+                                </Link>
                             </CardContent>
                         </Card>
                      </Grid>

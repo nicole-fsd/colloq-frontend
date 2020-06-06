@@ -11,6 +11,7 @@ const initialState = {
     firstname: "",
     lastname: "",
     age: "",
+    city: "",
     isTourist: "",
     istutor: "",
     meetupType: "",
@@ -28,8 +29,9 @@ const initialState = {
   
  /* ACTION CREATORS *///////////////////////////
 
- export const getUsers = () => (dispatch) => {
-   axios.get('http://localhost:8000/api/users?isTutor=true', {
+ export const getUsers = (city) => (dispatch) => {
+   console.log('city: ' + city)
+   axios.get(`http://localhost:8000/api/users?city.name=${city}`, {
     headers: {
       authorization: `Bearer ${localStorage.getItem('token')}`
     }
@@ -96,6 +98,7 @@ const initialState = {
           error: payload
         }
       case GET_SINGLE_USER:
+        console.log('payload:' + payload.city.name)
         return {
           ...state,
           singleUser: {
@@ -104,6 +107,7 @@ const initialState = {
             firstname: payload.firstname,
             lastname: payload.lastname,
             age: payload.age,
+            city: payload.city.name,
             isTourist: payload.isTourist,
             istutor: payload.isTutor,
             meetupType: payload.meetupType,
