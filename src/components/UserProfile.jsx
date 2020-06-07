@@ -120,6 +120,7 @@ const dispatch = useDispatch();
 let location = useLocation()
 const classes = useStyles()
 const [name, setName] = useState('');
+const photos = useSelector((state) => state.photos.photos);
 // const userFirstName = useSelector((state) => state.auth.user.firstName);
 // const userAge = useSelector((state) => state.auth.user.age);
 // const userMeetupType = useSelector((state) => state.auth.user.meetupType);
@@ -161,7 +162,7 @@ useEffect(() => {
         <Grid item>
         
           <Paper className={classes.photo} elevation={3}>
-              <Avatar alt="user profile photo" src={morgan} className={classes.large} />
+          <Avatar alt="user profile photo" src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${photos[0].title}.jpg&height=150&image=/wdev_nicole/eindwerk/images/${photos[0].title}.jpg`} className={classes.large} />
               {/* <img src={`http://localhost:8000/image.php?${photos.image}&height=150&image=/wdev_nicole/eindwerk/system/img/albums/${photos.image}`} />) */}
               </Paper>
               <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleSendMessageClick}>

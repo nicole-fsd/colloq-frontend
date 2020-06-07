@@ -40,7 +40,8 @@ export const REGISTER_ERROR = "REGISTER_ERROR"
 /* ACTION CREATORS *//////////////////////////////////////
 
 export const loginUser = (username, password) => (dispatch) => {
-  axios.post(`http://localhost:8000/api/login_check`, {
+  // axios.post(`https://wdev.be/wdev_nicole/eindwerk/api/login_check`, {
+    axios.post(`${process.env.REACT_APP_ENDPOINT}/login_check`, {
       username: username,
       password: password,
     })
@@ -79,7 +80,7 @@ export const registerUser = (email, password, firstName, lastName, age, meetupTy
       meetupType: meetupType,
       role: role
     }
-    axios.post("http://localhost:8000/api/register", data, config)
+    axios.post(`${process.env.REACT_APP_ENDPOINT}/register`, data, config)
     .then((response) => {
       dispatch(registerSuccess(response.data))
       console.log(response.headers)

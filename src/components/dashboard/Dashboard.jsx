@@ -112,6 +112,7 @@ export default function Dashboard() {
   const handleGetPhotoClick = () => {
     dispatch(getPhoto());
   }
+  // console.log("photo:" + photos[0].title)
 
   return (
     <div className={classes.root}>
@@ -119,7 +120,8 @@ export default function Dashboard() {
       <Grid className={classes.grid1} justify="space-evenly" container spacing={4}>
         <Grid item>
           <Paper className={classes.photo} elevation={3}>
-              <Avatar alt="user profile photo" src={morgan} className={classes.large} />
+              <Avatar alt="user profile photo" src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${photos[0].title}.jpg&height=150&image=/wdev_nicole/eindwerk/images/${photos[0].title}.jpg`} className={classes.large} />
+              {/* <img src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${photos[0].title}.jpg&height=150&image=/wdev_nicole/eindwerk/images/${photos[0].title}.jpg`} /> */}
               </Paper>
               <input
                 accept="image/*"
@@ -187,7 +189,7 @@ export default function Dashboard() {
             <Paper className={classes.paper} elevation={3}>MESSAGES</Paper>
             </Grid>
             <Grid item xs>
-            <Paper className={classes.paper} elevation={3}>{photos[0].title}</Paper>
+            <Paper className={classes.paper} elevation={3}>FAVORITES</Paper>
             </Grid>
           </Grid>
         

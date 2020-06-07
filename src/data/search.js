@@ -31,7 +31,7 @@ const initialState = {
 
  export const getUsers = (city) => (dispatch) => {
    console.log('city: ' + city)
-   axios.get(`http://localhost:8000/api/users?city.name=${city}`, {
+   axios.get(`${process.env.REACT_APP_ENDPOINT}/users?city.name=${city}`, {
     headers: {
       authorization: `Bearer ${localStorage.getItem('token')}`
     }
@@ -47,7 +47,7 @@ const initialState = {
  }  
 
  export const getUser = (id) => (dispatch) => {
-  axios.get('http://localhost:8000/api/users/' + id, {
+  axios.get(`${process.env.REACT_APP_ENDPOINT}/users/${id}`, {
     headers: {
       authorization: `Bearer ${localStorage.getItem('token')}`
     }
