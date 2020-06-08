@@ -97,6 +97,10 @@ const useStyles = makeStyles(theme => ({
       meetupLink: {
         fontSize:'2rem',
         textDecoration: 'none'
+      },
+      messageLink: {
+        fontSize:'2rem',
+        textDecoration: 'none'
       }
   }));
 
@@ -196,7 +200,9 @@ export default function Dashboard() {
               </Paper>
             </Grid>
             <Grid item xs={6}>
-            <Paper className={classes.paper} elevation={3}>MESSAGES</Paper>
+            <Paper className={classes.paper} elevation={3}>
+              <Link className={classes.messageLink} to='/messages'>My Messages ></Link>
+            </Paper>
             </Grid>
             <Grid item xs>
             <Paper className={classes.paper} elevation={3}>FAVORITES</Paper>

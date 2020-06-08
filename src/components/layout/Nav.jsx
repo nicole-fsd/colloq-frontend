@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -41,21 +41,23 @@ import { useDispatch, useSelector } from "react-redux";
       fontSize: "50px"
     },
     iconButton: {
-      marginRight: "5vw",
+      marginRight: "0.5vw",
     },
     currentUser: {
-      color: "white"
+      color: "white",
+      marginRight: "10vw",
+      fontSize: '1.6rem'
     }
   }));
 
 export default function Nav() {
     const dispatch = useDispatch()
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
     const isMenuOpen = Boolean(anchorEl);
     const menuId = 'primary-search-account-menu';
     const loggedIn = useSelector((state) => state.auth.loggedIn);
-    const userEmail = useSelector((state) => state.auth.user.email);
+    const userfirstName = useSelector((state) => state.auth.user.firstName);
   
 
     const handleMenuClose = () => {
@@ -69,7 +71,7 @@ export default function Nav() {
 
     const renderMenu = (
       <Menu
-      elevation={3}
+        elevation={3}
         anchorEl={anchorEl}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         id={menuId}
@@ -78,7 +80,7 @@ export default function Nav() {
         open={isMenuOpen}
         onClose={handleMenuClose}
       >
-        <MenuItem component={Link} to={"/search"}>Search</MenuItem>
+        <MenuItem onClick={handleMenuClose} component={Link} to={"/search"}>Search</MenuItem>
         <MenuItem onClick={handleLogOut}>Log out</MenuItem>
         
       </Menu>
@@ -107,7 +109,7 @@ export default function Nav() {
             >
               <AccountCircle className={classes.accountCircle} fontSize="large"/>
             </IconButton>
-            <Typography className={classes.currentUser}>{loggedIn ?  "Logged in as: " + userEmail : ""}</Typography>
+            <Typography className={classes.currentUser}>{loggedIn ? userfirstName : ""}</Typography>
             </>
             ) : "" }
             

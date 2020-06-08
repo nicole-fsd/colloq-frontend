@@ -6,18 +6,20 @@ import storage from "redux-persist/lib/storage"; // defaults to localStorage for
 import authReducer from "./auth";
 import photoReducer from "./photos";
 import searchReducer from "./search"
+import messageReducer from "./messages"
 
 const persistConfig = {
   key: 'root',
   storage: storage,
   blacklist: [''],
-  whitelist: ['auth', 'photos', 'search']
+  whitelist: ['auth', 'photos', 'search', 'messages']
 };
 
 const appReducer = persistCombineReducers(persistConfig, {
   auth: authReducer,
   photos: photoReducer, 
   search: searchReducer,
+  messages: messageReducer
   
 });
 

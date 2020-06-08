@@ -65,20 +65,20 @@ export const postUserMessage = (subject, text, userId, authUserId) => (dispatch)
     .catch((error) => console.log(error));
 };
 
-//  export const getMessages = (id) => (dispatch) => {
-//     axios.get(`${process.env.REACT_APP_ENDPOINT}/messages?user=${id}`, {
-//      headers: {
-//        authorization: `Bearer ${localStorage.getItem('token')}`
-//      }
-//     })
-//     .then((response) => {
-//      //  console.log(result)
-//      dispatch(addMessages(response.data['hydra:member']))
-//      console.log('get messages fetch successful' + response.data['hydra:member'])
-//    })
-//    .catch((error) => dispatch(addPhotoError('error fetching photo')));
+ export const getMessages = (id) => (dispatch) => {
+    axios.get(`${process.env.REACT_APP_ENDPOINT}/messages?messageRecipient=25`, {
+     headers: {
+       authorization: `Bearer ${localStorage.getItem('token')}`
+     }
+    })
+    .then((response) => {
+    //   console.log(response)
+     dispatch(addMessages(response.data['hydra:member']))
+     console.log('get messages fetch successful' + response.data['hydra:member'])
+   })
+   .catch((error) => console.log(error));
  
-//   }  
+  }  
 
 export const postMessageSuccess = (data) => ({
     type: POST_MESSAGE_SUCCESS,

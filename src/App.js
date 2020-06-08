@@ -9,6 +9,7 @@ import Dashboard from './components/dashboard/Dashboard'
 import Search from './components/Search'
 import UserProfile from './components/UserProfile'
 import MeetupsOverview from './components/MeetupsOverview'
+import MessagesOverview from './components/MessagesOverview'
 
 
 function App() {
@@ -52,7 +53,11 @@ function App() {
             exact
             path="/search"
             render={() => {
-              return <Search />;
+              return !Authenticated ? (
+              <Redirect to="/" /> 
+              ): ( 
+              <Search />
+              );
             }}
           />
           <Route
@@ -64,6 +69,13 @@ function App() {
             path="/meetups"
             render={() => {
               return <MeetupsOverview />;
+            }}
+          />
+          <Route
+            exact
+            path="/messages"
+            render={() => {
+              return <MessagesOverview />;
             }}
           />
             
