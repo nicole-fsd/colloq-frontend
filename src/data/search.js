@@ -102,7 +102,7 @@ const initialState = {
         return {
           ...state,
           singleUser: {
-            
+            id: payload.id,
             email: payload.email,
             firstname: payload.firstname,
             lastname: payload.lastname,

@@ -3,12 +3,30 @@ import {useSelector, useDispatch} from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import { getUser } from '../data/search';
 import { makeStyles } from "@material-ui/core/styles";
-import { Container , Paper, Grid, Typography, Button, TextField} from '@material-ui/core';
+import { Container , Paper, Grid, Typography, Button, TextField, IconButton, FormHelperText} from '@material-ui/core';
 import Footer from './landing/Footer'
 import Avatar from '@material-ui/core/Avatar';
 import morgan from './dashboard/images/Morgan-cat.jpg'
 import getPhoto from '../data/photos'
+import { postUserMessage } from '../data/messages';
+import Modal from '@material-ui/core/Modal';
+import CloseIcon from '@material-ui/icons/Close';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
+
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
 
 //STYLE
 const useStyles = makeStyles(theme => ({
@@ -16,11 +34,19 @@ const useStyles = makeStyles(theme => ({
       justifySelf: "center",
       textAlign: "center"
     },
+    paperModal: {
+      position: 'absolute',
+      width: 500,
+      backgroundColor: theme.palette.background.paper,
+      border: '1px solid #c6a3ff',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+    },
     paper: {
       padding: theme.spacing(2),
       textAlign: 'center',
       color: theme.palette.text.secondary,
-      backgroundColor: "#c6a3ff",
+      backgroundColor: "#eeeeee",
       height: "150px",
       width: "400px",
       margin: "30px"
@@ -56,12 +82,12 @@ const useStyles = makeStyles(theme => ({
       marginLeft: "90px"
   },
   paperInfo: {
-      backgroundColor: "#c6a3ff",
+      backgroundColor: "#eeeeee",
       height: "600px",
       width: "400px"
   },
   paperAbout: {
-      backgroundColor: "#c6a3ff",
+      backgroundColor: "#eeeeee",
       height: "175px",
       width: "450px",
       marginLeft: "30px"
@@ -111,6 +137,18 @@ const useStyles = makeStyles(theme => ({
       textDecoration: 'none',
       fontSize: '1rem',
       marginTop: '20px'
+    },
+    close: {
+      display: 'inline'
+    },
+    sendDiv: {
+      display: 'flex',
+      flexDirection: "row",
+      justifyContent: "space-between"
+
+    },
+    textarea: {
+      width: '100%'
     }
 }));
 
@@ -120,21 +158,76 @@ const dispatch = useDispatch();
 let location = useLocation()
 const classes = useStyles()
 const [name, setName] = useState('');
+const [subject, setSubject] = useState('');
+const [text, setText] = useState('');
 const photos = useSelector((state) => state.photos.photos);
 // const userFirstName = useSelector((state) => state.auth.user.firstName);
 // const userAge = useSelector((state) => state.auth.user.age);
 // const userMeetupType = useSelector((state) => state.auth.user.meetupType);
 // const userPublicMessage = useSelector((state) => state.auth.user.publicMessage);
 const str = location.pathname
+const user = useSelector((state) => state.search.singleUser);
+const userId = useSelector((state) => state.search.singleUser.id);
+const authUserId = useSelector((state) => state.auth.user.id);
+const [modalStyle] = React.useState(getModalStyle);
+const [open, setOpen] = React.useState(false);
 
 //HANDLERS
   //   const handleChange = (event) => {
   //   setName(event.target.value);
   // };
 
+  // MODAL //////////////////
+  // const handleOpen = () => {
+  //   setOpen(true);
+  // };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const handleSendMessageClick = () => {
-    dispatch(getPhoto());
+    setOpen(true);
   }
+
+  const handleMessageFormSubmit = (e) => {
+    e.preventDefault()
+    console.log('form submit')
+    dispatch(postUserMessage(subject, text, userId, authUserId))
+  }
+
+  const body = (
+    <div style={modalStyle} className={classes.paperModal}>
+      <div className={classes.sendDiv}>
+      <h2 id="simple-modal-title">Send Message</h2>
+      <IconButton aria-label="delete" className={classes.close} size="small" onClick={handleClose}>
+          <CloseIcon fontSize="inherit" />
+        </IconButton>
+      </div>
+      
+      <form method="POST" onSubmit={handleMessageFormSubmit}>
+      <TextField variant="standard" margin="normal" required fullWidth id="subject" label="Subject" name="subject" value={subject}
+        onChange={(e) => {
+          setSubject(e.target.value);
+        }}
+      />
+      {/* <TextField variant="standard" margin="normal" required fullWidth id="text" label="Message" name="text" value={text}
+        onChange={(e) => {
+          setText(e.target.value);
+        }}
+      /> */}
+      <TextareaAutosize className={classes.textarea} aria-label="message textarea" required fullWidth rowsMin={8} placeholder="Write a message..." id="text" label="Message" name="text" value={text}
+        onChange={(e) => {
+          setText(e.target.value);
+        }} />
+      <Button type="submit" className={classes.submitmsgBtn} variant="contained" color="secondary">
+        Send
+      </Button>
+      </form>
+    </div>
+  );
+
+  
 
 
 //get user id
@@ -145,9 +238,10 @@ var id = str.substring(n + 1);
 
 useEffect(() => {
     dispatch(getUser(id));
+    // dispatch(getPhoto(id));
   }, [dispatch, id])
 
-  const user = useSelector((state) => state.search.singleUser);
+  
  
   
 
@@ -162,12 +256,21 @@ useEffect(() => {
         <Grid item>
         
           <Paper className={classes.photo} elevation={3}>
-          <Avatar alt="user profile photo" src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${photos[0].title}.jpg&height=150&image=/wdev_nicole/eindwerk/images/${photos[0].title}.jpg`} className={classes.large} />
+          {/* <Avatar alt="user profile photo" src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${photos[0].title}.jpg&height=150&image=/wdev_nicole/eindwerk/images/${photos[0].title}.jpg`} className={classes.large} /> */}
               {/* <img src={`http://localhost:8000/image.php?${photos.image}&height=150&image=/wdev_nicole/eindwerk/system/img/albums/${photos.image}`} />) */}
               </Paper>
-              <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleSendMessageClick}>
-                Send message
+                <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleSendMessageClick}>
+                  Send message
                 </Button>  
+                <Modal
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="simple-modal-title"
+                  aria-describedby="simple-modal-description"
+                >
+                  {body}
+                </Modal>
+
         </Grid>
         <Grid item>
   <Paper className={classes.paperAbout} elevation={3}><Typography className={classes.typeAbout}>{user.publicMessage}</Typography></Paper>

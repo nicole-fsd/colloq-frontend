@@ -16,8 +16,8 @@ const initialState = {
   
  /* ACTION CREATORS *///////////////////////////
 
- export const getPhoto = () => (dispatch) => {
-   axios.get(`${process.env.REACT_APP_ENDPOINT}/images?user=24`, {
+ export const getPhoto = (id) => (dispatch) => {
+   axios.get(`${process.env.REACT_APP_ENDPOINT}/images?user=${id}`, {
     headers: {
       authorization: `Bearer ${localStorage.getItem('token')}`
     }

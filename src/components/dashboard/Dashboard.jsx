@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 // import { Redirect, Route } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container , Paper, Grid, Typography, Button, TextField} from '@material-ui/core';
@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.secondary,
-        backgroundColor: "#c6a3ff",
+        backgroundColor: "#eeeeee",
         height: "150px",
         width: "400px",
         margin: "30px"
@@ -55,22 +55,27 @@ const useStyles = makeStyles(theme => ({
         marginLeft: "90px"
     },
     paperInfo: {
-        backgroundColor: "#c6a3ff",
+        backgroundColor: "#eeeeee",
         height: "600px",
-        width: "400px"
+        width: "400px",
+        
     },
     paperAbout: {
-        backgroundColor: "#c6a3ff",
-        height: "175px",
+        backgroundColor: "#eeeeee",
+        minHeight: "175px",
         width: "450px",
-        marginLeft: "30px"
+        marginLeft: "30px",
+        overflow: "auto",
+        display: 'flex',
+
     },
     typeAbout: {
         padding: "20px",
-        color: "white"
+        color: "black",
+        flex: 1
     },
     photo: {
-        backgroundColor: "#c6a3ff",
+        backgroundColor: "#eeeeee",
         height: "200px",
         width: "200px",
         borderRadius: "50%"
@@ -101,6 +106,7 @@ export default function Dashboard() {
     const dispatch = useDispatch();
     const userFirstName = useSelector((state) => state.auth.user.firstName);
     const userAge = useSelector((state) => state.auth.user.age);
+    const userId = useSelector((state) => state.auth.user.id);
     const userMeetupType = useSelector((state) => state.auth.user.meetupType);
     const userPublicMessage = useSelector((state) => state.auth.user.publicMessage);
     const photos = useSelector((state) => state.photos.photos);
@@ -112,6 +118,10 @@ export default function Dashboard() {
   const handleGetPhotoClick = () => {
     dispatch(getPhoto());
   }
+
+  useEffect(() => {
+    dispatch(getPhoto(userId));
+  }, [])
   // console.log("photo:" + photos[0].title)
 
   return (
@@ -120,7 +130,7 @@ export default function Dashboard() {
       <Grid className={classes.grid1} justify="space-evenly" container spacing={4}>
         <Grid item>
           <Paper className={classes.photo} elevation={3}>
-              <Avatar alt="user profile photo" src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${photos[0].title}.jpg&height=150&image=/wdev_nicole/eindwerk/images/${photos[0].title}.jpg`} className={classes.large} />
+              {/* <Avatar alt="user profile photo" src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${photos[0].title}.jpg&height=150&image=/wdev_nicole/eindwerk/images/${photos[0].title}.jpg`} className={classes.large} /> */}
               {/* <img src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${photos[0].title}.jpg&height=150&image=/wdev_nicole/eindwerk/images/${photos[0].title}.jpg`} /> */}
               </Paper>
               <input
