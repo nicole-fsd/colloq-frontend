@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Grid, CardHeader, Typography} from '@material-ui/core'
+import { Grid, CardHeader, Typography, Container} from '@material-ui/core'
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import Button from '@material-ui/core/Button';
@@ -18,7 +18,10 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         display: 'flex',
         flexDirection: 'column',
-        height: "100%",
+        height: "100vh",
+    },
+    container: {
+
     },
     search: {
       marginTop: '8rem',
@@ -135,6 +138,7 @@ export default function Search() {
         // <Container disableGutters maxWidth="xl" className={classes.root}>
         <>
         <div className={classes.root}>
+          <Container maxWidth="xs">
         <Link className={classes.backLink} to='/dashboard'>Back to my profile</Link>
         <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -189,6 +193,7 @@ export default function Search() {
                      </Grid>
                 ))}
             </Grid>
+            </Container>
         </div> 
         </>   
     )

@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
       position: 'absolute',
       width: 500,
       backgroundColor: theme.palette.background.paper,
-      border: '1px solid #c6a3ff',
+      border: '0px solid #c6a3ff',
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
     },
@@ -88,13 +88,14 @@ const useStyles = makeStyles(theme => ({
   },
   paperAbout: {
       backgroundColor: "#eeeeee",
-      height: "175px",
+      minHeight: "175px",
       width: "450px",
-      marginLeft: "30px"
+      marginLeft: "30px",
+      overflow: "auto",
   },
   typeAbout: {
       padding: "20px",
-      color: "white"
+      color: "black"
   },
   photo: {
       backgroundColor: "#c6a3ff",
@@ -199,6 +200,7 @@ const [open, setOpen] = React.useState(false);
     dispatch(postUserMessage(subject, text, userId, authUserId))
   }
 
+/////MODAL BODY ///////////////////////
   const body = (
     <div style={modalStyle} className={classes.paperModal}>
       <div className={classes.sendDiv}>
@@ -229,6 +231,7 @@ const [open, setOpen] = React.useState(false);
       </form>
     </div>
   );
+  //////////////////////////////////////////
 
   
 
@@ -242,7 +245,7 @@ var id = str.substring(n + 1);
 useEffect(() => {
     dispatch(getUser(id));
     // dispatch(getPhoto(id));
-  }, [dispatch, id])
+  }, [])
 
   
  

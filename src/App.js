@@ -29,7 +29,7 @@ function App() {
             exact
             path="/register"
             render={() => {
-              return <Register />;
+              return Authenticated ? <Redirect to="/dashboard" /> : <Register />;
             }}
           />
           <Route

@@ -138,6 +138,7 @@ export default (state = initialState, { type, payload }) => {
         error: false,
         loading: false
       },
+      loggedIn: true,
     };
 
     default:

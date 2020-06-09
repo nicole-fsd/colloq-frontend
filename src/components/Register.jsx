@@ -19,17 +19,18 @@ const useStyles = makeStyles((theme) => ({
       display: "flex",
       justifyContent: "center",
       backgroundColor: "#E1E2E1",
-      height: "100vh"
+      minHeight: "100vh"
     },
   paper: {
     backgroundColor: "white",
     width: "40%",
-    height: "90vh",
+    minHeight: "90vh",
+    overflow: 'auto',
     alignSelf: "center",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    marginTop: ".5ch"
+    marginTop: ".2ch"
   },
   gridTop: {
     border: "1px solid black",
@@ -52,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: "30px",
     textAlign: "center",
-    margin: "1ch"
+    margin: "3.5ch 1ch"
   },
   form: {
     width: "400px",
@@ -67,6 +68,9 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       color: "black"
     }
+  },
+  formControl: {
+    margin: '2ch'
   }
 }));
 
@@ -89,8 +93,8 @@ export default function Register() {
     const [radioValue, setRadioValue] = useState('');
     // const [isTourist, setIsTourist] = useState(false);
     // const [isTutor, setIsTutor] = useState(false);
-    const [startDate, setStartDate] = useState(new Date('2014-08-18T21:11:54'));
-    const [endDate, setEndDate] = useState(new Date('2014-08-18T21:11:54'));
+    const [startDate, setStartDate] = useState(new Date('2020-06-09T21:11:54'));
+    const [endDate, setEndDate] = useState(new Date('2020-06-09T21:11:54'));
     
 
     const handleStartDateChange = (date) => {
@@ -121,66 +125,56 @@ export default function Register() {
             <form className={classes.form} method="POST" onSubmit={submitHandler}>
                           <TextField variant="standard" margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" value={email}
                           onChange={(e) => {
-                            setError("");
                             setEmail(e.target.value);
                           }}
                         />
                         <TextField variant="standard" margin="normal" required fullWidth name="password" label="Password" type="password" id="password" autoComplete="current-password" value={password}
                           onChange={(e) => {
-                            setError("");
                             setPassword(e.target.value);
                           }}
                         />
                         <TextField variant="standard" margin="normal" required fullWidth id="firstname" label="First name" name="firstname" autoComplete="firstname" value={firstname}
                           onChange={(e) => {
-                            setError("");
                             setFirstName(e.target.value);
                           }}
                         />
                         <TextField variant="standard" margin="normal" required fullWidth id="lastname" label="Last name" name="lastname" autoComplete="lastname" value={lastname}
                           onChange={(e) => {
-                            setError("");
                             setLastName(e.target.value);
                           }}
                         />
                         <TextField variant="standard" margin="normal" fullWidth id="age" label="Age" name="age" autoComplete="age" value={age}
                           onChange={(e) => {
-                            setError("");
                             setAge(e.target.value);
                           }}
                         />
                         <TextField variant="standard" margin="normal" required fullWidth name="city" label="City" type="text" id="city" value={city}
                           onChange={(e) => {
-                            setError("");
                             setCity(e.target.value);
                           }}
                         />
                         <TextField variant="standard" margin="normal" required fullWidth name="nativeLang" label="Native Language" type="text" id="nativeLang" value={nativeLang}
                           onChange={(e) => {
-                            setError("");
                             setNativeLang(e.target.value);
                           }}
                         />
                         <TextField variant="standard" margin="normal" required fullWidth name="targetLang" label="Meetup Language" type="text" id="targetLang" value={targetLang}
                           onChange={(e) => {
-                            setError("");
                             setTargetLang(e.target.value);
                           }}
                         />
                         <TextField variant="standard" margin="normal" required fullWidth name="meetup_city" label="City of meetup" type="text" id="meetup_city" value={meetupCity}
                           onChange={(e) => {
-                            setError("");
                             setMeetupCity(e.target.value);
                           }}
                         />
                         <TextField variant="standard" margin="normal" fullWidth name="meetup_type" label="Preferred type of meetup" type="text" id="meetup_type" value={meetupType}
                           onChange={(e) => {
-                            setError("");
                             setMeetupType(e.target.value);
                           }}
                         />
                   <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <Grid container justify="space-around">
+                  <Grid container justify="start">
                     {/* <TextField
                     id="startdate"
                     label="Start Date"
@@ -200,7 +194,7 @@ export default function Register() {
                       format="MM/dd/yyyy"
                       margin="normal"
                       id="date-picker-inline"
-                      label="Date-picker-inline1"
+                      label="Available start date"
                       value={startDate}
                       onChange={handleStartDateChange}
                       KeyboardButtonProps={{
@@ -213,7 +207,7 @@ export default function Register() {
                       format="MM/dd/yyyy"
                       margin="normal"
                       id="date-picker-inline2"
-                      label="Date picker inline"
+                      label="Available end date"
                       value={endDate}
                       onChange={handleEndDateChange}
                       KeyboardButtonProps={{
@@ -222,10 +216,10 @@ export default function Register() {
                     />
                       
                       <FormControl className={classes.formControl}>
-                      <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                      <InputLabel id="simple-select-label">Role: </InputLabel>
                       <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
+                        labelId="simple-select-label"
+                        id="simple-select"
                         value={radioValue}
                         onChange={handleRoleChange}
                       >
