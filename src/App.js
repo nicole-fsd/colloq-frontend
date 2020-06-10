@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from 'react-helmet';
 import { useSelector } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 import Landing from './components/Landing'
@@ -18,6 +19,10 @@ function App() {
   return (
     <>
        <Layout>
+       <Helmet>
+          <title>Colloq App</title>
+          <meta name="Meet, learn, and explore" content="Plan your next trip" /> 
+        </Helmet>
           <Route
             exact
             path="/"

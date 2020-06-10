@@ -101,7 +101,7 @@ export default function MessagesOverview() {
 
       useEffect(() => {
         dispatch(getMessages(userId));
-      }, [dispatch, userId])
+      }, [])
 
       const body = (
         <div style={modalStyle} className={classes.paperModal}>
@@ -150,14 +150,13 @@ export default function MessagesOverview() {
                             </ListItemIcon>
                             <ListItemText primary="Drafts" />
                         </ListItem>
-                        <ListItem button onClick={handleClick}>
+                        <ListItem button>
                             <ListItemIcon>
                             <InboxIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Inbox" />
-                            {open ? <ExpandLess /> : <ExpandMore />}
+                            <ListItemText primary="Inbox" /> 
                         </ListItem>
-                        <Collapse in={open} timeout="auto" unmountOnExit>
+                        {/* <Collapse in={open} timeout="auto" unmountOnExit>
                             <List component="div" disablePadding>
                             <ListItem button className={classes.nested}>
                                 <ListItemIcon>
@@ -166,7 +165,7 @@ export default function MessagesOverview() {
                                 <ListItemText primary="Starred" />
                             </ListItem>
                         </List>
-                    </Collapse>
+                    </Collapse> */}
                     </List>
                 </Grid>
                 <Grid item xs={12} md={8}>

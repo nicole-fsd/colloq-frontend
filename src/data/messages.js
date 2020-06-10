@@ -66,7 +66,7 @@ export const postUserMessage = (subject, text, userId, authUserId) => (dispatch)
 };
 
  export const getMessages = (id) => (dispatch) => {
-    axios.get(`${process.env.REACT_APP_ENDPOINT}/messages?messageRecipient=25`, {
+    axios.get(`${process.env.REACT_APP_ENDPOINT}/messages?messageRecipient=${id}`, {
      headers: {
        authorization: `Bearer ${localStorage.getItem('token')}`
      }
