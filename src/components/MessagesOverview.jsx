@@ -103,6 +103,23 @@ export default function MessagesOverview() {
         dispatch(getMessages(userId));
       }, [])
 
+      function handleMessageDelete(e) {
+        console.log('handlemessagedelete:' + e.target.parentNode.parentNode)
+      }
+
+      // const handleMessageDelete = (id) => {
+      //   axios.delete(`${process.env.REACT_APP_ENDPOINT}/messages/${id}`, {
+      //     headers: {
+      //       Authorization: authorizationToken
+      //     }
+      //   });
+      // }
+
+      
+
+
+      /////MODAL BODY/////////////////
+
       const body = (
         <div style={modalStyle} className={classes.paperModal}>
           <div className={classes.showDiv}>
@@ -188,7 +205,7 @@ export default function MessagesOverview() {
                                     secondary={message.subject}
                                 />
                                 <ListItemSecondaryAction>
-                                    <IconButton edge="end" aria-label="delete">
+                                    <IconButton edge="end" aria-label="delete" onClick={handleMessageDelete}>
                                     <DeleteIcon />
                                     </IconButton>
                                 </ListItemSecondaryAction>

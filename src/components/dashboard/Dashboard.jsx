@@ -117,6 +117,7 @@ export default function Dashboard() {
     const userPublicMessage = useSelector((state) => state.auth.user.publicMessage);
     const photos = useSelector((state) => state.photos.photos);
     const [singleUserPhoto, setSingleUserPhoto] = useState("");
+    const [newImage, setNewImage] = useState("");
 
     const handleChange = (event) => {
     setName(event.target.value);
@@ -142,6 +143,16 @@ export default function Dashboard() {
    useEffect(() => {
     getUser(userId);
    }, []);
+
+   const handleImageUpload = ({ target }) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(target.files[0]);
+    fileReader.onload = (e) => {
+        setNewImage(e.target.result)
+        console.log(e.target.result)
+    };
+    console.log('newImage: ' + newImage)
+};
   
 
   // useEffect(() => {
@@ -163,6 +174,7 @@ export default function Dashboard() {
                 className={classes.input}
                 id="contained-button-file"
                 multiple
+                onChange={handleImageUpload}
                 type="file"
                 />
                 <label htmlFor="contained-button-file">
