@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -52,6 +52,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Nav() {
     const dispatch = useDispatch()
+    let location = useLocation()
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
     const isMenuOpen = Boolean(anchorEl);
@@ -59,7 +60,7 @@ export default function Nav() {
     const loggedIn = useSelector((state) => state.auth.loggedIn);
     const userfirstName = useSelector((state) => state.auth.user.firstName);
   
-
+  
     const handleMenuClose = () => {
       setAnchorEl(null);
     };
@@ -80,7 +81,8 @@ export default function Nav() {
         open={isMenuOpen}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={handleMenuClose} component={Link} to={"/search"}>Search</MenuItem>
+        {location.pathname !== "/search" && <MenuItem onClick={handleMenuClose} component={Link} to={"/search"}>Search</MenuItem>}
+        {location.pathname !== "/dashboard" && <MenuItem onClick={handleMenuClose} component={Link} to={"/dashboard"}>My Profile</MenuItem>}
         <MenuItem onClick={handleLogOut}>Log out</MenuItem>
         
       </Menu>

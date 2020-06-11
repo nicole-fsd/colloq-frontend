@@ -25,6 +25,7 @@ const initialState = {
   const GET_USERS = "GET_USERS"
   const GET_USERS_ERROR = "GET_USERS_ERROR"
   const GET_SINGLE_USER = "GET_SINGLE_USER"
+  const GET_USERS_LOADING = "GET_USERS_LOADING"
  
   
  /* ACTION CREATORS *///////////////////////////
@@ -38,7 +39,6 @@ const initialState = {
    })
    .then((result) => {
     //  console.log(result)
-    // dispatch(addUsers(result.data))
     // console.log(result.data['hydra:member'])
     dispatch(addUsers(result.data['hydra:member']))
   })
@@ -47,6 +47,7 @@ const initialState = {
  }  
 
  export const getUser = (id) => (dispatch) => {
+   dispatch(loadingUser())
   axios.get(`${process.env.REACT_APP_ENDPOINT}/users/${id}`, {
     headers: {
       authorization: `Bearer ${localStorage.getItem('token')}`
@@ -66,6 +67,10 @@ const initialState = {
   })
   .catch((error) => dispatch(addUsersError('error fetching users')));
  }
+
+ export const loadingUser = () => ({
+   type: GET_USERS_LOADING,
+ })
 
  export const addUsers = (data) => ({
    type: GET_USERS,
@@ -97,6 +102,11 @@ const initialState = {
           ...state,
           error: payload
         }
+      case GET_USERS_LOADING:
+        return {
+          ...state,
+          loading: true
+        }
       case GET_SINGLE_USER:
         console.log('payload:' + payload.city.name)
         return {
@@ -114,6 +124,7 @@ const initialState = {
             publicMessage: payload.publicMessage,
             
           },
+          loading: false
         }
      
       default:

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Grid, CardHeader, Typography, Container} from '@material-ui/core'
+import { Grid, CardHeader, Typography, Container, CardMedia} from '@material-ui/core'
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import Button from '@material-ui/core/Button';
@@ -11,6 +11,7 @@ import CardContent from '@material-ui/core/CardContent';
 import {useDispatch, useSelector} from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getUsers } from '../data/search';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         display: 'flex',
         flexDirection: 'column',
-        height: "100vh",
+        minHeight: "100vh",
     },
     container: {
 
@@ -80,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
         flex: '1 0 auto',
       },
       cover: {
-        width: 151,
+        height: "50px"
       },
       type: {
         color: "secondary"
@@ -96,6 +97,21 @@ const useStyles = makeStyles((theme) => ({
     linkText: {
       textDecoration: "none",
     },
+   link: {
+     textDecoration: "none"
+   },
+   backLink: {
+    textDecoration: 'none',
+    fontSize: '1rem'
+  },
+  backIcon: {
+   verticalAlign: 'text-bottom',
+   fontSize: '1.1rem' 
+  },
+  backDiv: {
+    marginBottom: '1.8rem'
+  },
+    
    
     
   }
@@ -132,6 +148,7 @@ export default function Search() {
     const handleChange = (e) => {
       setSearchInput(e.target.value)
     }
+    console.log(users)
 
     return (
         
@@ -139,7 +156,6 @@ export default function Search() {
         <>
         <div className={classes.root}>
           <Container maxWidth="xs">
-        <Link className={classes.backLink} to='/dashboard'>Back to my profile</Link>
         <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -179,16 +195,25 @@ export default function Search() {
                 {users.map((user, index) => (
                     <Grid item xs={12} key={index}>
                         <Card>
+                        <CardMedia
+                              className={classes.cover}
+                              component="img"
+                              src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${user.images[0].filename}.jpg&width=200&height=200&&cropratio=4:3&image=/wdev_nicole/eindwerk/images/${user.images[0].filename}.jpg`}
+                              title="profile photo"
+                              height="220"
+                              
+                            />
                             <CardHeader
                                 title={user.firstname + ' ' + user.lastname}
                                 subheader={user.age}
                                 // subheader={user.city}
                             />
                             <CardContent className={classes.cardContent}>
-                              <Link  to={`/profile/${idArray[index]}`}>
+                              <Link className={classes.link} to={`/profile/${idArray[index]}`}>
                                 <Typography className={classes.linkText}>View Profile</Typography>
                                 </Link>
                             </CardContent>
+                            
                         </Card>
                      </Grid>
                 ))}

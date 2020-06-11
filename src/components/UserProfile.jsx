@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import axios from 'axios'
 import {useSelector, useDispatch} from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import { getUser } from '../data/search';
@@ -12,6 +13,7 @@ import { postUserMessage } from '../data/messages';
 import Modal from '@material-ui/core/Modal';
 import CloseIcon from '@material-ui/icons/Close';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -83,8 +85,9 @@ const useStyles = makeStyles(theme => ({
   },
   paperInfo: {
       backgroundColor: "#eeeeee",
-      height: "600px",
-      width: "400px"
+      minHeight: "400px",
+      width: "400px",
+      overflow: "auto"
   },
   paperAbout: {
       backgroundColor: "#eeeeee",
@@ -136,8 +139,14 @@ const useStyles = makeStyles(theme => ({
     },
     backLink: {
       textDecoration: 'none',
-      fontSize: '1rem',
-      marginTop: '20px'
+      fontSize: '1rem'
+    },
+    backIcon: {
+     verticalAlign: 'text-bottom',
+     fontSize: '1.1rem' 
+    },
+    backDiv: {
+      marginBottom: '1.8rem'
     },
     close: {
       display: 'inline'
@@ -171,10 +180,19 @@ const photos = useSelector((state) => state.photos.photos);
 // const userPublicMessage = useSelector((state) => state.auth.user.publicMessage);
 const str = location.pathname
 const user = useSelector((state) => state.search.singleUser);
-const userId = useSelector((state) => state.search.singleUser.id);
+// const userId = useSelector((state) => state.search.singleUser.id);
 const authUserId = useSelector((state) => state.auth.user.id);
 const [modalStyle] = React.useState(getModalStyle);
 const [open, setOpen] = React.useState(false);
+const loading = useSelector((state) => state.search.loading);
+const [singleUserMessage, setSingleUserMessage] = useState("");
+const [singleUserFirstname, setSingleUserFirstname] = useState("");
+const [singleUserLastname, setSingleUserLastname] = useState("");
+const [singleUserAge, setSingleUserAge] = useState("");
+const [singleUserLanguage, setSingleUserLanguage] = useState("");
+const [singleUserCity, setSingleUserCity] = useState("");
+const [singleUserMeetupType, setSingleUserMeetupType] = useState("");
+const [singleUserPhoto, setSingleUserPhoto] = useState("");
 
 //HANDLERS
   //   const handleChange = (event) => {
@@ -197,7 +215,7 @@ const [open, setOpen] = React.useState(false);
   const handleMessageFormSubmit = (e) => {
     e.preventDefault()
     console.log('form submit')
-    dispatch(postUserMessage(subject, text, userId, authUserId))
+    dispatch(postUserMessage(subject, text, id, authUserId))
   }
 
 /////MODAL BODY ///////////////////////
@@ -241,14 +259,39 @@ var n = str.lastIndexOf('/');
 var id = str.substring(n + 1);
 // console.log('userprofile result:' + id)
 
+const getUser = async (id) => {
+  const user = await axios.get(`${process.env.REACT_APP_ENDPOINT}/users/${id}`, {
+    headers: {
+      authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+   });
+   
+    // console.log(user);
+    setSingleUserMessage(user.data.publicMessage);
+    setSingleUserFirstname(user.data.firstname);
+    setSingleUserLastname(user.data.lastname);
+    setSingleUserAge(user.data.age);
+    setSingleUserCity(user.data.city.name);
+    setSingleUserMeetupType(user.data.meetuptype);
+    setSingleUserPhoto(user.data.images[0].filename);
+    console.log(user.data.images[0].filename);
+   
+}
 
-useEffect(() => {
-    dispatch(getUser(id));
-    // dispatch(getPhoto(id));
-  }, [])
 
-  
- 
+ useEffect(() => {
+  getUser(id);
+ }, []);
+
+
+// useEffect(() => {
+//     dispatch(getUser(id));
+//     // dispatch(getPhoto(id));
+//   }, [])
+
+
+
+
   
 
   return (
@@ -256,15 +299,19 @@ useEffect(() => {
       <div className={classes.root}>
       
         <Container className={classes.container}>
-        <Link className={classes.backLink} to='/search'>Back to search</Link>
-      <Grid className={classes.grid1} justify="space-evenly" container spacing={4}>
+          {loading && <h2>Profile is loading...</h2>}
+            
+              <Grid className={classes.grid1} justify="space-evenly" container spacing={4}>
         
-        <Grid item>
-        
-          <Paper className={classes.photo} elevation={3}>
-          {/* <Avatar alt="user profile photo" src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${photos[0].title}.jpg&height=150&image=/wdev_nicole/eindwerk/images/${photos[0].title}.jpg`} className={classes.large} /> */}
-              {/* <img src={`http://localhost:8000/image.php?${photos.image}&height=150&image=/wdev_nicole/eindwerk/system/img/albums/${photos.image}`} />) */}
-              </Paper>
+                <Grid item>
+                  <div className={classes.backDiv}>
+                  <Link className={classes.backLink} to='/search'><ArrowBackIosIcon className={classes.backIcon}/>Back to search results</Link>
+                  </div>
+                
+                <Paper className={classes.photo} elevation={3}>
+                  <Avatar alt="user profile photo" src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${singleUserPhoto}.jpg&height=200&image=/wdev_nicole/eindwerk/images/${singleUserPhoto}.jpg`} className={classes.large} />
+                  {/* <img src={`http://localhost:8000/image.php?${photos.image}&height=200&image=/wdev_nicole/eindwerk/system/img/albums/${photos.image}`} />) */}
+                </Paper>
                 <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleSendMessageClick}>
                   Send message
                 </Button>  
@@ -277,22 +324,22 @@ useEffect(() => {
                   {body}
                 </Modal>
 
-        </Grid>
-        <Grid item>
-  <Paper className={classes.paperAbout} elevation={3}><Typography className={classes.typeAbout}>{user.publicMessage}</Typography></Paper>
-        </Grid>
-      </Grid>
-      <Grid className={classes.grid2} justify="center" alignItems="center" container direction="row" spacing={0}>
-          <Grid className={classes.gridBottomLeft}>
-            <Grid item xs>
-            <Paper className={classes.paperInfo} elevation={3}>
-              <div className={classes.infoDiv}>
-              <Typography className={classes.name}>{user.firstname} {user.lastname}</Typography>
-              <div className={classes.subDiv}>
-                <Typography className={classes.subInfo}>Age: {user.age}</Typography>
-                <Typography className={classes.subInfo}>Language:</Typography>
-                <Typography className={classes.subInfo}>City: {user.city}</Typography>
-                <Typography className={classes.subInfo}>Meetup type: {user.meetupType}</Typography>
+                </Grid>
+              <Grid item>
+              <Paper className={classes.paperAbout} elevation={3}><Typography className={classes.typeAbout}>{singleUserMessage}</Typography></Paper>
+            </Grid>
+          </Grid>
+          <Grid className={classes.grid2} justify="center" alignItems="center" container direction="row" spacing={0}>
+            <Grid className={classes.gridBottomLeft}>
+              <Grid item xs>
+                <Paper className={classes.paperInfo} elevation={3}>
+                <div className={classes.infoDiv}>
+                <Typography className={classes.name}>{singleUserFirstname}  {singleUserLastname}</Typography>
+                <div className={classes.subDiv}>
+                <Typography className={classes.subInfo}>Age: {singleUserAge}</Typography>
+                <Typography className={classes.subInfo}>Language: </Typography>
+                <Typography className={classes.subInfo}>City: {singleUserCity}</Typography>
+                <Typography className={classes.subInfo}>Meetup type: {singleUserMeetupType}</Typography>
               </div>
               
               </div>
