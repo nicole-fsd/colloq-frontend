@@ -216,6 +216,7 @@ const [singleUserPhoto, setSingleUserPhoto] = useState("");
     e.preventDefault()
     console.log('form submit')
     dispatch(postUserMessage(subject, text, id, authUserId))
+    handleClose()
   }
 
 /////MODAL BODY ///////////////////////

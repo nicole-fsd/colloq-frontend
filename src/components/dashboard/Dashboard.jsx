@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 // import { Redirect, Route } from "react-router-dom";
+import axios from 'axios'
 import { makeStyles } from "@material-ui/core/styles";
 import { Container , Paper, Grid, Typography, Button, TextField} from '@material-ui/core';
 import Footer from '../landing/Footer'
@@ -111,9 +112,11 @@ export default function Dashboard() {
     const userFirstName = useSelector((state) => state.auth.user.firstName);
     const userAge = useSelector((state) => state.auth.user.age);
     const userId = useSelector((state) => state.auth.user.id);
+    // const userPhoto = useSelector((state) => state.auth.user.images[0].filename);
     const userMeetupType = useSelector((state) => state.auth.user.meetupType);
     const userPublicMessage = useSelector((state) => state.auth.user.publicMessage);
     const photos = useSelector((state) => state.photos.photos);
+    const [singleUserPhoto, setSingleUserPhoto] = useState("");
 
     const handleChange = (event) => {
     setName(event.target.value);
@@ -123,9 +126,27 @@ export default function Dashboard() {
     dispatch(getPhoto());
   }
 
-  useEffect(() => {
-    dispatch(getPhoto(userId));
-  }, [])
+  const getUser = async (userId) => {
+    const user = await axios.get(`${process.env.REACT_APP_ENDPOINT}/users/${userId}`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+     });
+     
+      setSingleUserPhoto(user.data.images[0].filename);
+      console.log(user.data.images[0].filename);
+     
+  }
+  
+  
+   useEffect(() => {
+    getUser(userId);
+   }, []);
+  
+
+  // useEffect(() => {
+  //   dispatch(getPhoto(userId));
+  // }, [])
   // console.log("photo:" + photos[0].title)
 
   return (
@@ -134,7 +155,7 @@ export default function Dashboard() {
       <Grid className={classes.grid1} justify="space-evenly" container spacing={4}>
         <Grid item>
           <Paper className={classes.photo} elevation={3}>
-              {/* <Avatar alt="user profile photo" src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${photos[0].title}.jpg&height=150&image=/wdev_nicole/eindwerk/images/${photos[0].title}.jpg`} className={classes.large} /> */}
+          <Avatar alt="user profile photo" src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${singleUserPhoto}.jpg&height=200&image=/wdev_nicole/eindwerk/images/${singleUserPhoto}.jpg`} className={classes.large} />
               {/* <img src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${photos[0].title}.jpg&height=150&image=/wdev_nicole/eindwerk/images/${photos[0].title}.jpg`} /> */}
               </Paper>
               <input
@@ -150,9 +171,7 @@ export default function Dashboard() {
                 </Button>
                 
                 </label>
-                <Button variant="contained" color="secondary" component="span" onClick={handleGetPhotoClick}>
-                Get photo
-                </Button>
+                
                 <div></div>
               
         </Grid>

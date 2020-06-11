@@ -25,6 +25,7 @@ export const initialState = {
     error: false,
     loading: false,
   },
+
   loggedIn: false,
 };
 
@@ -119,7 +120,7 @@ export default (state = initialState, { type, payload }) => {
           lastName: decoded.payload.lastName,
           age: decoded.payload.age,
           meetupType: decoded.payload.meetupType,
-          publicMessage: decoded.payload.publicMessage,
+          publicMessage: decoded.payload.publicMessage
         },
         loggedIn: true,
       };
