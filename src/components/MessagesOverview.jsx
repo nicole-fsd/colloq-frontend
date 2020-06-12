@@ -27,6 +27,7 @@ import { getMessages } from "../data/messages";
 import CloseIcon from '@material-ui/icons/Close';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Modal from '@material-ui/core/Modal';
+import { postUserMessage } from '../data/messages';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -47,7 +48,7 @@ const useStyles = makeStyles(theme => ({
       },
       paperModal: {
         position: 'absolute',
-        width: 400,
+        width: 500,
         backgroundColor: theme.palette.background.paper,
         border: '2px solid #000',
         boxShadow: theme.shadows[5],
@@ -63,6 +64,24 @@ const useStyles = makeStyles(theme => ({
       },
       modalBtn: {
         margin: '5px'
+      },
+      textfield: {
+        margin: '.5rem'
+      },
+      close: {
+        display: 'inline'
+      },
+      sendDiv: {
+        display: 'flex',
+        flexDirection: "row",
+        justifyContent: "space-between"
+  
+      },
+      textarea: {
+        width: '100%',
+        '&::placeholder': {
+          fontFamily: "Arial"
+        }
       }
   }));
 
@@ -76,10 +95,16 @@ export default function MessagesOverview() {
     const [dense, setDense] = useState(false);
     const [secondary, setSecondary] = useState(false);
     const [open, setOpen] = useState(false);
+    const [openReply, setOpenReply] = useState(false);
     const [openModal, setOpenModal] = useState(true);
     const [messageId, setmessageId] = useState(0);
     const [currentMessage, setCurrentMessage] = useState(0);
     const [modalStyle] = useState(getModalStyle);
+    const [subject, setSubject] = useState('');
+    const [text, setText] = useState('');
+    const authUserId = useSelector((state) => state.auth.user.id);
+    const [recipientId, setRecipientId] = useState('');
+
 
 
   const handleOpen = messageId => () => {
@@ -93,6 +118,10 @@ export default function MessagesOverview() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleReplyClose = () => {
+    setOpenReply(false);
   };
 
   const handleLiClick = (id) => {
@@ -136,14 +165,56 @@ export default function MessagesOverview() {
         setOpen(false);
       }
 
+      const handleMessageReply = () => {
+        setRecipientId(currentMessage.messageAuthor.id)
+        setOpen(false);
+        setOpenReply(true);
+
+      }
+
+      const handleMessageReplySubmit = (e) => {
+        e.preventDefault()
+        console.log('form submit')
+        dispatch(postUserMessage(subject, text, recipientId, authUserId))
+        setOpenReply(false)
+      }
+
       
 
 
-      /////MODAL BODY/////////////////
-
-      // const body = (
-       
-      // );
+      
+/////REPLY BODY ///////////////////////
+  const replyBody = (
+    <div style={modalStyle} className={classes.paperModal}>
+      <div className={classes.sendDiv}>
+      <h2 id="simple-modal-title">Send Reply</h2>
+      <IconButton aria-label="delete" className={classes.close} size="small" onClick={handleReplyClose}>
+          <CloseIcon fontSize="inherit" />
+        </IconButton>
+      </div>
+      
+      <form method="POST" onSubmit={handleMessageReplySubmit}>
+      <TextField variant="standard" margin="normal" required fullWidth id="subject" label="Subject" name="subject" value={subject}
+        onChange={(e) => {
+          setSubject(e.target.value);
+        }}
+      />
+      {/* <TextField variant="standard" margin="normal" required fullWidth id="text" label="Message" name="text" value={text}
+        onChange={(e) => {
+          setText(e.target.value);
+        }}
+      /> */}
+      <TextareaAutosize className={classes.textarea} aria-label="message textarea" required fullWidth rowsMin={8} placeholder="Write a message..." id="text" label="Message" name="text" value={text}
+        onChange={(e) => {
+          setText(e.target.value);
+        }} />
+      <Button type="submit" className={classes.submitmsgBtn} variant="contained" color="secondary">
+        Send
+      </Button>
+      </form>
+    </div>
+  );
+  //////////////////////////////////////////
     
     
 
@@ -212,9 +283,7 @@ export default function MessagesOverview() {
                                     secondary={message.subject}
                                 />
                                 <ListItemSecondaryAction>
-                                    <IconButton edge="end" aria-label="delete">
-                                    <DeleteIcon />
-                                    </IconButton>
+                                    <Typography>{message.createdAt.substring(0,10)}</Typography>
                                 </ListItemSecondaryAction>
                                
                                 </ListItem>
@@ -234,6 +303,7 @@ export default function MessagesOverview() {
                                       </div>
                                       <div>
                                       <TextField
+                                        className={classes.textfield}
                                         id="message-subject"
                                         label="Subject"
                                         defaultValue={currentMessage.subject}
@@ -243,6 +313,7 @@ export default function MessagesOverview() {
                                         variant="outlined"
                                       />
                                       <TextField
+                                        className={classes.textfield}
                                         id="message-text"
                                         label="Message"
                                         multiline
@@ -253,7 +324,7 @@ export default function MessagesOverview() {
                                         variant="outlined"
                                       />
                                       
-                                      <Button className={classes.modalBtn} variant="contained" color="secondary">
+                                      <Button className={classes.modalBtn} variant="contained" color="secondary" onClick={handleMessageReply}>
                                         Reply
                                       </Button>
                                       <Button className={classes.modalBtn} variant="contained" color="secondary" onClick={handleMessageDelete(currentMessage.id)}>
@@ -261,6 +332,14 @@ export default function MessagesOverview() {
                                       </Button>
                                       </div>
                                     </div>
+                                </Modal>
+                                <Modal
+                                  open={openReply}
+                                  onClose={handleReplyClose}
+                                  aria-labelledby="simple-modal-title"
+                                  aria-describedby="simple-modal-description"
+                                >
+                                  {replyBody}
                                 </Modal>
                         </List>
                     </div>
