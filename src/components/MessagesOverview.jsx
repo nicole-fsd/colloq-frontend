@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 // import { Redirect, Route } from "react-router-dom";
+import axios from 'axios'
 import { makeStyles } from "@material-ui/core/styles";
 import { Container , Paper, Grid, Typography, Button, TextField} from '@material-ui/core';
 import Footer from '../components/landing/Footer'
@@ -126,12 +127,13 @@ export default function MessagesOverview() {
       //   console.log('handlemessagedelete:' + e.target.parentNode.parentNode)
       // }
 
-      const handleMessageDelete = (id) => {
+      const handleMessageDelete = id => () => {
         axios.delete(`${process.env.REACT_APP_ENDPOINT}/messages/${id}`, {
           headers: {
-            Authorization: authorizationToken
+            authorization: `Bearer ${localStorage.getItem('token')}`
           }
         });
+        setOpen(false);
       }
 
       
@@ -254,7 +256,7 @@ export default function MessagesOverview() {
                                       <Button className={classes.modalBtn} variant="contained" color="secondary">
                                         Reply
                                       </Button>
-                                      <Button className={classes.modalBtn} variant="contained" color="secondary">
+                                      <Button className={classes.modalBtn} variant="contained" color="secondary" onClick={handleMessageDelete(currentMessage.id)}>
                                         Delete
                                       </Button>
                                       </div>
