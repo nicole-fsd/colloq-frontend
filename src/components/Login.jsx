@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { Grid, Typography, TextField, Container, Button } from "@material-ui/core";
 import { loginUser } from "../data/auth";
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -57,6 +58,35 @@ export default function Login() {
               </Typography>
               <Container component="main" maxWidth="xs">
                 <div>
+
+
+                {/* <ValidatorForm
+                  
+                  onSubmit={submitHandler}
+                  onError={errors => console.log(errors)}
+                >
+                  <TextValidator
+                      label="Email"
+                      onChange={(e) => {setEmail(e.target.value)}}
+                      name="email"
+                      value={email}
+                      validators={['required', 'isEmail']}
+                      errorMessages={['this field is required', 'email is not valid']}
+                  />
+                  <TextValidator
+                      label="Password"
+                      onChange={(e) => {setPassword(e.target.value)}}
+                      name="password"
+                      type="password"
+                      validators={['required', 'minNumber:8', 'maxNumber:255', 'matchRegexp:^[0-9]$']}
+                      errorMessages={['this field is required', 'minimum 8 characters', 'maximum 255 characters', 'must contain an uppercase letter']}
+                      value={password}
+                      
+                  />
+                  <Button type="submit">Submit</Button>
+                </ValidatorForm> */}
+
+
                   <form onSubmit={submitHandler}>
                     <TextField variant="standard" margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" value={email} onChange={(e) => {setEmail(e.target.value);}}/>
                     <TextField variant="standard" margin="normal" required fullWidth name="password" label="Password" type="password" id="password" autoComplete="current-password" value={password} onChange={(e) => { setPassword(e.target.value);}}/>

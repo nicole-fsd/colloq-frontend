@@ -25,6 +25,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { getMessages } from "../data/messages";
 import CloseIcon from '@material-ui/icons/Close';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import Modal from '@material-ui/core/Modal';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -43,6 +44,14 @@ const useStyles = makeStyles(theme => ({
         width: "70vw",
         margin: "30px"
       },
+      paperModal: {
+        position: 'absolute',
+        width: 400,
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+      },
       listitem: {
           borderBottom: ".5px solid gray"
       },
@@ -50,6 +59,9 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
         maxWidth: 360,
         backgroundColor: theme.palette.background.paper, 
+      },
+      modalBtn: {
+        margin: '5px'
       }
   }));
 
@@ -62,13 +74,20 @@ export default function MessagesOverview() {
     const messages = useSelector((state) => state.messages.messages);
     const [dense, setDense] = useState(false);
     const [secondary, setSecondary] = useState(false);
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const [openModal, setOpenModal] = useState(true);
+    const [messageId, setmessageId] = useState(0);
+    const [currentMessage, setCurrentMessage] = useState(0);
     const [modalStyle] = useState(getModalStyle);
 
 
-  const handleClick = () => {
+  const handleOpen = messageId => () => {
     setOpen(!open);
+    setmessageId(messageId);
+    // setCurrentMessage(messages.filter(msg => Object.keys(msg).id === messageId))
+    // setCurrentMessage(messages[0])
+    setCurrentMessage(messages.find(ms => ms.id === messageId))
+    // console.log('currentMessage:' + msg.id)
   };
 
   const handleClose = () => {
@@ -103,40 +122,26 @@ export default function MessagesOverview() {
         dispatch(getMessages(userId));
       }, [])
 
-      function handleMessageDelete(e) {
-        console.log('handlemessagedelete:' + e.target.parentNode.parentNode)
-      }
-
-      // const handleMessageDelete = (id) => {
-      //   axios.delete(`${process.env.REACT_APP_ENDPOINT}/messages/${id}`, {
-      //     headers: {
-      //       Authorization: authorizationToken
-      //     }
-      //   });
+      // function handleMessageDelete(e) {
+      //   console.log('handlemessagedelete:' + e.target.parentNode.parentNode)
       // }
+
+      const handleMessageDelete = (id) => {
+        axios.delete(`${process.env.REACT_APP_ENDPOINT}/messages/${id}`, {
+          headers: {
+            Authorization: authorizationToken
+          }
+        });
+      }
 
       
 
 
       /////MODAL BODY/////////////////
 
-      const body = (
-        <div style={modalStyle} className={classes.paperModal}>
-          <div className={classes.showDiv}>
-          <h2 id="simple-modal-title"></h2>
-          <IconButton aria-label="delete" className={classes.close} size="small" onClick={handleClose}>
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          </div>
-          <div>
-          <TextField variant="standard" margin="normal" required fullWidth id="subject" label="Subject" name="subject"/>
-          <TextareaAutosize className={classes.textarea} aria-label="message textarea" required fullWidth rowsMin={8} id="text" label="Message" name="text"/>
-          <Button className={classes.replyBtn} variant="contained" color="secondary">
-            Reply
-          </Button>
-          </div>
-        </div>
-      );
+      // const body = (
+       
+      // );
     
     
 
@@ -193,8 +198,8 @@ export default function MessagesOverview() {
                         <List dense={dense}>
                             {messages.length === 0 && <p>You have no messages</p>}
                             {messages.length > 0 &&
-                                messages.map((message) => (
-                                <ListItem className={classes.listitem} button="true" onClick={handleLiClick}>
+                                messages.map((message, index) => (
+                                <ListItem key={index} className={classes.listitem} button="true" onClick={handleOpen(message.id)}>
                                 {/* <ListItemAvatar>
                                     <Avatar>
                                     <FolderIcon />
@@ -205,12 +210,56 @@ export default function MessagesOverview() {
                                     secondary={message.subject}
                                 />
                                 <ListItemSecondaryAction>
-                                    <IconButton edge="end" aria-label="delete" onClick={handleMessageDelete}>
+                                    <IconButton edge="end" aria-label="delete">
                                     <DeleteIcon />
                                     </IconButton>
                                 </ListItemSecondaryAction>
+                               
                                 </ListItem>
                             ))}
+                             <Modal
+                                  open={open}
+                                  onClose={handleClose}
+                                  aria-labelledby="simple-modal-title"
+                                  aria-describedby="simple-modal-description"
+                                >
+                                   <div style={modalStyle} className={classes.paperModal}>
+                                      <div className={classes.showDiv}>
+                                      <h2 id="simple-modal-title"></h2>
+                                      <IconButton aria-label="delete" className={classes.close} size="small" onClick={handleClose}>
+                                          <CloseIcon fontSize="inherit" />
+                                        </IconButton>
+                                      </div>
+                                      <div>
+                                      <TextField
+                                        id="message-subject"
+                                        label="Subject"
+                                        defaultValue={currentMessage.subject}
+                                        disabled
+                                        fullWidth
+                                        multiline
+                                        variant="outlined"
+                                      />
+                                      <TextField
+                                        id="message-text"
+                                        label="Message"
+                                        multiline
+                                        fullWidth
+                                        rows={4}
+                                        defaultValue={currentMessage.text}
+                                        disabled
+                                        variant="outlined"
+                                      />
+                                      
+                                      <Button className={classes.modalBtn} variant="contained" color="secondary">
+                                        Reply
+                                      </Button>
+                                      <Button className={classes.modalBtn} variant="contained" color="secondary">
+                                        Delete
+                                      </Button>
+                                      </div>
+                                    </div>
+                                </Modal>
                         </List>
                     </div>
                 </Grid>
