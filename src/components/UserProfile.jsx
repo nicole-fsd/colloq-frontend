@@ -357,7 +357,9 @@ const getUser = async (id) => {
             <Paper className={classes.paper} elevation={3}>COMMENT</Paper>
             </Grid>
             <Grid item xs>
-            <Paper className={classes.paper} elevation={3}>COMMENT</Paper>
+              <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleSendMessageClick}>
+                Post Comment
+              </Button> 
             </Grid>
           </Grid>
         

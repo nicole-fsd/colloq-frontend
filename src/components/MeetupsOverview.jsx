@@ -10,6 +10,18 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import '../style/react-big-calendar.css'
 import { Link } from 'react-router-dom'
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import Switch from '@material-ui/core/Switch';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 
 
@@ -75,7 +87,20 @@ const useStyles = makeStyles(theme => ({
       },
       backDiv: {
           margin: '100px',
-      }
+      },
+      form: {
+        display: 'flex',
+        flexDirection: 'column',
+        margin: 'auto',
+        width: 'fit-content',
+      },
+      formControl: {
+        marginTop: theme.spacing(2),
+        minWidth: 120,
+      },
+      formControlLabel: {
+        marginTop: theme.spacing(1),
+      },
     
   }));
 
@@ -83,6 +108,25 @@ export default function Dashboard() {
     const classes = useStyles()
     const dispatch = useDispatch();
     const localizer = momentLocalizer(moment);
+    const [open, setOpen] = React.useState(false);
+    const [fullWidth, setFullWidth] = React.useState(true);
+    const [maxWidth, setMaxWidth] = React.useState('sm');
+
+
+    const handleClickOpen = () => {
+        setOpen(true);
+      };
+    
+      const handleClose = () => {
+        setOpen(false);
+      };
+
+      const handleCreateNewMeetup = (e) => {
+        setOpen(false);
+        e.preventDefault();
+      };
+    
+      
 
     const events = [
         {
@@ -130,8 +174,95 @@ export default function Dashboard() {
                         events={events}
                         style={{ height: "50vh", width: "50vw" }}
                         />
+                    
+                    
                     </Grid>
                 </Grid>
+                <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                        Create New Meetup
+                    </Button>
+                <Dialog
+                        fullWidth={fullWidth}
+                        maxWidth={maxWidth}
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="dialog-title"
+                    >
+                        <DialogTitle id="new-meetup-dialog">Create New Meetup</DialogTitle>
+                        <DialogContent>
+                        <DialogContentText>
+                            Please fill in the event details
+                        </DialogContentText>
+                        <form className={classes.form} noValidate>
+                        <div>
+                            <TextField
+                                id="name"
+                                label="Name"
+                                type="text"
+                                fullWidth
+                            />
+                            <TextField
+                                id="city"
+                                label="City"
+                                type="text"
+                                fullWidth
+                            />
+                            <FormControl>
+                            <TextField
+                                id="date"
+                                
+                                type="date"
+                                autoComplete="current-password"
+                            />
+                            <FormHelperText id="component-helper-text">Date</FormHelperText>
+                            <TextField
+                                id="start-time"
+                                
+                                type="time"
+                                autoComplete="current-password"
+                            />
+                            <FormHelperText id="component-helper-text">Start Time</FormHelperText>
+                            <TextField
+                                id="end-time"
+                                
+                                type="time"
+                                autoComplete="current-password"
+                            />
+                            <FormHelperText id="component-helper-text">End Time</FormHelperText>
+                            </FormControl>
+                            <TextField
+                                id="type"
+                                label="Type"
+                                type="text"
+                                fullWidth
+                            />
+                            <TextField
+                                id="language"
+                                label="Language"
+                                type="text"
+                                fullWidth
+                            />
+                            <TextField
+                                id="description"
+                                label="Description"
+                                type="text"
+                                multiline
+                                fullWidth
+                            />
+                            
+
+                        </div>
+                        </form>
+                        </DialogContent>
+                        <DialogActions>
+                        <Button onClick={handleCreateNewMeetup} color="primary">
+                            Submit
+                        </Button>
+                        <Button onClick={handleClose} color="primary">
+                            Cancel
+                        </Button>
+                        </DialogActions>
+                    </Dialog>
             
 
       </Container>

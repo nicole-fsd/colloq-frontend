@@ -58,11 +58,7 @@ function App() {
             exact
             path="/search"
             render={() => {
-              return !Authenticated ? (
-              <Redirect to="/" /> 
-              ): ( 
-              <Search />
-              );
+              return !Authenticated ? <Redirect to="/" /> : <Search />;
             }}
           />
           <Route
