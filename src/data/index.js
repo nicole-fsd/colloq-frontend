@@ -8,12 +8,13 @@ import photoReducer from "./photos";
 import searchReducer from "./search"
 import messageReducer from "./messages"
 import meetupReducer from "./meetups"
+import commentReducer from "./comments"
 
 const persistConfig = {
   key: 'root',
   storage: storage,
   blacklist: [''],
-  whitelist: ['auth', 'photos', 'search', 'messages', 'meetups']
+  whitelist: ['auth', 'photos', 'search', 'messages', 'meetups', 'comments']
 };
 
 const appReducer = persistCombineReducers(persistConfig, {
@@ -21,7 +22,8 @@ const appReducer = persistCombineReducers(persistConfig, {
   photos: photoReducer, 
   search: searchReducer,
   messages: messageReducer,
-  meetups: meetupReducer
+  meetups: meetupReducer,
+  comments: commentReducer,
   
 });
 

@@ -14,6 +14,13 @@ import Modal from '@material-ui/core/Modal';
 import CloseIcon from '@material-ui/icons/Close';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { postComment, getComments } from '../data/comments';
+
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -63,7 +70,7 @@ const useStyles = makeStyles(theme => ({
   container: {
       backgroundColor: "#E1E2E1",
       width: "100vw",
-      minHeight: "100vh",
+      minHeight: "100vh"
   },
   grid1: {
       // border: "1px solid black",
@@ -162,6 +169,16 @@ const useStyles = makeStyles(theme => ({
       '&::placeholder': {
         fontFamily: "Arial"
       }
+    },
+    paperComment: {
+      padding: theme.spacing(2),
+      textAlign: 'left',
+      color: theme.palette.text.secondary,
+      backgroundColor: "#eeeeee",
+      minHeight: "2rem",
+      width: "400px",
+      margin: "1rem",
+      borderRadius: "25px"
     }
 }));
 
@@ -174,6 +191,7 @@ const [name, setName] = useState('');
 const [subject, setSubject] = useState('');
 const [text, setText] = useState('');
 const photos = useSelector((state) => state.photos.photos);
+const comments = useSelector((state) => state.comments.comments);
 // const userFirstName = useSelector((state) => state.auth.user.firstName);
 // const userAge = useSelector((state) => state.auth.user.age);
 // const userMeetupType = useSelector((state) => state.auth.user.meetupType);
@@ -184,6 +202,7 @@ const user = useSelector((state) => state.search.singleUser);
 const authUserId = useSelector((state) => state.auth.user.id);
 const [modalStyle] = React.useState(getModalStyle);
 const [open, setOpen] = React.useState(false);
+const [openCommentModal, setOpenCommentModal] = useState(false);
 const loading = useSelector((state) => state.search.loading);
 const [singleUserMessage, setSingleUserMessage] = useState("");
 const [singleUserFirstname, setSingleUserFirstname] = useState("");
@@ -193,6 +212,7 @@ const [singleUserLanguage, setSingleUserLanguage] = useState("");
 const [singleUserCity, setSingleUserCity] = useState("");
 const [singleUserMeetupType, setSingleUserMeetupType] = useState("");
 const [singleUserPhoto, setSingleUserPhoto] = useState("");
+const [commentText, setCommentText] = useState("");
 
 //HANDLERS
   //   const handleChange = (event) => {
@@ -214,9 +234,29 @@ const [singleUserPhoto, setSingleUserPhoto] = useState("");
 
   const handleMessageFormSubmit = (e) => {
     e.preventDefault()
-    console.log('form submit')
+    console.log('message form submit')
     dispatch(postUserMessage(subject, text, id, authUserId))
     handleClose()
+  }
+
+  const handleOpenCommentModal = () => {
+    setOpenCommentModal(true);
+  };
+
+  const handleCloseCommentModal = () => {
+    setOpenCommentModal(false);
+  };
+
+  const handleSubmitComment = (e) => {
+    e.preventDefault()
+    console.log('comment submit')
+    dispatch(postComment(commentText, id, authUserId))
+    handleCloseCommentModal()
+  }
+
+  const handleGetComments = () => {
+    dispatch(getComments(id))
+    
   }
 
 /////MODAL BODY ///////////////////////
@@ -284,6 +324,12 @@ const getUser = async (id) => {
   getUser(id);
  }, []);
 
+//  useEffect(() => {
+//   getComments(id)
+//  }, []);
+
+ console.log(comments)
+
 
 // useEffect(() => {
 //     dispatch(getUser(id));
@@ -350,16 +396,57 @@ const getUser = async (id) => {
             </Grid>
           </Grid>
             <Grid className={classes.gridBottomRight}>
+            {comments.length === 0 && <p>No comments to display</p>}
+              {comments.map(comment => (
+                  <Grid item xs={6}>
+                  <Paper className={classes.paperComment} elevation={1}>
+                    
+                    <Typography variant="overline">{comment.createdAt.substring(5, 10)}</Typography>
+                    <Typography variant="h6">{comment.text}</Typography>
+                    <Typography variant="overline">{comment.commentAuthor.firstname} {comment.commentAuthor.lastname}</Typography>
+                    </Paper>
+                  </Grid>
+              ))}
             <Grid item xs>
-            <Paper className={classes.paper} elevation={3}>COMMENT</Paper>
-            </Grid>
-            <Grid item xs={6}>
-            <Paper className={classes.paper} elevation={3}>COMMENT</Paper>
-            </Grid>
-            <Grid item xs>
-              <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleSendMessageClick}>
+            <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleGetComments}>
+                Get Comments
+              </Button> 
+              <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleOpenCommentModal}>
                 Post Comment
               </Button> 
+              <Dialog
+                open={openCommentModal}
+                onClose={handleCloseCommentModal}
+                aria-labelledby="max-width-dialog-title"
+              >
+                <DialogTitle id="max-width-dialog-title">Post a Comment</DialogTitle>
+                <DialogContent>
+                  <form className={classes.form} noValidate>
+                    <TextField
+                      id="text"
+                      label="Comment"
+                      type="text"
+                      fullWidth
+                      multiline
+                      rows={4}
+                      variant='filled'
+                      value={commentText}
+                      onChange={(e) => {
+                      setCommentText(e.target.value);
+                      }}
+                    />
+                      
+                  </form>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleSubmitComment} color="primary">
+                    Post
+                  </Button>
+                  <Button onClick={handleCloseCommentModal} color="primary">
+                    Cancel
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </Grid>
           </Grid>
         

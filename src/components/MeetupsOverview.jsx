@@ -86,10 +86,10 @@ const useStyles = makeStyles(theme => ({
       backLink: {
         textDecoration: 'none',
         fontSize: '1rem',
-        marginTop: '20px'
+        marginTop: '.2rem'
       },
       backDiv: {
-          margin: '100px',
+          margin: '.5rem',
       },
       form: {
         display: 'flex',
@@ -104,6 +104,15 @@ const useStyles = makeStyles(theme => ({
       formControlLabel: {
         marginTop: theme.spacing(1),
       },
+      createBtn: {
+        margin: '.2rem .5rem'
+      },
+      updateBtn: {
+        margin: '.2rem .5rem'
+      },
+      btnDiv: {
+        margin: '.8rem 0'
+      }
     
   }));
 
@@ -174,35 +183,6 @@ export default function MeetupsOverview() {
       const handleGetMeetups = () => {
         dispatch(getMeetups(userId));
       }
-
-      
-
-       
-
-    
-    
-
-    
-    const events = [
-        {
-            start: moment().toDate(),
-            // end: moment().toDate(),
-            // end: moment()
-            // .add(1, "days")
-            // .toDate(),
-            title: "Meetup in Lisbon"
-        },
-        {
-            start: moment().add(12, 'days').toDate(),
-            end: moment().add(12, 'days').toDate(),
-            title: "Meetup in Tokyo"
-        },
-        {
-            start: moment().add(3, 'days').toDate(),
-            end: moment().add(3, 'days').toDate(),
-            title: "Meetup in Paris"
-        },
-        ]
    
     
   
@@ -220,18 +200,14 @@ export default function MeetupsOverview() {
                 <div className={classes.backDiv}>
                     <Link className={classes.backLink} to='/dashboard'>Back to my profile</Link>
                 </div>
-              {/* <div>{meetups}</div> */}
-                <ul>
-                  {meetups.map(meetup => (
-                    <li>{meetup.name}</li>
-                  ))}
-                </ul>
-                <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                <div className={classes.btnDiv}>
+                <Button className={classes.createBtn} variant="outlined" color="primary" onClick={handleClickOpen}>
                   Create New Meetup
                 </Button>
-                <Button variant="outlined" color="primary" onClick={handleGetMeetups}>
-                  Get meetups
+                <Button className={classes.updateBtn} variant="outlined" color="primary" onClick={handleGetMeetups}>
+                  Update Calendar
                 </Button>
+                </div>
                 
                     <Grid item xs>
                     <Calendar
@@ -239,7 +215,7 @@ export default function MeetupsOverview() {
                         defaultDate={new Date()}
                         defaultView="month"
                         events={meetups}
-                        style={{ height: "50vh", width: "50vw" }}
+                        style={{ height: "70vh", width: "60vw" }}
                         startAccessor="date"
                         endAccessor="date"
                         titleAccessor="name"
