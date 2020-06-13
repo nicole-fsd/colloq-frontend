@@ -19,8 +19,8 @@ const initialState = {
   
  /* ACTION CREATORS *///////////////////////////
 
-//  export const getMessage = (id) => (dispatch) => {
-//    axios.get(`${process.env.REACT_APP_ENDPOINT}/messages?user=${id}`, {
+//  export const getMeetups = () => (dispatch) => {
+//    axios.get(`${process.env.REACT_APP_ENDPOINT}/meetups`, {
 //     headers: {
 //       authorization: `Bearer ${localStorage.getItem('token')}`
 //     }
@@ -36,7 +36,7 @@ const initialState = {
 
 
 
-export const addMeetup = (name, city, date, startTime, endTime, type, language, description) => (dispatch) => {
+export const addMeetup = (name, city, date, startTime, endTime, type, language, description, userId, participantId) => (dispatch) => {
     const config = {
       headers: {
       'Content-Type': "application/json;charset=UTF-8",
@@ -51,7 +51,9 @@ export const addMeetup = (name, city, date, startTime, endTime, type, language, 
       endTime: endTime,
       type: type,
       language:  `/wdev_nicole/eindwerk/api/languages/${language}`,
-      description: description
+      description: description,
+      creator: `/wdev_nicole/eindwerk/api/users/${userId}`,
+      participant: `/wdev_nicole/eindwerk/api/users/${participantId}`
     }
     axios.post(`${process.env.REACT_APP_ENDPOINT}/meetups`, data, config)
     .then((response) => {

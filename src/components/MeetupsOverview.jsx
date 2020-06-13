@@ -117,12 +117,14 @@ export default function MeetupsOverview() {
     const [inputLanguage, setInputLanguage] = useState("");
     const [name, setName] = useState("");
     const [date, setDate] = useState("");
+    const [participantEmail, setParticipantEmail] = useState("");
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
     const [type, setType] = useState("");
     const [description, setDescription] = useState("");
     const [languageId, setLanguageId] = useState("");
     const [cityId, setCityId] = useState("");
+    const userId = useSelector((state) => state.auth.user.id);
 
 
     const handleClickOpen = () => {
@@ -146,17 +148,24 @@ export default function MeetupsOverview() {
               authorization: `Bearer ${localStorage.getItem('token')}`
             }
            });
+        const requestThree = axios.get(`${process.env.REACT_APP_ENDPOINT}/users?email=${participantEmail}`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+        });
 
-        const [city, language] = await axios.all([requestOne, requestTwo]);
+        const [city, language, participant] = await axios.all([requestOne, requestTwo, requestThree]);
 
         const cityIdData = (city.data['hydra:member'][0].id)
         const languageIdData = (language.data['hydra:member'][0].id)
+        const participantData = (participant.data['hydra:member'])
+        const participantResult = participantData.find(user => user.email === participantEmail)
         
         setLanguageId(languageIdData)
         setCityId(cityIdData)
-        console.log(name)
+        const participantId = participantResult.id
 
-        dispatch(addMeetup(name, cityIdData, date, startTime, endTime, type, languageIdData, description))
+        dispatch(addMeetup(name, cityIdData, date, startTime, endTime, type, languageIdData, description, userId, participantId))
         setOpen(false);
       };
 
@@ -248,6 +257,16 @@ export default function MeetupsOverview() {
                                 value={inputCity}
                                 onChange={(e) => {
                                 setInputCity(e.target.value);
+                          }}
+                            />
+                            <TextField
+                                id="participant"
+                                label="Person you are meeting(email)"
+                                type="email"
+                                fullWidth
+                                value={participantEmail}
+                                onChange={(e) => {
+                                setParticipantEmail(e.target.value);
                           }}
                             />
                             <FormControl>
