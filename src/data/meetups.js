@@ -12,27 +12,30 @@ const initialState = {
   
  
   const ADD_MEETUP_ERROR = "ADD_MEETUP_ERROR"
-  const GET_MEETUPS = "GET_MEETUPS"
+  const GET_MEETUPS_SUCCESS = "GET_MEETUPS_SUCCESS"
   const ADD_MEETUP_SUCCESS = "ADD_MEETUP_SUCCESS"
 //   const GET_MESSAGE = "GET_MESSAGE"
   
   
  /* ACTION CREATORS *///////////////////////////
 
-//  export const getMeetups = () => (dispatch) => {
-//    axios.get(`${process.env.REACT_APP_ENDPOINT}/meetups`, {
-//     headers: {
-//       authorization: `Bearer ${localStorage.getItem('token')}`
-//     }
-//    })
-//    .then((response) => {
-//     //  console.log(result)
-//     dispatch(addMessage(response.data['hydra:member']))
-//     console.log('fetch successful' + response.data['hydra:member'])
-//   })
-//   .catch((error) => dispatch(addPhotoError('error fetching photo')));
+ export const getMeetups = (userId) => (dispatch) => {
+   axios.get(`${process.env.REACT_APP_ENDPOINT}/meetups?creator=%22%2Fwdev_nicole%2Feindwerk%2Fapi%2Fusers%2F${userId}%22`, {
+    headers: {
+      authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+   })
+   .then((response) => {
+    //  console.log(result)
+    
+    const meetups = response.data['hydra:member']
+    const userMeetups = meetups.filter(meetup => meetup.creator === `/wdev_nicole/eindwerk/api/users/${userId}`)
+    console.log('getmeetups successful' + userMeetups[0].name)
+    dispatch(getMeetupsSuccess(userMeetups))
+  })
+  .catch((error) => console.log('getmeetupserror:' + error));
 
-//  }  
+ }  
 
 
 
@@ -83,8 +86,8 @@ export const addMeetupSuccess = (data) => ({
     payload: data,
   })
 
- export const getMeetups = (data) => ({
-   type: GET_MEETUPS,
+ export const getMeetupsSuccess = (data) => ({
+   type: GET_MEETUPS_SUCCESS,
    payload: data,
  })
 
@@ -97,7 +100,7 @@ export const addMeetupSuccess = (data) => ({
   
   export default (state = initialState, { type, payload }) => {
     switch (type) {
-      case GET_MEETUPS:
+      case GET_MEETUPS_SUCCESS:
         // console.log(payload)
         return {
           error: null,

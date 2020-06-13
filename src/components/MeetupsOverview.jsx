@@ -23,7 +23,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import { addMeetup } from "../data/meetups";
+import { addMeetup, getMeetups } from "../data/meetups";
+
 
 
 
@@ -125,6 +126,7 @@ export default function MeetupsOverview() {
     const [languageId, setLanguageId] = useState("");
     const [cityId, setCityId] = useState("");
     const userId = useSelector((state) => state.auth.user.id);
+    const meetups = useSelector((state) => state.meetups.meetups);
 
 
     const handleClickOpen = () => {
@@ -169,13 +171,22 @@ export default function MeetupsOverview() {
         setOpen(false);
       };
 
-    
+      const handleGetMeetups = () => {
+        dispatch(getMeetups(userId));
+      }
+
       
 
+       
+
+    
+    
+
+    
     const events = [
         {
             start: moment().toDate(),
-            end: moment().toDate(),
+            // end: moment().toDate(),
             // end: moment()
             // .add(1, "days")
             // .toDate(),
@@ -209,22 +220,36 @@ export default function MeetupsOverview() {
                 <div className={classes.backDiv}>
                     <Link className={classes.backLink} to='/dashboard'>Back to my profile</Link>
                 </div>
+              {/* <div>{meetups}</div> */}
+                <ul>
+                  {meetups.map(meetup => (
+                    <li>{meetup.name}</li>
+                  ))}
+                </ul>
+                <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                  Create New Meetup
+                </Button>
+                <Button variant="outlined" color="primary" onClick={handleGetMeetups}>
+                  Get meetups
+                </Button>
                 
                     <Grid item xs>
                     <Calendar
                         localizer={localizer}
                         defaultDate={new Date()}
                         defaultView="month"
-                        events={events}
+                        events={meetups}
                         style={{ height: "50vh", width: "50vw" }}
+                        startAccessor="date"
+                        endAccessor="date"
+                        titleAccessor="name"
+
                         />
                     
                     
                     </Grid>
                 </Grid>
-                <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                        Create New Meetup
-                    </Button>
+                
                 <Dialog
                         fullWidth={fullWidth}
                         maxWidth={maxWidth}
