@@ -113,8 +113,8 @@ export default function MeetupsOverview() {
     const [open, setOpen] = React.useState(false);
     const [fullWidth, setFullWidth] = React.useState(true);
     const [maxWidth, setMaxWidth] = React.useState('sm');
-    const [city, setCity] = useState("");
-    const [language, setLanguage] = useState("");
+    const [inputCity, setInputCity] = useState("");
+    const [inputLanguage, setInputLanguage] = useState("");
     const [name, setName] = useState("");
     const [date, setDate] = useState("");
     const [startTime, setStartTime] = useState("");
@@ -136,12 +136,12 @@ export default function MeetupsOverview() {
       const handleCreateNewMeetup = async (e) => {
         // setOpen(false);
         e.preventDefault();
-        const requestOne = axios.get(`${process.env.REACT_APP_ENDPOINT}/cities?name=vienna`, {
+        const requestOne = axios.get(`${process.env.REACT_APP_ENDPOINT}/cities?name=${inputCity}`, {
             headers: {
               authorization: `Bearer ${localStorage.getItem('token')}`
             }
            });
-        const requestTwo = axios.get(`${process.env.REACT_APP_ENDPOINT}/languages?name=german`, {
+        const requestTwo = axios.get(`${process.env.REACT_APP_ENDPOINT}/languages?name=${inputLanguage}`, {
             headers: {
               authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -245,9 +245,9 @@ export default function MeetupsOverview() {
                                 label="City"
                                 type="text"
                                 fullWidth
-                                value={city}
+                                value={inputCity}
                                 onChange={(e) => {
-                                setCity(e.target.value);
+                                setInputCity(e.target.value);
                           }}
                             />
                             <FormControl>
@@ -300,9 +300,9 @@ export default function MeetupsOverview() {
                                 label="Language"
                                 type="text"
                                 fullWidth
-                                value={language}
+                                value={inputLanguage}
                                 onChange={(e) => {
-                                setLanguage(e.target.value);
+                                setInputLanguage(e.target.value);
                           }}
                             />
                             <TextField

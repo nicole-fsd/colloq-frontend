@@ -69,7 +69,7 @@ function App() {
             exact
             path="/meetups"
             render={() => {
-              return <MeetupsOverview />;
+              return !Authenticated ? <Redirect to="/" /> : <MeetupsOverview />;
             }}
           />
           <Route
