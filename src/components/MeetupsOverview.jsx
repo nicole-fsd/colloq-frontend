@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 // import { Redirect, Route } from "react-router-dom";
+import axios from 'axios'
 import { makeStyles } from "@material-ui/core/styles";
 import { Container , Paper, Grid, Typography, Button, TextField} from '@material-ui/core';
 import Footer from './landing/Footer'
@@ -22,6 +23,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import { addMeetup } from "../data/meetups";
 
 
 
@@ -104,13 +106,23 @@ const useStyles = makeStyles(theme => ({
     
   }));
 
-export default function Dashboard() {
+export default function MeetupsOverview() {
     const classes = useStyles()
     const dispatch = useDispatch();
     const localizer = momentLocalizer(moment);
     const [open, setOpen] = React.useState(false);
     const [fullWidth, setFullWidth] = React.useState(true);
     const [maxWidth, setMaxWidth] = React.useState('sm');
+    const [city, setCity] = useState("");
+    const [language, setLanguage] = useState("");
+    const [name, setName] = useState("");
+    const [date, setDate] = useState("");
+    const [startTime, setStartTime] = useState("");
+    const [endTime, setEndTime] = useState("");
+    const [type, setType] = useState("");
+    const [description, setDescription] = useState("");
+    const [languageId, setLanguageId] = useState("");
+    const [cityId, setCityId] = useState("");
 
 
     const handleClickOpen = () => {
@@ -121,10 +133,33 @@ export default function Dashboard() {
         setOpen(false);
       };
 
-      const handleCreateNewMeetup = (e) => {
-        setOpen(false);
+      const handleCreateNewMeetup = async (e) => {
+        // setOpen(false);
         e.preventDefault();
+        const requestOne = axios.get(`${process.env.REACT_APP_ENDPOINT}/cities?name=vienna`, {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+           });
+        const requestTwo = axios.get(`${process.env.REACT_APP_ENDPOINT}/languages?name=german`, {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+           });
+
+        const [city, language] = await axios.all([requestOne, requestTwo]);
+
+        const cityIdData = (city.data['hydra:member'][0].id)
+        const languageIdData = (language.data['hydra:member'][0].id)
+        
+        setLanguageId(languageIdData)
+        setCityId(cityIdData)
+        console.log(name)
+
+        dispatch(addMeetup(name, cityIdData, date, startTime, endTime, type, languageIdData, description))
+        setOpen(false);
       };
+
     
       
 
@@ -200,12 +235,20 @@ export default function Dashboard() {
                                 label="Name"
                                 type="text"
                                 fullWidth
+                                value={name}
+                                onChange={(e) => {
+                                setName(e.target.value);
+                          }}
                             />
                             <TextField
                                 id="city"
                                 label="City"
                                 type="text"
                                 fullWidth
+                                value={city}
+                                onChange={(e) => {
+                                setCity(e.target.value);
+                          }}
                             />
                             <FormControl>
                             <TextField
@@ -213,6 +256,10 @@ export default function Dashboard() {
                                 
                                 type="date"
                                 autoComplete="current-password"
+                                value={date}
+                                onChange={(e) => {
+                                setDate(e.target.value);
+                          }}
                             />
                             <FormHelperText id="component-helper-text">Date</FormHelperText>
                             <TextField
@@ -220,6 +267,10 @@ export default function Dashboard() {
                                 
                                 type="time"
                                 autoComplete="current-password"
+                                value={startTime}
+                                onChange={(e) => {
+                                setStartTime(e.target.value);
+                          }}
                             />
                             <FormHelperText id="component-helper-text">Start Time</FormHelperText>
                             <TextField
@@ -227,6 +278,10 @@ export default function Dashboard() {
                                 
                                 type="time"
                                 autoComplete="current-password"
+                                value={endTime}
+                                onChange={(e) => {
+                                setEndTime(e.target.value);
+                          }}
                             />
                             <FormHelperText id="component-helper-text">End Time</FormHelperText>
                             </FormControl>
@@ -235,12 +290,20 @@ export default function Dashboard() {
                                 label="Type"
                                 type="text"
                                 fullWidth
+                                value={type}
+                                onChange={(e) => {
+                                setType(e.target.value);
+                          }}
                             />
                             <TextField
                                 id="language"
                                 label="Language"
                                 type="text"
                                 fullWidth
+                                value={language}
+                                onChange={(e) => {
+                                setLanguage(e.target.value);
+                          }}
                             />
                             <TextField
                                 id="description"
@@ -248,6 +311,10 @@ export default function Dashboard() {
                                 type="text"
                                 multiline
                                 fullWidth
+                                value={description}
+                                onChange={(e) => {
+                                setDescription(e.target.value);
+                          }}
                             />
                             
 
