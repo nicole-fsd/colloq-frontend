@@ -36,6 +36,7 @@ export const LOGIN_ERROR = "LOGIN_ERROR";
 export const LOGOUT = "LOGOUT";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_ERROR = "REGISTER_ERROR"
+export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS"
 
 
 /* ACTION CREATORS *//////////////////////////////////////
@@ -93,6 +94,34 @@ export const registerUser = (email, password, firstName, lastName, age, meetupTy
     .catch((error) => console.log(error));
 };
 
+export const updateUser = (id, email, firstname, lastname, age, meetupType) => (dispatch) => {
+  const config = {
+    headers: {
+    'Content-Type': "application/json;charset=UTF-8",
+    'Authorization': `Bearer ${localStorage.getItem('token')}`
+    },
+  };
+  const data = {
+    email: email,
+    firstName: firstname,
+    lastName: lastname,
+    age: age,
+    meetupType: meetupType,
+    // startDate: startDate,
+    // endDate: endDate,
+    // nativeLang: nativeLang,
+    // targetLang: targetLang,
+    
+  }
+  axios.put(`${process.env.REACT_APP_ENDPOINT}/users/${id}`, data, config)
+  .then((response) => {
+    // dispatch(updateUserSuccess(response.data))
+    console.log('update user success')
+  })
+  .catch((error) => console.log(error));
+};
+
+
 export const registerSuccess = (data) => ({
   type: REGISTER_SUCCESS,
   payload: data,
@@ -101,6 +130,11 @@ export const registerSuccess = (data) => ({
 export const registerError = (msg) => ({
   type: REGISTER_ERROR,
   payload: msg
+});
+
+export const updateUserSuccess = (data) => ({
+  type: UPDATE_USER_SUCCESS,
+  payload: data
 });
 
 

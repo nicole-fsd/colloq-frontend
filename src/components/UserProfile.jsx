@@ -4,10 +4,9 @@ import {useSelector, useDispatch} from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import { getUser } from '../data/search';
 import { makeStyles } from "@material-ui/core/styles";
-import { Container , Paper, Grid, Typography, Button, TextField, IconButton, FormHelperText} from '@material-ui/core';
+import { Container , Paper, Grid, Typography, Button, TextField, IconButton } from '@material-ui/core';
 import Footer from './landing/Footer'
 import Avatar from '@material-ui/core/Avatar';
-import morgan from './dashboard/images/Morgan-cat.jpg'
 import getPhoto from '../data/photos'
 import { postUserMessage } from '../data/messages';
 import Modal from '@material-ui/core/Modal';
@@ -17,7 +16,6 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { postComment, getComments } from '../data/comments';
 
@@ -187,10 +185,10 @@ const UserProfile = () => {
 const dispatch = useDispatch();
 let location = useLocation()
 const classes = useStyles()
-const [name, setName] = useState('');
+// const [name, setName] = useState('');
 const [subject, setSubject] = useState('');
 const [text, setText] = useState('');
-const photos = useSelector((state) => state.photos.photos);
+// const photos = useSelector((state) => state.photos.photos);
 const comments = useSelector((state) => state.comments.comments);
 // const userFirstName = useSelector((state) => state.auth.user.firstName);
 // const userAge = useSelector((state) => state.auth.user.age);
@@ -208,7 +206,7 @@ const [singleUserMessage, setSingleUserMessage] = useState("");
 const [singleUserFirstname, setSingleUserFirstname] = useState("");
 const [singleUserLastname, setSingleUserLastname] = useState("");
 const [singleUserAge, setSingleUserAge] = useState("");
-const [singleUserLanguage, setSingleUserLanguage] = useState("");
+// const [singleUserLanguage, setSingleUserLanguage] = useState("");
 const [singleUserCity, setSingleUserCity] = useState("");
 const [singleUserMeetupType, setSingleUserMeetupType] = useState("");
 const [singleUserPhoto, setSingleUserPhoto] = useState("");
@@ -315,20 +313,20 @@ const getUser = async (id) => {
     setSingleUserCity(user.data.city.name);
     setSingleUserMeetupType(user.data.meetuptype);
     setSingleUserPhoto(user.data.images[0].filename);
-    console.log(user.data.images[0].filename);
+    // console.log(user.data.images[0].filename);
    
 }
 
 
  useEffect(() => {
   getUser(id);
- }, []);
+ }, [id]);
 
 //  useEffect(() => {
 //   getComments(id)
 //  }, []);
 
- console.log(comments)
+ 
 
 
 // useEffect(() => {

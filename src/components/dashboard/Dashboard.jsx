@@ -2,14 +2,16 @@ import React, {useState, useEffect} from "react";
 // import { Redirect, Route } from "react-router-dom";
 import axios from 'axios'
 import { makeStyles } from "@material-ui/core/styles";
-import { Container , Paper, Grid, Typography, Button, TextField} from '@material-ui/core';
+import { Container , Paper, Grid, Typography, Button, TextField, IconButton} from '@material-ui/core';
 import Footer from '../landing/Footer'
 import Avatar from '@material-ui/core/Avatar';
-import morgan from './images/Morgan-cat.jpg'
 import { getPhoto } from "../../data/photos";
+import { updateUser } from "../../data/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from 'react-router-dom'
-// import EditIcon from '@material-ui/icons/Edit';
+import { Link } from 'react-router-dom'
+import EditIcon from '@material-ui/icons/Edit';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -57,7 +59,7 @@ const useStyles = makeStyles(theme => ({
     },
     paperInfo: {
         backgroundColor: "#eeeeee",
-        height: "600px",
+        minHeight: "600px",
         width: "400px",
         
     },
@@ -68,6 +70,7 @@ const useStyles = makeStyles(theme => ({
         marginLeft: "30px",
         overflow: "auto",
         display: 'flex',
+        flexDirection: 'column'
 
     },
     typeAbout: {
@@ -102,30 +105,77 @@ const useStyles = makeStyles(theme => ({
       messageLink: {
         fontSize:'2rem',
         textDecoration: 'none'
+      },
+      editIconBtn: {
+        textAlign: 'right',
+      },
+      textarea: {
+        width: '100%',
+        height: '100%'
+      },
+      infoContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+      },
+      publicMessageText: {
+        padding: '1rem'
+      },
+      bioContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: '.8rem'
       }
   }));
 
 export default function Dashboard() {
     const classes = useStyles()
     const [name, setName] = useState('');
+    const [editOn, setEditOn] = useState(true);
+    const [editMessageOn, setEditMessageOn] = useState(true);
     const dispatch = useDispatch();
     const userFirstName = useSelector((state) => state.auth.user.firstName);
     const userAge = useSelector((state) => state.auth.user.age);
+    const userLastName = useSelector((state) => state.auth.user.lastName);
+    const userEmail = useSelector((state) => state.auth.user.email);
+    const userCity = useSelector((state) => state.auth.user.city);
+    const userMeetupCity = useSelector((state) => state.auth.user.meetupCity);
+    // const userNativeLang = useSelector((state) => state.auth.user.nativeLang);
+    // const userTargetLang = useSelector((state) => state.auth.user.targetLang);
+    const userMeetupType = useSelector((state) => state.auth.user.meetupType);
     const userId = useSelector((state) => state.auth.user.id);
     // const userPhoto = useSelector((state) => state.auth.user.images[0].filename);
-    const userMeetupType = useSelector((state) => state.auth.user.meetupType);
+    
     const userPublicMessage = useSelector((state) => state.auth.user.publicMessage);
-    const photos = useSelector((state) => state.photos.photos);
+    // const photos = useSelector((state) => state.photos.photos);
     const [singleUserPhoto, setSingleUserPhoto] = useState("");
     const [newImage, setNewImage] = useState("");
+    const [email, setEmail] = useState(userEmail);
+    // const [password, setPassword] = useState();
+    const [firstname, setFirstName] = useState(userFirstName);
+    const [lastname, setLastName] = useState(userLastName);
+    const [city, setCity] = useState(userCity);
+    const [publicMessage, setPublicMessage] = useState(userPublicMessage);
+    // const [nativeLang, setNativeLang] = useState();
+    // const [targetLang, setTargetLang] = useState("");
+    const [meetupCity, setMeetupCity] = useState(userMeetupCity);
+    const [meetupType, setMeetupType] = useState(userMeetupType);
+    const [age, setAge] = useState(userAge);
+    
 
     const handleChange = (event) => {
     setName(event.target.value);
-  };
+    };
 
-  const handleGetPhotoClick = () => {
-    dispatch(getPhoto());
-  }
+    const handleUpdateDetails = (e) => {
+      e.preventDefault()
+      // console.log(userId, email, firstname, lastname, age, meetupType)
+      dispatch(updateUser(userId, email, firstname, lastname, age, meetupType))
+      };
+
 
   const getUser = async (userId) => {
     const user = await axios.get(`${process.env.REACT_APP_ENDPOINT}/users/${userId}`, {
@@ -138,10 +188,16 @@ export default function Dashboard() {
       console.log(user.data.images[0].filename);
      
   }
+
+  // useEffect(() => {
+  //   getUser(userId);
+  //  }, []);
   
   
    useEffect(() => {
-    getUser(userId);
+    (async function anyNameFunction() {
+      await getUser(userId);
+    })();
    }, []);
 
    const handleImageUpload = ({ target }) => {
@@ -167,7 +223,6 @@ export default function Dashboard() {
         <Grid item>
           <Paper className={classes.photo} elevation={3}>
           <Avatar alt="user profile photo" src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${singleUserPhoto}.jpg&height=200&image=/wdev_nicole/eindwerk/images/${singleUserPhoto}.jpg`} className={classes.large} />
-              {/* <img src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${photos[0].title}.jpg&height=150&image=/wdev_nicole/eindwerk/images/${photos[0].title}.jpg`} /> */}
               </Paper>
               <input
                 accept="image/*"
@@ -178,28 +233,74 @@ export default function Dashboard() {
                 type="file"
                 />
                 <label htmlFor="contained-button-file">
-                <Button variant="contained" color="secondary" component="span">
-                Upload
-                </Button>
-                
+                  <Button variant="contained" color="secondary" component="span">
+                    Upload
+                  </Button>
                 </label>
-                
-                <div></div>
               
         </Grid>
         <Grid item>
-  <Paper className={classes.paperAbout} elevation={3}><Typography className={classes.typeAbout}>{userPublicMessage}</Typography></Paper>
+          
+          <Paper className={classes.paperAbout} elevation={3}>
+          <Container className={classes.bioContainer}>
+              <Typography variant='h6'>Personal Bio</Typography>
+                <div className={classes.editIconBtn}>
+                  <IconButton className={classes.editIconBtnTag} onClick={() => setEditMessageOn(!editMessageOn)}><EditIcon className={classes.editIcon}/></IconButton>
+                </div>
+                
+              </Container>
+          {/* <Typography variant='h6'>Personal Bio</Typography>
+            <div className={classes.editIconBtn}>
+            
+              <IconButton onClick={() => setEditMessageOn(!editMessageOn)}><EditIcon /></IconButton>
+            </div> */}
+              {/* <TextareaAutosize 
+                className={classes.textarea}
+                aria-label="public-message" 
+                rowsMin={5} 
+                placeholder="Bio" 
+                disabled={editMessageOn}
+                value={userPublicMessage} 
+                onChange={handleChange}
+                fullWidth
+              /> */}
+            <TextField 
+                className={classes.publicMessageText}
+                id="public-message"  
+                disabled={editMessageOn}
+                value={publicMessage} 
+                multiline
+                rows={5}
+                InputProps={{
+                  disableUnderline: true,
+                 }}
+                onChange={(e) => {
+                  setPublicMessage(e.target.value);
+                }}
+              />
+            {/* <Typography className={classes.typeAbout}>{userPublicMessage}</Typography> */}
+            </Paper>
         </Grid>
       </Grid>
       <Grid className={classes.grid2} justify="center" alignItems="center" container direction="row" spacing={0}>
           <Grid className={classes.gridBottomLeft}>
             <Grid item xs>
             <Paper className={classes.paperInfo} elevation={3}>
-            <form className={classes.form} noValidate autoComplete="off">
-                <div>
+            <form className={classes.form} noValidate autoComplete="off" onSubmit={handleUpdateDetails}>
+              <Container className={classes.infoContainer}>
+              <Typography variant='h6'>Personal Details</Typography>
+                <div className={classes.editIconBtn}>
+                  <IconButton className={classes.editIconBtnTag} onClick={() => setEditOn(!editOn)}><EditIcon className={classes.editIcon}/></IconButton>
+                </div>
+                
+              </Container>
+              
+              
+                {/* <div>
                     <TextField 
                     id="standard-name" 
                     label="Name" 
+                    disabled={editOn}
                     value={userFirstName} 
                     onChange={handleChange} 
                     />
@@ -208,6 +309,7 @@ export default function Dashboard() {
                     <TextField
                     id="filled-name"
                     label="Age"
+                    disabled={editOn}
                     value={userAge}
                     onChange={handleChange}
                     />
@@ -216,10 +318,64 @@ export default function Dashboard() {
                     <TextField
                     id="outlined-name"
                     label="Meetup Type"
+                    disabled={editOn}
                     value={userMeetupType}
                     onChange={handleChange}
                     />
-                </div>
+                </div> */}
+                        <TextField disabled={editOn} variant="standard" margin="normal" type="email" fullWidth id="email" label="Email Address" name="email" autoComplete="email" value={email}
+                          onChange={(e) => {
+                            setEmail(e.target.value);
+                          }}
+                        />
+                        <TextField disabled={editOn} variant="standard" margin="normal" fullWidth id="firstname" label="First name" name="firstname" autoComplete="firstname" value={firstname}
+                          onChange={(e) => {
+                            setFirstName(e.target.value);
+                          }}
+                        />
+                        <TextField disabled={editOn} variant="standard" margin="normal" fullWidth id="lastname" label="Last name" name="lastname" autoComplete="lastname" value={lastname}
+                          onChange={(e) => {
+                            setLastName(e.target.value);
+                          }}
+                        />
+                        <TextField disabled={editOn} variant="standard" margin="normal" id="age" label="Age" name="age" autoComplete="age" value={age}
+                          onChange={(e) => {
+                            setAge(e.target.value);
+                          }}
+                        />
+                        <TextField disabled={editOn} variant="standard" margin="normal" fullWidth name="city" label="City" type="text" id="city" value={city}
+                          onChange={(e) => {
+                            setCity(e.target.value);
+                          }}
+                        />
+                        {/* <TextField disabled={editOn} variant="standard" margin="normal" fullWidth name="nativeLang" label="Native Language" type="text" id="nativeLang" value={nativeLang}
+                          onChange={(e) => {
+                            setNativeLang(e.target.value);
+                          }}
+                        />
+                        <TextField disabled={editOn} variant="standard" margin="normal"  fullWidth name="targetLang" label="Meetup Language" type="text" id="targetLang" value={targetLang}
+                          onChange={(e) => {
+                            setTargetLang(e.target.value);
+                          }}
+                        /> */}
+                        <TextField disabled={editOn} variant="standard" margin="normal" fullWidth name="meetup_city" label="City of meetup" type="text" id="meetup_city" value={meetupCity}
+                          onChange={(e) => {
+                            setMeetupCity(e.target.value);
+                          }}
+                        />
+                        <TextField disabled={editOn} variant="standard" margin="normal" fullWidth name="meetup_type" label="Preferred type of meetup" type="text" id="meetup_type" value={meetupType}
+                          onChange={(e) => {
+                            setMeetupType(e.target.value);
+                          }}
+                          />
+                          <div>
+                            {!editOn && 
+                              <Button variant="outlined" color="secondary" component="button" type='submit'>
+                                Save
+                              </Button>
+                            }
+                          </div>
+                
                 </form>
             </Paper>
             </Grid>

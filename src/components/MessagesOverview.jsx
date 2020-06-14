@@ -2,26 +2,18 @@ import React, {useState, useEffect} from "react";
 // import { Redirect, Route } from "react-router-dom";
 import axios from 'axios'
 import { makeStyles } from "@material-ui/core/styles";
-import { Container , Paper, Grid, Typography, Button, TextField} from '@material-ui/core';
+import { Paper, Grid, Typography, Button, TextField} from '@material-ui/core';
 import Footer from '../components/landing/Footer'
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
-import DeleteIcon from '@material-ui/icons/Delete';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import Collapse from '@material-ui/core/Collapse';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import SendIcon from '@material-ui/icons/Send';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
 import IconButton from '@material-ui/core/IconButton';
 import { getMessages } from "../data/messages";
 import CloseIcon from '@material-ui/icons/Close';
@@ -69,7 +61,8 @@ const useStyles = makeStyles(theme => ({
         margin: '.5rem'
       },
       close: {
-        display: 'inline'
+        display: 'inline',
+        justifyContent: 'end'
       },
       sendDiv: {
         display: 'flex',
@@ -79,21 +72,24 @@ const useStyles = makeStyles(theme => ({
       },
       textarea: {
         width: '100%',
+        color: 'black',
         '&::placeholder': {
           fontFamily: "Arial"
         }
+      },
+      inputRoot: {
+        color: 'black'
       }
   }));
 
 export default function MessagesOverview() {
     const classes = useStyles()
     const dispatch = useDispatch();
-    const userFirstName = useSelector((state) => state.auth.user.firstName);
-    const userAge = useSelector((state) => state.auth.user.age);
+    // const userFirstName = useSelector((state) => state.auth.user.firstName);
+    // const userAge = useSelector((state) => state.auth.user.age);
     const userId = useSelector((state) => state.auth.user.id);
     const messages = useSelector((state) => state.messages.messages);
-    const [dense, setDense] = useState(false);
-    const [secondary, setSecondary] = useState(false);
+    // const [secondary, setSecondary] = useState(false);
     const [open, setOpen] = useState(false);
     const [openReply, setOpenReply] = useState(false);
     const [openModal, setOpenModal] = useState(true);
@@ -124,13 +120,13 @@ export default function MessagesOverview() {
     setOpenReply(false);
   };
 
-  const handleLiClick = (id) => {
-    setOpenModal(true);
-  }
+  // const handleLiClick = (id) => {
+  //   setOpenModal(true);
+  // }
 
-  const handleLiClose = () => {
-    setOpenModal(false);
-  };
+  // const handleLiClose = () => {
+  //   setOpenModal(false);
+  // };
 
   function rand() {
     return Math.round(Math.random() * 20) - 10;
@@ -150,7 +146,7 @@ export default function MessagesOverview() {
 
       useEffect(() => {
         dispatch(getMessages(userId));
-      }, [])
+      }, [dispatch, userId])
 
       // function handleMessageDelete(e) {
       //   console.log('handlemessagedelete:' + e.target.parentNode.parentNode)
@@ -268,7 +264,7 @@ export default function MessagesOverview() {
                         Inbox
                     </Typography>
                     <div className={classes.inbox}>
-                        <List dense={dense}>
+                        <List>
                             {messages.length === 0 && <p>You have no messages</p>}
                             {messages.length > 0 &&
                                 messages.map((message, index) => (
@@ -302,7 +298,16 @@ export default function MessagesOverview() {
                                         </IconButton>
                                       </div>
                                       <div>
-                                      <TextField
+                                        <Typography variant="overline">
+                                          Subject: 
+                                        </Typography>
+                                        <Typography
+                                          paragraph={true}
+                                          variant='h6'
+                                        >
+                                        {currentMessage.subject}
+                                        </Typography>
+                                      {/* <TextField
                                         className={classes.textfield}
                                         id="message-subject"
                                         label="Subject"
@@ -311,7 +316,7 @@ export default function MessagesOverview() {
                                         fullWidth
                                         multiline
                                         variant="outlined"
-                                      />
+                                      /> */}
                                       <TextField
                                         className={classes.textfield}
                                         id="message-text"
@@ -319,6 +324,12 @@ export default function MessagesOverview() {
                                         multiline
                                         fullWidth
                                         rows={4}
+                                        InputProps={{
+                                          classes:{
+                                            root: classes.inputRoot,
+                                            
+                                          }
+                                        }}
                                         defaultValue={currentMessage.text}
                                         disabled
                                         variant="outlined"

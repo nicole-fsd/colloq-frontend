@@ -110,7 +110,7 @@ const initialState = {
           loading: true
         }
       case GET_SINGLE_USER:
-        console.log('payload:' + payload.city.name)
+        // console.log('payload:' + payload.city.name)
         return {
           ...state,
           singleUser: {

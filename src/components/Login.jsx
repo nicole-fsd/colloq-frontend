@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { Grid, Typography, TextField, Container, Button } from "@material-ui/core";
 import { loginUser } from "../data/auth";
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 
 const useStyles = makeStyles((theme) => ({

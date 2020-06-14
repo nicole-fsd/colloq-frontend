@@ -1,11 +1,9 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 // import { Redirect, Route } from "react-router-dom";
 import axios from 'axios'
 import { makeStyles } from "@material-ui/core/styles";
-import { Container , Paper, Grid, Typography, Button, TextField} from '@material-ui/core';
+import { Container, Grid, Button, TextField} from '@material-ui/core';
 import Footer from './landing/Footer'
-import Avatar from '@material-ui/core/Avatar';
-import morgan from './dashboard/images/Morgan-cat.jpg'
 import { useDispatch, useSelector } from "react-redux";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
@@ -17,11 +15,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import Switch from '@material-ui/core/Switch';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { addMeetup, getMeetups } from "../data/meetups";
 
@@ -120,9 +113,7 @@ export default function MeetupsOverview() {
     const classes = useStyles()
     const dispatch = useDispatch();
     const localizer = momentLocalizer(moment);
-    const [open, setOpen] = React.useState(false);
-    const [fullWidth, setFullWidth] = React.useState(true);
-    const [maxWidth, setMaxWidth] = React.useState('sm');
+    const [open, setOpen] = useState(false);
     const [inputCity, setInputCity] = useState("");
     const [inputLanguage, setInputLanguage] = useState("");
     const [name, setName] = useState("");
@@ -132,8 +123,8 @@ export default function MeetupsOverview() {
     const [endTime, setEndTime] = useState("");
     const [type, setType] = useState("");
     const [description, setDescription] = useState("");
-    const [languageId, setLanguageId] = useState("");
-    const [cityId, setCityId] = useState("");
+    // const [languageId, setLanguageId] = useState("");
+    // const [cityId, setCityId] = useState("");
     const userId = useSelector((state) => state.auth.user.id);
     const meetups = useSelector((state) => state.meetups.meetups);
 
@@ -172,17 +163,21 @@ export default function MeetupsOverview() {
         const participantData = (participant.data['hydra:member'])
         const participantResult = participantData.find(user => user.email === participantEmail)
         
-        setLanguageId(languageIdData)
-        setCityId(cityIdData)
+        // setLanguageId(languageIdData)
+        // setCityId(cityIdData)
         const participantId = participantResult.id
 
         dispatch(addMeetup(name, cityIdData, date, startTime, endTime, type, languageIdData, description, userId, participantId))
         setOpen(false);
       };
 
-      const handleGetMeetups = () => {
+      // const handleGetMeetups = () => {
+      //   dispatch(getMeetups(userId));
+      // }
+
+      useEffect(() => {
         dispatch(getMeetups(userId));
-      }
+      }, [dispatch, userId])
    
     
   
@@ -204,12 +199,12 @@ export default function MeetupsOverview() {
                 <Button className={classes.createBtn} variant="outlined" color="primary" onClick={handleClickOpen}>
                   Create New Meetup
                 </Button>
-                <Button className={classes.updateBtn} variant="outlined" color="primary" onClick={handleGetMeetups}>
+                {/* <Button className={classes.updateBtn} variant="outlined" color="primary" onClick={handleGetMeetups}>
                   Update Calendar
-                </Button>
+                </Button> */}
                 </div>
                 
-                    <Grid item xs>
+                  <Grid item xs>
                     <Calendar
                         localizer={localizer}
                         defaultDate={new Date()}
@@ -219,27 +214,21 @@ export default function MeetupsOverview() {
                         startAccessor="date"
                         endAccessor="date"
                         titleAccessor="name"
-
                         />
-                    
-                    
                     </Grid>
-                </Grid>
-                
-                <Dialog
-                        fullWidth={fullWidth}
-                        maxWidth={maxWidth}
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="dialog-title"
-                    >
-                        <DialogTitle id="new-meetup-dialog">Create New Meetup</DialogTitle>
-                        <DialogContent>
-                        <DialogContentText>
-                            Please fill in the event details
-                        </DialogContentText>
-                        <form className={classes.form} noValidate>
-                        <div>
+                  </Grid>
+                  <Dialog   
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="dialog-title"
+                  >
+                  <DialogTitle id="new-meetup-dialog">Create New Meetup</DialogTitle>
+                  <DialogContent>
+                  <DialogContentText>
+                      Please fill in the event details
+                  </DialogContentText>
+                    <form className={classes.form} noValidate>
+                      <div>
                             <TextField
                                 id="name"
                                 label="Name"
@@ -248,7 +237,7 @@ export default function MeetupsOverview() {
                                 value={name}
                                 onChange={(e) => {
                                 setName(e.target.value);
-                          }}
+                                }}
                             />
                             <TextField
                                 id="city"

@@ -89,7 +89,6 @@ export default function Register() {
     const [meetupCity, setMeetupCity] = useState("");
     const [meetupType, setMeetupType] = useState("");
     const [age, setAge] = useState("");
-    const [error, setError] = useState("");
     const [radioValue, setRadioValue] = useState('');
     // const [isTourist, setIsTourist] = useState(false);
     // const [isTutor, setIsTutor] = useState(false);
@@ -112,7 +111,7 @@ export default function Register() {
 
     const submitHandler = (e) => {
       e.preventDefault();
-      dispatch(registerUser(email, password, firstname, lastname, age, meetupType, startDate, endDate, nativeLand, targetLang, radioValue))
+      dispatch(registerUser(email, password, firstname, lastname, age, meetupType, startDate, endDate, nativeLang, targetLang, radioValue))
     };
 
     return (

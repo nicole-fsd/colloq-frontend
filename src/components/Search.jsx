@@ -11,7 +11,6 @@ import CardContent from '@material-ui/core/CardContent';
 import {useDispatch, useSelector} from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getUsers } from '../data/search';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 const useStyles = makeStyles((theme) => ({
     root: {
