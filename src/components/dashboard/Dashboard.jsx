@@ -65,7 +65,7 @@ const useStyles = makeStyles(theme => ({
     },
     paperAbout: {
         backgroundColor: "#eeeeee",
-        minHeight: "175px",
+        minHeight: "10rem",
         width: "450px",
         marginLeft: "30px",
         overflow: "auto",
@@ -120,7 +120,8 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center'
       },
       publicMessageText: {
-        padding: '1rem'
+        padding: '1rem',
+        width: '90%'
       },
       bioContainer: {
         display: 'flex',
@@ -128,6 +129,9 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: '.8rem'
+      },
+      saveBioBtn: {
+        marginBottom: ".8rem"
       }
   }));
 
@@ -174,6 +178,12 @@ export default function Dashboard() {
       e.preventDefault()
       // console.log(userId, email, firstname, lastname, age, meetupType)
       dispatch(updateUser(userId, email, firstname, lastname, age, meetupType))
+      };
+
+    const handleUpdateMessage = (e) => {
+      e.preventDefault()
+      // console.log(userId, email, firstname, lastname, age, meetupType)
+      // dispatch(updateUser(userId, email, firstname, lastname, age, meetupType))
       };
 
 
@@ -242,13 +252,14 @@ export default function Dashboard() {
         <Grid item>
           
           <Paper className={classes.paperAbout} elevation={3}>
+            <form onSubmit={handleUpdateMessage}>
           <Container className={classes.bioContainer}>
               <Typography variant='h6'>Personal Bio</Typography>
                 <div className={classes.editIconBtn}>
                   <IconButton className={classes.editIconBtnTag} onClick={() => setEditMessageOn(!editMessageOn)}><EditIcon className={classes.editIcon}/></IconButton>
                 </div>
-                
               </Container>
+              
           {/* <Typography variant='h6'>Personal Bio</Typography>
             <div className={classes.editIconBtn}>
             
@@ -278,7 +289,15 @@ export default function Dashboard() {
                   setPublicMessage(e.target.value);
                 }}
               />
-            {/* <Typography className={classes.typeAbout}>{userPublicMessage}</Typography> */}
+           
+                <div>
+                  {!editMessageOn && 
+                    <Button className={classes.saveBioBtn} variant="outlined" color="secondary" component="button" type='submit'>
+                      Save
+                    </Button>
+                  }
+                </div>
+            </form>
             </Paper>
         </Grid>
       </Grid>
