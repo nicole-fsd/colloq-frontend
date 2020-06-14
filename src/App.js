@@ -62,9 +62,12 @@ function App() {
             }}
           />
           <Route
-            path="/profile/:id">
-              <UserProfile />
-          </Route>
+            path="/profile/:id"
+            render={() => {
+              return !Authenticated ? <Redirect to="/" /> : <UserProfile />;
+            }}
+            />
+              
           <Route
             exact
             path="/meetups"

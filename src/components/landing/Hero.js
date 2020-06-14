@@ -9,14 +9,24 @@ import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: "250px",
+    padding: "8rem",
     // border: "solid 1px black",
-    minHeight: "850px",
+    [theme.breakpoints.up('md')]: {
+      padding: "15rem",
+    }, 
+    minHeight: "100vh",
     // backgroundImage: `url(${Background})`,
-    color: "#424242"
+    color: "#424242",
   },
   text: {
-    color: "secondary" 
+    color: "secondary",
+    fontSize: '2.8rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '3rem',
+    },
+  [theme.breakpoints.up('md')]: {
+    fontSize: '3.8rem',
+  }, 
   },
   link: {
     textDecoration: 'none',

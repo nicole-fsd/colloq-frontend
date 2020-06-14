@@ -40,7 +40,7 @@ export const postComment = (text, userId, authUserId) => (dispatch) => {
 };
 
  export const getComments = (id) => (dispatch) => {
-    axios.get(`${process.env.REACT_APP_ENDPOINT}/comments?commentRecipient=%22%2Fwdev_nicole%2Feindwerk%2Fapi%2Fusers%2F38%22`, {
+    axios.get(`${process.env.REACT_APP_ENDPOINT}/comments?commentRecipient=%22%2Fwdev_nicole%2Feindwerk%2Fapi%2Fusers%2F${id}%22`, {
      headers: {
        authorization: `Bearer ${localStorage.getItem('token')}`
      }

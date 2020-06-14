@@ -96,7 +96,7 @@ export default function Register() {
     const [startDate, setStartDate] = useState(new Date('2020-06-09T21:11:54'));
     const [endDate, setEndDate] = useState(new Date('2020-06-09T21:11:54'));
     
-
+    
     const handleStartDateChange = (date) => {
       setStartDate(date);
     };
@@ -112,7 +112,7 @@ export default function Register() {
 
     const submitHandler = (e) => {
       e.preventDefault();
-      dispatch(registerUser(email, password, firstname, lastname, age, meetupType, startDate, endDate, radioValue))
+      dispatch(registerUser(email, password, firstname, lastname, age, meetupType, startDate, endDate, nativeLand, targetLang, radioValue))
     };
 
     return (
@@ -123,7 +123,7 @@ export default function Register() {
               Register
             </Typography>
             <form className={classes.form} method="POST" onSubmit={submitHandler}>
-                          <TextField variant="standard" margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" value={email}
+                          <TextField variant="standard" margin="normal" type="email" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" value={email}
                           onChange={(e) => {
                             setEmail(e.target.value);
                           }}

@@ -5,34 +5,36 @@ import { makeStyles } from "@material-ui/core/styles";
  
 const useStyles = makeStyles(theme => ({
   container: {
-    minHeight: "700px",
-    justify: "center",
+    minHeight: "800px",
+    justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#ff7043",
+    
   },
   grid: {
-    padding: "150px",
-    justify: "center",
+    padding: "8rem",
+    justifyContent: "center",
     alignItems: "center",
     color: "white",
   },
   gridItem: {
-    height: "150px",
-    width: "150px",
-    borderRadius: "50%"
+    height: "5rem",
+    width: "5rem",
+    borderRadius: "50%",
+    
   },
   card: {
     maxWidth: "350px",
     borderRadius: "50%"
   },
   media: {
-    height: "300px",
+    minHeight: "300px",
   },
   stepTitle: {
-    fontSize: "30px",
+    fontSize: "2rem",
     textAlign: "center",
-    paddingBottom: "20px",
-    paddingRight: "25px"
+    marginBottom: "1.5rem",
+    paddingRight: "2rem"
   }
 }));
 
@@ -42,7 +44,7 @@ const useStyles = makeStyles(theme => ({
     return (
       <Container disableGutters maxWidth="xl" className={classes.container}>
         <Grid container direction="row" justify="space-evenly" className={classes.grid}>
-          <Grid item className={classes.gridItem} xs={3}>
+          <Grid item className={classes.gridItem} xs={12} sm={4}>
           <Typography className={classes.stepTitle}>Sign up</Typography>
             <Card className={classes.card}>
               <CardActionArea>
@@ -57,7 +59,7 @@ const useStyles = makeStyles(theme => ({
           </Grid>
           <Grid item 
           className={classes.gridItem} 
-          xs={3}
+          xs={12} sm={4}
           >
           <Typography className={classes.stepTitle}>Connect</Typography>
           <Card className={classes.card}>
@@ -71,7 +73,7 @@ const useStyles = makeStyles(theme => ({
               </CardActionArea>
             </Card >
           </Grid>
-          <Grid item className={classes.gridItem} xs={3}>
+          <Grid item className={classes.gridItem} xs={12} sm={4}>
           <Typography className={classes.stepTitle}>Meet and Learn</Typography>
           <Card className={classes.card}>
               <CardActionArea>

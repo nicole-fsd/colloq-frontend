@@ -124,6 +124,7 @@ export default function Search() {
     const [searchInput, setSearchInput] = useState("")
     const dispatch = useDispatch();
     const users = useSelector((state) => state.search.users);
+    const userIsTourist = useSelector((state) => state.auth.user.isTourist);
 
     /// make array of user ids
       let i;
@@ -137,18 +138,18 @@ export default function Search() {
       idArray.push(result)
       }
 
-      // console.log(idArray)
+    
       
     const handleSearchFormSubmit = (e) => {
       e.preventDefault();
-      dispatch(getUsers(searchInput))
+      dispatch(getUsers(searchInput, userIsTourist))
       console.log('handlesearchformsubmit')
     }
 
     const handleChange = (e) => {
       setSearchInput(e.target.value)
     }
-    console.log(users)
+    
 
     return (
         
@@ -192,6 +193,7 @@ export default function Search() {
                 width={900}
                 
             >
+              {users.length === 0 && <Typography>Search criteria returned no results</Typography>}
                 {users.map((user, index) => (
                     <Grid item xs={12} key={index}>
                         <Card>

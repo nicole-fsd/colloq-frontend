@@ -11,13 +11,14 @@ const useStyles = makeStyles((theme) => ({
     minHeight: "100vh",
     display: "flex",
     justifyContent: "center",
-    alignContent: "center"
+    alignContent: "center",
+    marginBottom: '1rem'
   },
   gridList: {
-    height: "100vh",
+    minHeight: "100vh",
     width: "70vw",
     // border: "1px solid black",
-    paddingTop: "60px"
+    paddingTop: "60px",
   },
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
@@ -32,7 +33,7 @@ export default function TitlebarGridList() {
     <Container className={classes.root}>
       <GridList spacing={60} cellHeight={250} className={classes.gridList}>
         {tileData.map((tile) => (
-          <GridListTile key={tile.img}>
+          <GridListTile xs={12} key={tile.img}>
             <img src={tile.img} alt={tile.title} />
             <GridListTileBar
               title={tile.title}

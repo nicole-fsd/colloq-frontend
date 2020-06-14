@@ -13,7 +13,7 @@ export const initialState = {
     lastname: "",
     age: "",
     isTourist: "",
-    istutor: "",
+    isTutor: "",
     meetupType: "",
     publicMessage: "",
   },
@@ -66,7 +66,7 @@ export const logoutUser = () => ({
   type: LOGOUT,
 });
 
-export const registerUser = (email, password, firstName, lastName, age, meetupType, startDate, endDate, role) => (dispatch) => {
+export const registerUser = (email, password, firstName, lastName, age, meetupType, startDate, endDate, nativeLang, targetLang, role) => (dispatch) => {
     const config = {
       headers: {
       'Content-Type': "application/json;charset=UTF-8"
@@ -79,6 +79,10 @@ export const registerUser = (email, password, firstName, lastName, age, meetupTy
       lastName: lastName,
       age: age,
       meetupType: meetupType,
+      startDate: startDate,
+      endDate: endDate,
+      nativeLang: nativeLang,
+      targetLang: targetLang,
       role: role
     }
     axios.post(`${process.env.REACT_APP_ENDPOINT}/register`, data, config)
@@ -120,7 +124,9 @@ export default (state = initialState, { type, payload }) => {
           lastName: decoded.payload.lastName,
           age: decoded.payload.age,
           meetupType: decoded.payload.meetupType,
-          publicMessage: decoded.payload.publicMessage
+          publicMessage: decoded.payload.publicMessage,
+          isTourist: decoded.payload.isTourist,
+          isTutor: decoded.payload.isTutor
         },
         loggedIn: true,
       };

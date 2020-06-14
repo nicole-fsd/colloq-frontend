@@ -9,25 +9,26 @@ import profileData from './profileData';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: "400px",
+    padding: "2rem",
     minHeight: "800px",
     // backgroundImage: `url(${Background})`,
     backgroundColor: "#ff7043",
     color: "white",
-    justify: "center",
+    display: 'flex',
+    justifyContent: "center",
     alignItems: "center"
   },
   container: {
-    justify: "center",
+    justifyContent: "center",
     alignItems: "center"
   },
   gridList: {
-    justifySelf: "center",
+    justifyContent: "center",
     width: 1200,
     
   },
   grid: {
-    justify:"center"
+    justifyContent:"center"
   }
 }));
 
@@ -48,7 +49,6 @@ const useStyles = makeStyles(theme => ({
             <img src={tile.img} alt={tile.title} />
             <GridListTileBar
               title={tile.title}
-    
             />
           </GridListTile>
         ))}
