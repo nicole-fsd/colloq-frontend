@@ -97,6 +97,7 @@ export default function Nav() {
         <AppBar className={classes.appbar} position="static">
             <Toolbar className={classes.toolbar}>
             <Typography variant="h2" className={classes.logo}>
+           
             <Link className={classes.link} to="/">Colloq </Link>
             </Typography>
             {loggedIn ? (

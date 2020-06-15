@@ -33,8 +33,8 @@ const initialState = {
  export const getUsers = (city, bool) => (dispatch) => {
    console.log('city: ' + city)
    
-   axios.get(`${process.env.REACT_APP_ENDPOINT}/users?isTutor=${bool}&city.name=${city}`, {
-  //  axios.get(`${process.env.REACT_APP_ENDPOINT}/users?city.name=${city}`, {
+  //  axios.get(`${process.env.REACT_APP_ENDPOINT}/users?isTutor=${bool}&city.name=${city}`, {
+   axios.get(`${process.env.REACT_APP_ENDPOINT}/users?city.name=${city}`, {
     headers: {
       authorization: `Bearer ${localStorage.getItem('token')}`
     }

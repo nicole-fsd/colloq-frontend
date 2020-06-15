@@ -213,13 +213,36 @@ export default function Dashboard() {
     })();
    }, []);
 
+
+
    const handleImageUpload = ({ target }) => {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(target.files[0]);
+
     fileReader.onload = (e) => {
-        setNewImage(e.target.result)
-        // console.log(e.target.result)
+
+      // setNewImage(e.target.result)
+        const data = (e.target.result)
+        postPhoto(data)
+        
     };
+  }
+
+  function postPhoto(img) {
+    // console.log('postphoto called')
+    // console.log('newImage:' + img)
+    const config = {
+      headers: {
+      'Content-Type': "multipart/form-data",
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+    };
+    const data = new FormData();
+    data.append("file", img);
+    
+    axios.post(`${process.env.REACT_APP_ENDPOINT}/media_objects`, data, config)
+    .then((response) => console.log('post photo success' + response.data))
+    .catch((error) => console.log('error:' + error));
   }
     
 //     // console.log('newImage: ' + newImage)
@@ -241,24 +264,7 @@ export default function Dashboard() {
 //     .catch((error) => console.log('error:' + error));
 // };
 
-// function postPhoto() {
-//   console.log('postphoto called')
-//   const config = {
-//     headers: {
-//     'Authorization': `Bearer ${localStorage.getItem('token')}`
-//     },
-//   };
-//   const data = {
-//     filename: 'test',
-//     title: 'test',
-//     caption: 'test',
-//     image: 'test',
-//     mediaImage: newImage
-//   }
-//   axios.post(`${process.env.REACT_APP_ENDPOINT}/media_objects`, data, config)
-//   .then((response) => console.log('post photo success' + response.data))
-//   .catch((error) => console.log('error:' + error));
-// }
+
   
 
   // useEffect(() => {

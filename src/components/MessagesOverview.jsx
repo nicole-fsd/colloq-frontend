@@ -220,7 +220,7 @@ export default function MessagesOverview() {
     <div className={classes.root}>
         <Paper className={classes.paper} elevation={3}>
             <div className={classes.backDiv}>
-                <Link className={classes.backLink} to='/dashboard'>Back to my profile</Link>
+                {/* <Link className={classes.backLink} to='/dashboard'>Back to my profile</Link> */}
             </div>
             <Grid container>
                 <Grid item xs={12} md={4}>
@@ -234,12 +234,6 @@ export default function MessagesOverview() {
                             <SendIcon />
                             </ListItemIcon>
                             <ListItemText primary="Sent mail" />
-                        </ListItem>
-                        <ListItem button>
-                            <ListItemIcon>
-                            <DraftsIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Drafts" />
                         </ListItem>
                         <ListItem button>
                             <ListItemIcon>

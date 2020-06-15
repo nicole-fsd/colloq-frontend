@@ -192,9 +192,9 @@ export default function MeetupsOverview() {
             </Grid>
 
             <Grid className={classes.grid2} justify="center" alignItems="center" container direction="column" spacing={0}>
-                <div className={classes.backDiv}>
+                {/* <div className={classes.backDiv}>
                     <Link className={classes.backLink} to='/dashboard'>Back to my profile</Link>
-                </div>
+                </div> */}
                 <div className={classes.btnDiv}>
                 <Button className={classes.createBtn} variant="outlined" color="primary" onClick={handleClickOpen}>
                   Create New Meetup
