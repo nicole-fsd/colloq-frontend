@@ -132,6 +132,9 @@ const useStyles = makeStyles(theme => ({
       },
       saveBioBtn: {
         marginBottom: ".8rem"
+      },
+      uploadBtn: {
+        marginTop: '.8rem'
       }
   }));
 
@@ -195,7 +198,7 @@ export default function Dashboard() {
      });
      
       setSingleUserPhoto(user.data.images[0].filename);
-      console.log(user.data.images[0].filename);
+      // console.log(user.data.images[0].filename);
      
   }
 
@@ -215,10 +218,47 @@ export default function Dashboard() {
     fileReader.readAsDataURL(target.files[0]);
     fileReader.onload = (e) => {
         setNewImage(e.target.result)
-        console.log(e.target.result)
+        // console.log(e.target.result)
     };
-    console.log('newImage: ' + newImage)
-};
+  }
+    
+//     // console.log('newImage: ' + newImage)
+
+//     const config = {
+//       headers: {
+//       'Authorization': `Bearer ${localStorage.getItem('token')}`
+//       },
+//     };
+//     const data = {
+//       filename: 'test',
+//       title: 'test',
+//       caption: 'test',
+//       image: 'test',
+//       mediaImage: newImage
+//     }
+//     axios.post(`${process.env.REACT_APP_ENDPOINT}/media_objects`, data, config)
+//     .then((response) => console.log('post photo success' + response.data))
+//     .catch((error) => console.log('error:' + error));
+// };
+
+// function postPhoto() {
+//   console.log('postphoto called')
+//   const config = {
+//     headers: {
+//     'Authorization': `Bearer ${localStorage.getItem('token')}`
+//     },
+//   };
+//   const data = {
+//     filename: 'test',
+//     title: 'test',
+//     caption: 'test',
+//     image: 'test',
+//     mediaImage: newImage
+//   }
+//   axios.post(`${process.env.REACT_APP_ENDPOINT}/media_objects`, data, config)
+//   .then((response) => console.log('post photo success' + response.data))
+//   .catch((error) => console.log('error:' + error));
+// }
   
 
   // useEffect(() => {
@@ -238,12 +278,11 @@ export default function Dashboard() {
                 accept="image/*"
                 className={classes.input}
                 id="contained-button-file"
-                multiple
                 onChange={handleImageUpload}
                 type="file"
                 />
                 <label htmlFor="contained-button-file">
-                  <Button variant="contained" color="secondary" component="span">
+                  <Button className={classes.uploadBtn} variant="contained" color="secondary" component="span">
                     Upload
                   </Button>
                 </label>

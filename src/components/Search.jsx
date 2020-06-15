@@ -192,7 +192,7 @@ export default function Search() {
                 width={900}
                 
             >
-              {users.length === 0 && <Typography>Search criteria returned no results</Typography>}
+              {users.length === 0 && <Typography>No results to show</Typography>}
                 {users.map((user, index) => (
                     <Grid item xs={12} key={index}>
                         <Card>
