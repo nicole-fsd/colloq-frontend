@@ -30,6 +30,10 @@ const useStyles = makeStyles(theme => ({
   termsGrid: {
     // border: "solid 1px red",
     justifyContent: "center"
+  },
+  textLink: {
+    fontSize: '1.2rem',
+    verticalAlign: 'sub'
   }
 }));
 
@@ -57,13 +61,13 @@ const Footer = () => {
       </Grid>
       <Grid item container xs={6} className={classes.termsGrid} spacing={6}>
         <Grid item>
-          <Typography>Contact</Typography>
+          <Typography className={classes.textLink}>Contact</Typography>
         </Grid>
         <Grid item>
-          <Typography>Privacy</Typography>
+          <a href="/"><Typography className={classes.textLink}>Privacy</Typography></a>
         </Grid>
         <Grid item>
-          <Typography>Terms and Conditions</Typography>
+          <Typography className={classes.textLink}>Terms and Conditions</Typography>
         </Grid>
       </Grid>
       

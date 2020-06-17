@@ -12,6 +12,7 @@ export const initialState = {
     firstname: "",
     lastname: "",
     age: "",
+    city:"",
     isTourist: "",
     isTutor: "",
     meetupType: "",
@@ -94,7 +95,7 @@ export const registerUser = (email, password, firstName, lastName, age, meetupTy
     .catch((error) => console.log(error));
 };
 
-export const updateUser = (id, email, firstname, lastname, age, meetupType) => (dispatch) => {
+export const updateUser = (id, email, firstname, lastname, age, cityIri, meetupCityIri, meetupType) => (dispatch) => {
   const config = {
     headers: {
     'Content-Type': "application/json;charset=UTF-8",
@@ -105,7 +106,9 @@ export const updateUser = (id, email, firstname, lastname, age, meetupType) => (
     email: email,
     firstName: firstname,
     lastName: lastname,
-    age: age,
+    age: parseInt(age),
+    city: cityIri, 
+    meetupCity: meetupCityIri,
     meetupType: meetupType,
     // startDate: startDate,
     // endDate: endDate,
@@ -157,6 +160,10 @@ export default (state = initialState, { type, payload }) => {
           firstName: decoded.payload.firstName,
           lastName: decoded.payload.lastName,
           age: decoded.payload.age,
+          city: decoded.payload.city,
+          cityId: decoded.payload.cityId,
+          meetupCity: decoded.payload.meetupCity,
+          meetupCityId: decoded.payload.meetupCityId,
           meetupType: decoded.payload.meetupType,
           publicMessage: decoded.payload.publicMessage,
           isTourist: decoded.payload.isTourist,

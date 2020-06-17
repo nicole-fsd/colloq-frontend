@@ -208,6 +208,7 @@ export default function Search() {
                                 title={user.firstname + ' ' + user.lastname}
                                 subheader={user.age}
                                 // subheader={user.city}
+                                
                             />
                             <CardContent className={classes.cardContent}>
                               <Link className={classes.link} to={`/profile/${idArray[index]}`}>

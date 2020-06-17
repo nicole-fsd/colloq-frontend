@@ -32,9 +32,15 @@ const useStyles = makeStyles(theme => ({
   },
   stepTitle: {
     fontSize: "2rem",
-    textAlign: "center",
+    // textAlign: "center",
     marginBottom: "1.5rem",
-    paddingRight: "2rem"
+    paddingLeft: "100px"
+  },
+  stepTitle3: {
+    fontSize: "2rem",
+    // textAlign: "center",
+    marginBottom: "1.5rem",
+    paddingLeft: "70px"
   }
 }));
 
@@ -74,7 +80,7 @@ const useStyles = makeStyles(theme => ({
             </Card >
           </Grid>
           <Grid item className={classes.gridItem} xs={12} sm={4}>
-          <Typography className={classes.stepTitle}>Meet and Learn</Typography>
+          <Typography className={classes.stepTitle3}>Meet and Learn</Typography>
           <Card className={classes.card}>
               <CardActionArea>
                 <CardMedia

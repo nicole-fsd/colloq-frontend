@@ -11,6 +11,7 @@ import Search from './components/Search'
 import UserProfile from './components/UserProfile'
 import MeetupsOverview from './components/MeetupsOverview'
 import MessagesOverview from './components/MessagesOverview'
+// import Privacy from './components/landing/Privacy'
 
 
 function App() {
@@ -82,6 +83,13 @@ function App() {
               return <MessagesOverview />;
             }}
           />
+          {/* <Route
+            exact
+            path="/privacy"
+            render={() => {
+              return <Privacy />;
+            }}
+          /> */}
             
       </Layout>
     </> 

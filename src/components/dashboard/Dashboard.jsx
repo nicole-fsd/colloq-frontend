@@ -177,10 +177,26 @@ export default function Dashboard() {
     setName(event.target.value);
     };
 
-    const handleUpdateDetails = (e) => {
+    const handleUpdateDetails = async (e) => {
       e.preventDefault()
+      const requestOne = axios.get(`${process.env.REACT_APP_ENDPOINT}/cities?name=${city}`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')}`
+        }})
+    const requestTwo = axios.get(`${process.env.REACT_APP_ENDPOINT}/cities?name=${meetupCity}`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`
+      }})
+      const [cityIriData, meetupCityIriData] = await axios.all([requestOne, requestTwo]);
+
+      const cityIri = (cityIriData.data['hydra:member'][0]['@id'])
+      const meetupCityIri = (meetupCityIriData.data['hydra:member'][0]['@id'])
+      
+
+      
+        // .then((res) => console.log(res.data['hydra:member'][0]['@id']))
       // console.log(userId, email, firstname, lastname, age, meetupType)
-      dispatch(updateUser(userId, email, firstname, lastname, age, meetupType))
+      dispatch(updateUser(userId, email, firstname, lastname, age, cityIri, meetupCityIri, meetupType))
       };
 
     const handleUpdateMessage = (e) => {
@@ -215,17 +231,29 @@ export default function Dashboard() {
 
 
 
-   const handleImageUpload = ({ target }) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(target.files[0]);
+   const handleImageUpload = (e) => {
+    const files = Array.from(e.target.files)
+    
 
-    fileReader.onload = (e) => {
+    const formData = new FormData()
 
-      // setNewImage(e.target.result)
-        const data = (e.target.result)
-        postPhoto(data)
-        
+    files.forEach((file, i) => {
+      formData.append("file", file)
+    })
+
+    const config = {
+      headers: {
+      'Content-Type': "multipart/form-data",
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
     };
+    // const data = new FormData();
+    // data.append("file", img);
+    
+    axios.post(`${process.env.REACT_APP_ENDPOINT}/media_objects`, formData, config)
+    .then((response) => console.log('post photo success' + response.data))
+    .catch((error) => console.log('error:' + error));
+    
   }
 
   function postPhoto(img) {
@@ -240,7 +268,7 @@ export default function Dashboard() {
     const data = new FormData();
     data.append("file", img);
     
-    axios.post(`${process.env.REACT_APP_ENDPOINT}/media_objects`, data, config)
+    axios.post(`${process.env.REACT_APP_ENDPOINT}/media_objects`, img, config)
     .then((response) => console.log('post photo success' + response.data))
     .catch((error) => console.log('error:' + error));
   }
