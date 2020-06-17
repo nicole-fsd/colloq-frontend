@@ -16,6 +16,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     alignItems: "center",
     color: "white",
+    marginLeft: '28px'
   },
   gridItem: {
     height: "5rem",
@@ -31,16 +32,17 @@ const useStyles = makeStyles(theme => ({
     minHeight: "300px",
   },
   stepTitle: {
-    fontSize: "2rem",
+    fontSize: "3rem",
     // textAlign: "center",
     marginBottom: "1.5rem",
     paddingLeft: "100px"
   },
   stepTitle3: {
-    fontSize: "2rem",
+    fontSize: "3rem",
     // textAlign: "center",
     marginBottom: "1.5rem",
-    paddingLeft: "70px"
+    paddingLeft: "30px",
+
   }
 }));
 

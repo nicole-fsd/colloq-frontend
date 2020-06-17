@@ -6,7 +6,7 @@ import { Container , Paper, Grid, Typography, Button, TextField, IconButton} fro
 import Footer from '../landing/Footer'
 import Avatar from '@material-ui/core/Avatar';
 import { getPhoto } from "../../data/photos";
-import { updateUser } from "../../data/auth";
+import { updateUser, setPhoto, updatePublicMessage } from "../../data/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from 'react-router-dom'
 import EditIcon from '@material-ui/icons/Edit';
@@ -100,11 +100,15 @@ const useStyles = makeStyles(theme => ({
       },
       meetupLink: {
         fontSize:'2rem',
-        textDecoration: 'none'
+        textDecoration: 'none',
+        color: '#65499c',
+        fontFamily: 'Segoe UI'
       },
       messageLink: {
         fontSize:'2rem',
-        textDecoration: 'none'
+        textDecoration: 'none',
+        color: '#65499c',
+        fontFamily: 'Segoe UI'
       },
       editIconBtn: {
         textAlign: 'right',
@@ -157,9 +161,11 @@ export default function Dashboard() {
     // const userPhoto = useSelector((state) => state.auth.user.images[0].filename);
     
     const userPublicMessage = useSelector((state) => state.auth.user.publicMessage);
+    const authUserPhoto = useSelector((state) => state.auth.user.imageFile);
     // const photos = useSelector((state) => state.photos.photos);
     const [singleUserPhoto, setSingleUserPhoto] = useState("");
-    const [newImage, setNewImage] = useState("");
+    
+   
     const [email, setEmail] = useState(userEmail);
     // const [password, setPassword] = useState();
     const [firstname, setFirstName] = useState(userFirstName);
@@ -201,8 +207,8 @@ export default function Dashboard() {
 
     const handleUpdateMessage = (e) => {
       e.preventDefault()
-      // console.log(userId, email, firstname, lastname, age, meetupType)
-      // dispatch(updateUser(userId, email, firstname, lastname, age, meetupType))
+      console.log(userId, publicMessage)
+      dispatch(updatePublicMessage(userId, publicMessage))
       };
 
 
@@ -233,6 +239,8 @@ export default function Dashboard() {
 
    const handleImageUpload = (e) => {
     const files = Array.from(e.target.files)
+    const filename = files[0].name
+    // dispatch(setPhoto(filename))
     
 
     const formData = new FormData()
@@ -247,31 +255,27 @@ export default function Dashboard() {
       'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
     };
-    // const data = new FormData();
-    // data.append("file", img);
-    
     axios.post(`${process.env.REACT_APP_ENDPOINT}/media_objects`, formData, config)
     .then((response) => console.log('post photo success' + response.data))
     .catch((error) => console.log('error:' + error));
-    
   }
 
-  function postPhoto(img) {
-    // console.log('postphoto called')
-    // console.log('newImage:' + img)
-    const config = {
-      headers: {
-      'Content-Type': "multipart/form-data",
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
-      },
-    };
-    const data = new FormData();
-    data.append("file", img);
+  // function postPhoto(img) {
+  //   // console.log('postphoto called')
+  //   // console.log('newImage:' + img)
+  //   const config = {
+  //     headers: {
+  //     'Content-Type': "multipart/form-data",
+  //     'Authorization': `Bearer ${localStorage.getItem('token')}`
+  //     },
+  //   };
+  //   const data = new FormData();
+  //   data.append("file", img);
     
-    axios.post(`${process.env.REACT_APP_ENDPOINT}/media_objects`, img, config)
-    .then((response) => console.log('post photo success' + response.data))
-    .catch((error) => console.log('error:' + error));
-  }
+  //   axios.post(`${process.env.REACT_APP_ENDPOINT}/media_objects`, img, config)
+  //   .then((response) => console.log('post photo success' + response.data))
+  //   .catch((error) => console.log('error:' + error));
+  // }
     
 //     // console.log('newImage: ' + newImage)
 

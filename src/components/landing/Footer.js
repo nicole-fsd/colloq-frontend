@@ -29,11 +29,21 @@ const useStyles = makeStyles(theme => ({
   },
   termsGrid: {
     // border: "solid 1px red",
-    justifyContent: "center"
+    justifyContent: "center",
+    textDecoration: 'none'
   },
   textLink: {
     fontSize: '1.2rem',
-    verticalAlign: 'sub'
+    verticalAlign: 'sub',
+    color: 'black',
+    textDecoration: 'none'
+  },
+  copy: {
+    marginBottom: '0'
+  },
+  copyDiv: {
+    marginTop: 50,
+    textAlign: 'center'
   }
 }));
 
@@ -64,7 +74,7 @@ const Footer = () => {
           <Typography className={classes.textLink}>Contact</Typography>
         </Grid>
         <Grid item>
-          <a href="/"><Typography className={classes.textLink}>Privacy</Typography></a>
+          <Typography className={classes.textLink}>Privacy</Typography>
         </Grid>
         <Grid item>
           <Typography className={classes.textLink}>Terms and Conditions</Typography>
@@ -72,8 +82,10 @@ const Footer = () => {
       </Grid>
       
       </Grid>
-     
-      <Typography className={classes.copy}>©2020 All Rights Reserved</Typography>
+     <div className={classes.copyDiv}>
+       <Typography className={classes.copy}>©2020 Colloq, Inc. All Rights Reserved</Typography> 
+     </div>
+      
     </Container>
   );
 };

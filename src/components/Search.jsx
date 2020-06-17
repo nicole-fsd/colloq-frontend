@@ -206,11 +206,10 @@ export default function Search() {
                             />
                             <CardHeader
                                 title={user.firstname + ' ' + user.lastname}
-                                subheader={user.age}
-                                // subheader={user.city}
-                                
+                                subheader={'Age:' + user.age}   
                             />
                             <CardContent className={classes.cardContent}>
+                            <Typography variant='subtitle1'></Typography>
                               <Link className={classes.link} to={`/profile/${idArray[index]}`}>
                                 <Typography className={classes.linkText}>View Profile</Typography>
                                 </Link>

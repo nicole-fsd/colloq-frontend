@@ -17,6 +17,7 @@ export const initialState = {
     isTutor: "",
     meetupType: "",
     publicMessage: "",
+    // imageFile: ""
   },
   register: {
     error: false,
@@ -38,6 +39,7 @@ export const LOGOUT = "LOGOUT";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_ERROR = "REGISTER_ERROR"
 export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS"
+// export const SET_PHOTO = "SET_PHOTO"
 
 
 /* ACTION CREATORS *//////////////////////////////////////
@@ -51,6 +53,11 @@ export const loginUser = (username, password) => (dispatch) => {
     .then((response) => dispatch(loginSuccess(response.data.token)))
     .catch((error) => console.log(error));
 };
+
+// export const setPhoto = (filename) => ({
+//   type: SET_PHOTO,
+//   payload: filename,
+// });
 
 
 export const loginSuccess = (data) => ({
@@ -124,6 +131,24 @@ export const updateUser = (id, email, firstname, lastname, age, cityIri, meetupC
   .catch((error) => console.log(error));
 };
 
+export const updatePublicMessage = (id, publicMessage) => (dispatch) => {
+  const config = {
+    headers: {
+    'Content-Type': "application/json;charset=UTF-8",
+    'Authorization': `Bearer ${localStorage.getItem('token')}`
+    },
+  };
+  const data = {
+    publicMessage: publicMessage
+  }
+  axios.put(`${process.env.REACT_APP_ENDPOINT}/users/${id}`, data, config)
+  .then((response) => {
+    // dispatch(updateUserSuccess(response.data))
+    console.log('update public message success')
+  })
+  .catch((error) => console.log(error));
+};
+
 
 export const registerSuccess = (data) => ({
   type: REGISTER_SUCCESS,
@@ -188,6 +213,16 @@ export default (state = initialState, { type, payload }) => {
       },
       loggedIn: true,
     };
+
+    // case SET_PHOTO:
+    //   const filename = payload.substring(0, payload.length-4);
+    //   return {
+    //     ...state,
+    //     user: {
+    //       ...state.auth,
+    //       imageFile: filename
+    //     }
+    //   }
 
     default:
       return state;

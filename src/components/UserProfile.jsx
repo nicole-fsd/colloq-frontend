@@ -320,6 +320,7 @@ const getUser = async (id) => {
 
  useEffect(() => {
   getUser(id);
+  getComments(id)
  }, [id]);
 
 //  useEffect(() => {
@@ -382,9 +383,10 @@ const getUser = async (id) => {
                 <Typography className={classes.name}>{singleUserFirstname}  {singleUserLastname}</Typography>
                 <div className={classes.subDiv}>
                 <Typography className={classes.subInfo}>Age: {singleUserAge}</Typography>
-                <Typography className={classes.subInfo}>Language: </Typography>
+                <Typography className={classes.subInfo}>Native Language: English</Typography>
+                <Typography className={classes.subInfo}>Target Language: Spanish</Typography>
                 <Typography className={classes.subInfo}>City: {singleUserCity}</Typography>
-                <Typography className={classes.subInfo}>Meetup type: {singleUserMeetupType}</Typography>
+                <Typography className={classes.subInfo}>Meetup type: Park{singleUserMeetupType}</Typography>
               </div>
               
               </div>
@@ -406,9 +408,9 @@ const getUser = async (id) => {
                   </Grid>
               ))}
             <Grid item xs>
-            <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleGetComments}>
+            {/* <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleGetComments}>
                 Get Comments
-              </Button> 
+              </Button>  */}
               <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleOpenCommentModal}>
                 Post Comment
               </Button> 
