@@ -2,27 +2,44 @@ import React, {useState} from "react";
 import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-import { Grid, Typography, TextField, Container, Button } from "@material-ui/core";
+import { Grid, Typography, TextField, Container, Button, Paper } from "@material-ui/core";
 import { loginUser } from "../data/auth";
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    backgroundColor: "#E1E2E1",
+    minWidth: 400,
+    maxWidth: 500,
+    height: 'auto',
+    position: 'absolute',
+    top: '20%',
+    left: 0,
+    right: 0,
+    margin: 'auto',
   },
   title: {
     fontSize: "30px",
-    textAlign: "center"
+    textAlign: "center",
+    color: '#757575'
   },
   toolbar: {
     color: "white",
   },
   container: {
     alignItems: "center",
-    marginTop: theme.spacing(15),
+    marginTop: theme.spacing(5),
+    
+    
+  },
+  paper: {
+    border: '1px solid #bdbdbd',
+    padding: 20,
+    overflow: 'auto',
   },
   link: {
     textDecoration: "none",
+    fontSize: '1rem',
     marginLeft: "50px",
     color: "gray",
     '&:hover': {
@@ -30,7 +47,9 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   div: {
-    margin: "20px auto"
+    margin: "20px auto",
+    
+
   }
 }));
 
@@ -49,6 +68,9 @@ export default function Login() {
 
     return (
       <>
+      <div>
+      <div className={classes.root}>
+      <Paper className={classes.paper} component="div" elevation={3}>
         <Grid container direction="column" className={classes.container}>
           <Grid item container xs={12} sm={10} direction="column">
             <Grid item xs={12}>
@@ -99,6 +121,9 @@ export default function Login() {
             </Grid>
           </Grid>
         </Grid>
+        </Paper>
+        </div>
+        </div>
       </>
     );
   }

@@ -408,9 +408,9 @@ const getUser = async (id) => {
                   </Grid>
               ))}
             <Grid item xs>
-            {/* <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleGetComments}>
+            <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleGetComments}>
                 Get Comments
-              </Button>  */}
+              </Button> 
               <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleOpenCommentModal}>
                 Post Comment
               </Button> 

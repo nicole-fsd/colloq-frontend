@@ -16,21 +16,26 @@ import {Grid, Typography, TextField, Button, Paper, FormControl } from "@materia
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      display: "flex",
-      justifyContent: "center",
+      // display: "flex",
+      // justifyContent: "center",
       backgroundColor: "#E1E2E1",
-      minHeight: "100vh"
+      // minHeight: "100vh",
+
+      minWidth: 400,
+      maxWidth: 600,
+      height: 'auto',
+      position: 'absolute',
+      top: '10%',
+      left: 0,
+      right: 0,
+      margin: 'auto',
+
     },
   paper: {
     backgroundColor: "white",
-    width: "40%",
-    minHeight: "90vh",
+    border: '1px solid #bdbdbd',
+    padding: 20,
     overflow: 'auto',
-    alignSelf: "center",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    marginTop: ".2ch"
   },
   gridTop: {
     border: "1px solid black",
@@ -51,17 +56,21 @@ const useStyles = makeStyles((theme) => ({
     width: "73ch"
   },
   title: {
-    fontSize: "30px",
+    fontSize: "2.5rem",
     textAlign: "center",
-    margin: "3.5ch 1ch"
+    margin: "3ch 1ch",
+    fontFamily: 'Segoe UI',
+    color: '#757575'
   },
   form: {
-    width: "400px",
+    width: "70%",
+    margin: 'auto'
   },
   submitDiv: {
     margin: "4ch"
   },
   link: {
+    fontSize: '1rem',
     marginLeft: "6ch",
     textDecoration: "none",
     color: "gray",
@@ -116,6 +125,7 @@ export default function Register() {
 
     return (
       <>
+      <div>
         <div className={classes.root}>
           <Paper className={classes.paper} component="div" elevation={3}>
             <Typography variant="h4" component="h2" className={classes.title}>
@@ -237,6 +247,7 @@ export default function Register() {
                         </div>
               </form>
           </Paper>
+        </div>
         </div>
       </>
     );
