@@ -189,7 +189,7 @@ export default function Dashboard() {
         headers: {
           authorization: `Bearer ${localStorage.getItem('token')}`
         }})
-    const requestTwo = axios.get(`${process.env.REACT_APP_ENDPOINT}/cities?name=${meetupCity}`, {
+      const requestTwo = axios.get(`${process.env.REACT_APP_ENDPOINT}/cities?name=${meetupCity}`, {
       headers: {
         authorization: `Bearer ${localStorage.getItem('token')}`
       }})

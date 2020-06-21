@@ -27,16 +27,25 @@ const useStyles = makeStyles(theme => ({
         flexDirection: "column",
         alignItems: "center",
         minHeight: "100vh",
-        backgroundColor: "gray"
+        backgroundColor: "gray",
+        
+
       },
       paper: {
         padding: theme.spacing(5),
+        [theme.breakpoints.down('sm')]: {
+          padding: theme.spacing(0),
+        },
         textAlign: 'center',
         color: theme.palette.text.secondary,
         backgroundColor: "#eeeeee",
         height: "90vh",
         width: "70vw",
-        margin: "30px"
+        [theme.breakpoints.down('xs')]: {
+          width: "100vw",
+          margin: 0,
+        },
+        margin: "30px",
       },
       paperModal: {
         position: 'absolute',
@@ -45,6 +54,10 @@ const useStyles = makeStyles(theme => ({
         border: '2px solid #000',
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
+        [theme.breakpoints.down('xs')]: {
+          width: "90vw",
+          position: 'fixed'
+        },
       },
       listitem: {
           borderBottom: ".5px solid gray"
@@ -53,6 +66,9 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
         maxWidth: 360,
         backgroundColor: theme.palette.background.paper, 
+        [theme.breakpoints.down('xs')]: {
+          maxWidth: '100%',
+        },
       },
       modalBtn: {
         margin: '5px'

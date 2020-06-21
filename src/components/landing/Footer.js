@@ -5,6 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import { Link } from "react-router-dom";
 
 
 
@@ -52,7 +53,7 @@ const Footer = () => {
   return (
     <Container className={classes.container}>
       <Grid container className={classes.topGrid} spacing={3}>
-      <Grid item container xs={6} className={classes.socialGrid} spacing={3}>
+      <Grid item container xs={12} sm={6} className={classes.socialGrid} spacing={3}>
         <Grid item>
         <IconButton color="primary" aria-label="Facebook" component="span">
           <FacebookIcon fontSize="large"/>
@@ -69,15 +70,15 @@ const Footer = () => {
         </IconButton>
         </Grid>
       </Grid>
-      <Grid item container xs={6} className={classes.termsGrid} spacing={6}>
+      <Grid item container xs={12} sm={6} className={classes.termsGrid} spacing={6}>
         <Grid item>
           <Typography className={classes.textLink}>Contact</Typography>
         </Grid>
         <Grid item>
-          <Typography className={classes.textLink}>Privacy</Typography>
+          <Link to="/privacy"><Typography className={classes.textLink}>Privacy</Typography></Link>
         </Grid>
         <Grid item>
-          <Typography className={classes.textLink}>Terms and Conditions</Typography>
+        <Link to="/terms"><Typography className={classes.textLink}>Terms and Conditions</Typography></Link>
         </Grid>
       </Grid>
       

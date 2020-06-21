@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import axios from 'axios'
 import 'date-fns';
 import {useDispatch} from 'react-redux'
 import { Link } from "react-router-dom";
@@ -16,11 +17,7 @@ import {Grid, Typography, TextField, Button, Paper, FormControl } from "@materia
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      // display: "flex",
-      // justifyContent: "center",
       backgroundColor: "#E1E2E1",
-      // minHeight: "100vh",
-
       minWidth: 400,
       maxWidth: 600,
       height: 'auto',
@@ -118,9 +115,16 @@ export default function Register() {
         console.log(radioValue)
       };
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
       e.preventDefault();
-      dispatch(registerUser(email, password, firstname, lastname, age, meetupType, startDate, endDate, nativeLang, targetLang, radioValue))
+      // const requestOne = axios.get(`${process.env.REACT_APP_ENDPOINT}/cities?name=${city}`)
+      // const requestTwo = axios.get(`${process.env.REACT_APP_ENDPOINT}/cities?name=${meetupCity}`)
+      // const [cityIriData, meetupCityIriData] = await axios.all([requestOne, requestTwo]);
+      // const cityIri = (cityIriData.data['hydra:member'][0]['@id'])
+      // const meetupCityIri = (meetupCityIriData.data['hydra:member'][0]['@id'])
+
+      // console.log(email, password, firstname, lastname, age, meetupType, startDate, endDate, cityIri, meetupCityIri, radioValue)
+      dispatch(registerUser(email, password, firstname, lastname, age, meetupType, startDate, endDate, radioValue))
     };
 
     return (
