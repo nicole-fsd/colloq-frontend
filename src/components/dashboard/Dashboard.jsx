@@ -38,12 +38,20 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: "#E1E2E1",
         width: "100vw",
         minHeight: "100vh",
+        [theme.breakpoints.down('xs')]: {
+          width: '100%',
+        },
+        
     },
     grid1: {
         // border: "1px solid black",
         paddingTop: "80px",
         alignItems: "center",
-        marginLeft: "20px"
+        marginLeft: "20px",
+        [theme.breakpoints.down('xs')]: {
+          marginLeft: "-15px",
+          marginBottom: ".5rem"
+        },
     
     },
     grid2: {
@@ -55,7 +63,10 @@ const useStyles = makeStyles(theme => ({
     },
     gridBottomRight: {
         // border: "1px solid green"
-        marginLeft: "90px"
+        marginLeft: "90px",
+        [theme.breakpoints.down('xs')]: {
+          marginLeft: "0px",
+        },
     },
     paperInfo: {
         backgroundColor: "#eeeeee",
@@ -70,7 +81,11 @@ const useStyles = makeStyles(theme => ({
         marginLeft: "30px",
         overflow: "auto",
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        [theme.breakpoints.down('xs')]: {
+          width: "400px",
+          marginLeft: "0px",
+        },
 
     },
     typeAbout: {
@@ -159,13 +174,10 @@ export default function Dashboard() {
     const userMeetupType = useSelector((state) => state.auth.user.meetupType);
     const userId = useSelector((state) => state.auth.user.id);
     // const userPhoto = useSelector((state) => state.auth.user.images[0].filename);
-    
     const userPublicMessage = useSelector((state) => state.auth.user.publicMessage);
     const authUserPhoto = useSelector((state) => state.auth.user.imageFile);
     // const photos = useSelector((state) => state.photos.photos);
     const [singleUserPhoto, setSingleUserPhoto] = useState("");
-    
-   
     const [email, setEmail] = useState(userEmail);
     // const [password, setPassword] = useState();
     const [firstname, setFirstName] = useState(userFirstName);
@@ -262,44 +274,7 @@ export default function Dashboard() {
     .catch((error) => console.log('error:' + error));
   }
 
-  // function postPhoto(img) {
-  //   // console.log('postphoto called')
-  //   // console.log('newImage:' + img)
-  //   const config = {
-  //     headers: {
-  //     'Content-Type': "multipart/form-data",
-  //     'Authorization': `Bearer ${localStorage.getItem('token')}`
-  //     },
-  //   };
-  //   const data = new FormData();
-  //   data.append("file", img);
-    
-  //   axios.post(`${process.env.REACT_APP_ENDPOINT}/media_objects`, img, config)
-  //   .then((response) => console.log('post photo success' + response.data))
-  //   .catch((error) => console.log('error:' + error));
-  // }
-    
-//     // console.log('newImage: ' + newImage)
-
-//     const config = {
-//       headers: {
-//       'Authorization': `Bearer ${localStorage.getItem('token')}`
-//       },
-//     };
-//     const data = {
-//       filename: 'test',
-//       title: 'test',
-//       caption: 'test',
-//       image: 'test',
-//       mediaImage: newImage
-//     }
-//     axios.post(`${process.env.REACT_APP_ENDPOINT}/media_objects`, data, config)
-//     .then((response) => console.log('post photo success' + response.data))
-//     .catch((error) => console.log('error:' + error));
-// };
-
-
-  
+ 
 
   // useEffect(() => {
   //   dispatch(getPhoto(userId));
@@ -329,46 +304,28 @@ export default function Dashboard() {
               
         </Grid>
         <Grid item>
-          
           <Paper className={classes.paperAbout} elevation={3}>
             <form onSubmit={handleUpdateMessage}>
-          <Container className={classes.bioContainer}>
-              <Typography variant='h6'>Personal Bio</Typography>
+              <Container className={classes.bioContainer}>
+                <Typography variant='h6'>Personal Bio</Typography>
                 <div className={classes.editIconBtn}>
                   <IconButton className={classes.editIconBtnTag} onClick={() => setEditMessageOn(!editMessageOn)}><EditIcon className={classes.editIcon}/></IconButton>
                 </div>
               </Container>
-              
-          {/* <Typography variant='h6'>Personal Bio</Typography>
-            <div className={classes.editIconBtn}>
-            
-              <IconButton onClick={() => setEditMessageOn(!editMessageOn)}><EditIcon /></IconButton>
-            </div> */}
-              {/* <TextareaAutosize 
-                className={classes.textarea}
-                aria-label="public-message" 
-                rowsMin={5} 
-                placeholder="Bio" 
-                disabled={editMessageOn}
-                value={userPublicMessage} 
-                onChange={handleChange}
-                fullWidth
-              /> */}
-            <TextField 
-                className={classes.publicMessageText}
-                id="public-message"  
-                disabled={editMessageOn}
-                value={publicMessage} 
-                multiline
-                rows={5}
-                InputProps={{
-                  disableUnderline: true,
-                 }}
-                onChange={(e) => {
-                  setPublicMessage(e.target.value);
-                }}
-              />
-           
+              <TextField 
+                  className={classes.publicMessageText}
+                  id="public-message"  
+                  disabled={editMessageOn}
+                  value={publicMessage} 
+                  multiline
+                  rows={5}
+                  InputProps={{
+                    disableUnderline: true,
+                  }}
+                  onChange={(e) => {
+                    setPublicMessage(e.target.value);
+                  }}
+                />
                 <div>
                   {!editMessageOn && 
                     <Button className={classes.saveBioBtn} variant="outlined" color="secondary" component="button" type='submit'>
@@ -382,7 +339,7 @@ export default function Dashboard() {
       </Grid>
       <Grid className={classes.grid2} justify="center" alignItems="center" container direction="row" spacing={0}>
           <Grid className={classes.gridBottomLeft}>
-            <Grid item xs>
+            <Grid item xs={12}>
             <Paper className={classes.paperInfo} elevation={3}>
             <form className={classes.form} noValidate autoComplete="off" onSubmit={handleUpdateDetails}>
               <Container className={classes.infoContainer}>
@@ -479,17 +436,17 @@ export default function Dashboard() {
             </Grid>
           </Grid>
             <Grid className={classes.gridBottomRight}>
-            <Grid item xs>
+            <Grid item xs={12}>
               <Paper className={classes.paper} elevation={3}>
                 <Link className={classes.meetupLink} to='/meetups'>My Meetups </Link>
               </Paper>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
             <Paper className={classes.paper} elevation={3}>
               <Link className={classes.messageLink} to='/messages'>My Messages </Link>
             </Paper>
             </Grid>
-            <Grid item xs>
+            <Grid item xs={12}>
             <Paper className={classes.paper} elevation={3}>FAVORITES</Paper>
             </Grid>
           </Grid>
