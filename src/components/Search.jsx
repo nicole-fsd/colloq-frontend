@@ -199,7 +199,7 @@ export default function Search() {
                         <CardMedia
                               className={classes.cover}
                               component="img"
-                              src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${user.images[0].filename}.jpg&width=200&height=200&&cropratio=4:3&image=/wdev_nicole/eindwerk/images/${user.images[0].filename}.jpg`}
+                              src={user.images.length > 0 ? `https://wdev.be/wdev_nicole/eindwerk/image.php?${user.images[0].filename}.jpg&width=200&height=200&&cropratio=4:3&image=/wdev_nicole/eindwerk/images/${user.images[0].filename}.jpg` : ""}
                               title="profile photo"
                               height="220"
                               

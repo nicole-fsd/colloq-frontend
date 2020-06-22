@@ -338,6 +338,7 @@ const getUser = async (id) => {
 
 
 
+
   
 
   return (
@@ -400,10 +401,11 @@ const getUser = async (id) => {
               {comments.map(comment => (
                   <Grid item xs={6}>
                   <Paper className={classes.paperComment} elevation={1}>
-                    
-                    <Typography variant="overline">{comment.createdAt.substring(5, 10)}</Typography>
+                    {/* {const eStartTime = new Date(comment.createdAt).toDateString()
+                    const startString = eStartTime.toTimeString().substr(0,5)} */}
+                    <Typography variant="overline">{new Date(comment.createdAt).toDateString()}</Typography>
                     <Typography variant="h6">{comment.text}</Typography>
-                    <Typography variant="overline">{comment.commentAuthor.firstname} {comment.commentAuthor.lastname}</Typography>
+                    <Typography variant="overline">- {comment.commentAuthor.firstname} {comment.commentAuthor.lastname}</Typography>
                     </Paper>
                   </Grid>
               ))}
