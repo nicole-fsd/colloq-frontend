@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 // import { Redirect, Route } from "react-router-dom";
 import axios from 'axios'
 import { makeStyles } from "@material-ui/core/styles";
-import { Container, Grid, Button, TextField} from '@material-ui/core';
+import { Container, Grid, Button, TextField, Typography} from '@material-ui/core';
 import Footer from './landing/Footer'
 import { useDispatch, useSelector } from "react-redux";
 import { Calendar, momentLocalizer } from "react-big-calendar";
@@ -98,13 +98,25 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(1),
       },
       createBtn: {
-        margin: '.2rem .5rem'
+        margin: '.2rem .5rem 1.2rem .5rem'
       },
       updateBtn: {
         margin: '.2rem .5rem'
       },
       btnDiv: {
         margin: '.8rem 0'
+      },
+      detailDialog: {
+        minWidth: '400px'
+      },
+      contentDialog: {
+        minWidth: '350px'
+      },
+      key: {
+        fontWeight: 'bold'
+      },
+      titleDialog: {
+        margin: '.5rem'
       }
     
   }));
@@ -114,6 +126,7 @@ export default function MeetupsOverview() {
     const dispatch = useDispatch();
     const localizer = momentLocalizer(moment);
     const [open, setOpen] = useState(false);
+    const [openDetail, setOpenDetail] = useState(false);
     const [inputCity, setInputCity] = useState("");
     const [inputLanguage, setInputLanguage] = useState("");
     const [name, setName] = useState("");
@@ -123,6 +136,14 @@ export default function MeetupsOverview() {
     const [endTime, setEndTime] = useState("");
     const [type, setType] = useState("");
     const [description, setDescription] = useState("");
+    const [nameDetail, setNameDetail] = useState("");
+    const [dateDetail, setDateDetail] = useState("");
+    const [participantDetail, setParticipantDetail] = useState("");
+    const [startTimeDetail, setStartTimeDetail] = useState("");
+    const [endTimeDetail, setEndTimeDetail] = useState("");
+    const [typeDetail, setTypeDetail] = useState("");
+    const [descriptionDetail, setDescriptionDetail] = useState("");
+    const [openedEventId, setOpenedEventId] = useState("");
     // const [languageId, setLanguageId] = useState("");
     // const [cityId, setCityId] = useState("");
     const userId = useSelector((state) => state.auth.user.id);
@@ -178,7 +199,41 @@ export default function MeetupsOverview() {
       useEffect(() => {
         dispatch(getMeetups(userId));
       }, [dispatch, userId])
+
+      const handleEventSelect = (e) => {
+        setOpenDetail(true);
+        console.log(e)
+        setNameDetail(e.name)
+        const eDate = new Date(e.date)
+        const dateString = eDate.toDateString()
+        setDateDetail(dateString)
+        setDescriptionDetail(e.description)
+        const eStartTime = new Date(e.startTime)
+        const startString = eStartTime.toTimeString().substr(0,5)
+        setStartTimeDetail(startString)
+        const eEndTime = new Date(e.endTime)
+        const endString = eEndTime.toTimeString().substr(0,5)
+        setEndTimeDetail(endString)
+        setTypeDetail(e.type)
+        setOpenedEventId(e.id)
+
+      }
    
+      const handleEventDelete = (e) => {
+        console.log(openedEventId)
+        axios.delete(`${process.env.REACT_APP_ENDPOINT}/meetups/${openedEventId}`, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        setOpenDetail(false);
+        dispatch(getMeetups(userId))
+      }
+
+      const handleDetailClose = () => {
+        setOpenDetail(false);
+        
+      }
     
   
 
@@ -214,9 +269,13 @@ export default function MeetupsOverview() {
                         startAccessor="date"
                         endAccessor="date"
                         titleAccessor="name"
+                        onSelectEvent={handleEventSelect}
                         />
                     </Grid>
                   </Grid>
+
+                  {/* --------------------- CREATE EVENT DIALOG ------------------- */}
+
                   <Dialog   
                     open={open}
                     onClose={handleClose}
@@ -338,6 +397,36 @@ export default function MeetupsOverview() {
                             Cancel
                         </Button>
                         </DialogActions>
+                    </Dialog>
+                           
+                    {/* ------------------ EVENT DETAIL DIALOG -------------- */}
+
+                    
+                    <Dialog
+                      className={classes.detailDialog}
+                      open={openDetail}
+                      onClose={handleDetailClose}
+                      aria-labelledby="event-detail-dialog"
+                    >
+                      <DialogTitle className={classes.titleDialog} id="event-detail-dialog-title">{nameDetail}</DialogTitle>
+                      <DialogContent className={classes.contentDialog}>
+                        <Typography className={classes.key} variant='overline'>Date: </Typography><Typography variant='body1' component='span'>{dateDetail}</Typography><br />
+                        <Typography className={classes.key} variant='overline'>Start: </Typography><Typography variant='body1' component='span'>{startTimeDetail}</Typography><br />
+                        <Typography className={classes.key} variant='overline'>End: </Typography><Typography variant='body1' component='span'>{endTimeDetail}</Typography><br />
+                        <Typography className={classes.key} variant='overline'>Type: </Typography><Typography variant='body1' component='span'>{typeDetail}</Typography><br />
+                        <Typography className={classes.key} variant='overline'>Description: </Typography><Typography variant='body1' component='span'>{descriptionDetail}</Typography>
+                        
+                        
+                          
+                      </DialogContent>
+                      <DialogActions>
+                      <Button onClick={handleEventDelete} color="primary">
+                          Delete Event
+                        </Button>
+                        <Button onClick={handleDetailClose} color="primary">
+                          Close
+                        </Button>
+                      </DialogActions>
                     </Dialog>
             
 
