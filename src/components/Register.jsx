@@ -117,14 +117,8 @@ export default function Register() {
 
     const submitHandler = async (e) => {
       e.preventDefault();
-      // const requestOne = axios.get(`${process.env.REACT_APP_ENDPOINT}/cities?name=${city}`)
-      // const requestTwo = axios.get(`${process.env.REACT_APP_ENDPOINT}/cities?name=${meetupCity}`)
-      // const [cityIriData, meetupCityIriData] = await axios.all([requestOne, requestTwo]);
-      // const cityIri = (cityIriData.data['hydra:member'][0]['@id'])
-      // const meetupCityIri = (meetupCityIriData.data['hydra:member'][0]['@id'])
-
       // console.log(email, password, firstname, lastname, age, meetupType, startDate, endDate, cityIri, meetupCityIri, radioValue)
-      dispatch(registerUser(email, password, firstname, lastname, age, nativeLang, targetLang, meetupType, startDate, endDate, radioValue))
+      dispatch(registerUser(email, password, firstname, lastname, age, city, meetupCity, nativeLang, targetLang, meetupType, startDate, endDate, radioValue))
     };
 
     return (

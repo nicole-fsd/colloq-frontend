@@ -219,7 +219,9 @@ export default function Dashboard() {
       }
      });
      
-      setSingleUserPhoto(user.data.images[0].filename);
+      if (user.data.images.length > 0) {
+        setSingleUserPhoto(user.data.images[0].filename);
+      }
       // console.log(user.data.images[0].filename);
      
   }

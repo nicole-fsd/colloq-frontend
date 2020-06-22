@@ -75,7 +75,7 @@ export const logoutUser = () => ({
   type: LOGOUT,
 });
 
-export const registerUser = (email, password, firstName, lastName, age, nativeLang, targetLang, meetupType, startDate, endDate, role) => (dispatch) => {
+export const registerUser = (email, password, firstName, lastName, age, city, meetupCity, nativeLang, targetLang, meetupType, startDate, endDate, role) => (dispatch) => {
     const config = {
       headers: {
       'Content-Type': "application/json;charset=UTF-8"
@@ -87,14 +87,8 @@ export const registerUser = (email, password, firstName, lastName, age, nativeLa
       firstName: firstName,
       lastName: lastName,
       age: age,
-      city: 236,
-      meetupCity: 105,
-      // city: {
-      //   "@id": "/wdev_nicole/eindwerk/api/cities/236"
-      // },
-      // meetupCity: {
-      //   "@id": "/wdev_nicole/eindwerk/api/cities/105"
-      // },
+      city: city,
+      meetupCity: meetupCity,
       meetupType: meetupType,
       startDate: startDate,
       endDate: endDate,
@@ -104,8 +98,11 @@ export const registerUser = (email, password, firstName, lastName, age, nativeLa
     }
     axios.post(`${process.env.REACT_APP_ENDPOINT}/register`, data, config)
     .then((response) => {
+      const resEmail = response.config.data.email
+      const resPassword = response.config.data.password
+      dispatch(loginUser(email, password))
       dispatch(registerSuccess(response.data))
-      console.log(response.headers)
+    console.log('email and password:' + email, password);
     })
     .catch((error) => console.log(error));
 };
