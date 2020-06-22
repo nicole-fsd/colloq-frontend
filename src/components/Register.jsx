@@ -124,7 +124,7 @@ export default function Register() {
       // const meetupCityIri = (meetupCityIriData.data['hydra:member'][0]['@id'])
 
       // console.log(email, password, firstname, lastname, age, meetupType, startDate, endDate, cityIri, meetupCityIri, radioValue)
-      dispatch(registerUser(email, password, firstname, lastname, age, meetupType, startDate, endDate, radioValue))
+      dispatch(registerUser(email, password, firstname, lastname, age, nativeLang, targetLang, meetupType, startDate, endDate, radioValue))
     };
 
     return (
