@@ -13,6 +13,7 @@ import MeetupsOverview from './components/MeetupsOverview'
 import MessagesOverview from './components/MessagesOverview'
 import Terms from './components/Terms'
 import Privacy from './components/Privacy'
+import Contact from './components/Contact'
 
 
 function App() {
@@ -82,7 +83,7 @@ function App() {
             exact
             path="/messages"
             render={() => {
-              return <MessagesOverview />;
+              return !Authenticated ? <Redirect to="/" /> : <MessagesOverview />;
             }}
           />
           <Route
@@ -97,6 +98,13 @@ function App() {
             path="/terms"
             render={() => {
               return <Terms />;
+            }}
+          />
+          <Route
+            exact
+            path="/contact"
+            render={() => {
+              return <Contact />;
             }}
           />
             

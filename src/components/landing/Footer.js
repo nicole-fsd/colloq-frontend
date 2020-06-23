@@ -36,11 +36,13 @@ const useStyles = makeStyles(theme => ({
   textLink: {
     fontSize: '1.2rem',
     verticalAlign: 'sub',
-    color: 'black',
-    textDecoration: 'none'
+    color: '#616161',
+    textDecoration: 'none',
+    marginTop: "10px"
   },
   copy: {
-    marginBottom: '0'
+    marginBottom: '0',
+    color: '#616161'
   },
   copyDiv: {
     marginTop: 50,
@@ -72,13 +74,13 @@ const Footer = () => {
       </Grid>
       <Grid item container xs={12} sm={6} className={classes.termsGrid} spacing={6}>
         <Grid item>
-          <Typography className={classes.textLink}>Contact</Typography>
+        <Link style={{ textDecoration: 'none' }} to="/contact"><Typography className={classes.textLink}>Contact</Typography></Link>
         </Grid>
         <Grid item>
-          <Link to="/privacy"><Typography className={classes.textLink}>Privacy</Typography></Link>
+          <Link style={{ textDecoration: 'none' }} to="/privacy"><Typography className={classes.textLink}>Privacy</Typography></Link>
         </Grid>
         <Grid item>
-        <Link to="/terms"><Typography className={classes.textLink}>Terms and Conditions</Typography></Link>
+        <Link style={{ textDecoration: 'none' }} to="/terms"><Typography className={classes.textLink}>Terms and Conditions</Typography></Link>
         </Grid>
       </Grid>
       
