@@ -20,6 +20,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { postComment, getComments } from '../data/comments';
 
 
+///Modal Calculations /////////////////////////
 function rand() {
   return Math.round(Math.random() * 20) - 10;
 }
@@ -35,7 +36,7 @@ function getModalStyle() {
   };
 }
 
-//STYLE
+//STYLE //////////////////////////////////////
 const useStyles = makeStyles(theme => ({
   root: {
       justifySelf: "center",
@@ -48,6 +49,9 @@ const useStyles = makeStyles(theme => ({
       border: '0px solid #c6a3ff',
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
+      [theme.breakpoints.down('xs')]: {
+        width: '100%'
+      },
     },
     paper: {
       padding: theme.spacing(2),
@@ -58,23 +62,22 @@ const useStyles = makeStyles(theme => ({
       width: "400px",
       margin: "30px"
     },
-  // root: {
-  //   padding: "250px",
-  //   // border: "solid 1px black",
-  //   minHeight: "850px",
-  //   // backgroundImage: `url(${Background})`,
-  //   color: "#424242"
-  // },
   container: {
       backgroundColor: "#E1E2E1",
       width: "100vw",
-      minHeight: "100vh"
+      minHeight: "100vh",
+      [theme.breakpoints.down('xs')]: {
+        width: '100%'
+      },
   },
   grid1: {
-      // border: "1px solid black",
       paddingTop: "80px",
       alignItems: "center",
-      marginLeft: "20px"
+      marginLeft: "20px",
+      [theme.breakpoints.down('xs')]: {
+        marginLeft: "0px",
+        width: '100%'
+      },
   
   },
   grid2: {
@@ -85,8 +88,12 @@ const useStyles = makeStyles(theme => ({
       // border: "1px solid red"
   },
   gridBottomRight: {
-      // border: "1px solid green"
-      marginLeft: "90px"
+      // border: "1px solid green",
+      marginLeft: "90px",
+      [theme.breakpoints.down('xs')]: {
+        marginLeft: "0px",
+        width: '100%'
+      },
   },
   paperInfo: {
       backgroundColor: "#eeeeee",
@@ -100,10 +107,14 @@ const useStyles = makeStyles(theme => ({
       width: "450px",
       marginLeft: "30px",
       overflow: "auto",
+      [theme.breakpoints.down('xs')]: {
+        width: "400px",
+        marginLeft: "0px",
+      },
   },
   typeAbout: {
       padding: "20px",
-      color: "black"
+      color: theme.palette.text.secondary,
   },
   photo: {
       backgroundColor: "#c6a3ff",
@@ -126,7 +137,8 @@ const useStyles = makeStyles(theme => ({
           },
     },
     infoDiv: {
-      padding: '2rem'
+      padding: '2rem',
+      color: theme.palette.text.secondary,
     },
     name: {
       fontSize: '2rem',
@@ -137,7 +149,8 @@ const useStyles = makeStyles(theme => ({
     },
     subInfo: {
       fontSize: '1.25rem',
-      lineHeight: '2.5rem'
+      lineHeight: '2.5rem',
+      color: theme.palette.text.secondary,
     },
     msgBtn: {
       margin: '1rem'
@@ -176,7 +189,10 @@ const useStyles = makeStyles(theme => ({
       minHeight: "2rem",
       width: "400px",
       margin: "1rem",
-      borderRadius: "25px"
+      borderRadius: "25px",
+      [theme.breakpoints.down('xs')]: {
+        marginLeft: "30px",
+      },
     },
     titleDialog: {
       marginBottom: 0
@@ -329,17 +345,12 @@ const getUser = async (id) => {
   dispatch(getComments(id))
  }, []);
 
- 
 
 
 // useEffect(() => {
 //     dispatch(getUser(id));
 //     // dispatch(getPhoto(id));
 //   }, [])
-
-
-
-
 
   
 

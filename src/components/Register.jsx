@@ -64,7 +64,10 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto'
   },
   submitDiv: {
-    margin: "4ch"
+    margin: "4ch",
+    [theme.breakpoints.down('xs')]: {
+      margin: '.5ch'
+    },
   },
   link: {
     fontSize: '1rem',
@@ -73,10 +76,16 @@ const useStyles = makeStyles((theme) => ({
     color: "gray",
     '&:hover': {
       color: "black"
-    }
+    },
+    [theme.breakpoints.down('xs')]: {
+      marginLeft: '3ch'
+    },
   },
   formControl: {
     margin: '2ch'
+  },
+  roleSelect: {
+    paddingRight: '18px'
   }
 }));
 
@@ -98,8 +107,8 @@ export default function Register() {
     const [radioValue, setRadioValue] = useState('');
     // const [isTourist, setIsTourist] = useState(false);
     // const [isTutor, setIsTutor] = useState(false);
-    const [startDate, setStartDate] = useState(new Date('2020-06-09T21:11:54'));
-    const [endDate, setEndDate] = useState(new Date('2020-06-09T21:11:54'));
+    const [startDate, setStartDate] = useState(Date.now());
+    const [endDate, setEndDate] = useState(Date.now());
     
     
     const handleStartDateChange = (date) => {
@@ -225,6 +234,7 @@ export default function Register() {
                       <FormControl className={classes.formControl}>
                       <InputLabel id="simple-select-label">Role: </InputLabel>
                       <Select
+                        className={classes.roleSelect}
                         labelId="simple-select-label"
                         id="simple-select"
                         value={radioValue}

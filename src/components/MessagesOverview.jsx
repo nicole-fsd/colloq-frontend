@@ -78,7 +78,10 @@ const useStyles = makeStyles(theme => ({
       },
       close: {
         display: 'inline',
-        justifyContent: 'end'
+        textAlign: 'end'
+      },
+      closeDetailIcon: {
+        textAlign: 'end'
       },
       sendDiv: {
         display: 'flex',
@@ -195,7 +198,7 @@ export default function MessagesOverview() {
 
 
       
-/////REPLY BODY ///////////////////////
+/////REPLY MODAL BODY ///////////////////////
   const replyBody = (
     <div style={modalStyle} className={classes.paperModal}>
       <div className={classes.sendDiv}>
@@ -211,11 +214,6 @@ export default function MessagesOverview() {
           setSubject(e.target.value);
         }}
       />
-      {/* <TextField variant="standard" margin="normal" required fullWidth id="text" label="Message" name="text" value={text}
-        onChange={(e) => {
-          setText(e.target.value);
-        }}
-      /> */}
       <TextareaAutosize className={classes.textarea} aria-label="message textarea" required fullWidth rowsMin={8} placeholder="Write a message..." id="text" label="Message" name="text" value={text}
         onChange={(e) => {
           setText(e.target.value);
@@ -257,16 +255,6 @@ export default function MessagesOverview() {
                             </ListItemIcon>
                             <ListItemText primary="Inbox" /> 
                         </ListItem>
-                        {/* <Collapse in={open} timeout="auto" unmountOnExit>
-                            <List component="div" disablePadding>
-                            <ListItem button className={classes.nested}>
-                                <ListItemIcon>
-                                <StarBorder />
-                                </ListItemIcon>
-                                <ListItemText primary="Starred" />
-                            </ListItem>
-                        </List>
-                    </Collapse> */}
                     </List>
                 </Grid>
                 <Grid item xs={12} md={8}>
@@ -279,11 +267,6 @@ export default function MessagesOverview() {
                             {messages.length > 0 &&
                                 messages.map((message, index) => (
                                 <ListItem key={index} className={classes.listitem} button="true" onClick={handleOpen(message.id)}>
-                                {/* <ListItemAvatar>
-                                    <Avatar>
-                                    <FolderIcon />
-                                    </Avatar>
-                                </ListItemAvatar> */}
                                 <ListItemText
                                     primary={message.messageAuthor.firstname + ' ' + message.messageAuthor.lastname}
                                     secondary={message.subject}
@@ -294,6 +277,9 @@ export default function MessagesOverview() {
                                
                                 </ListItem>
                             ))}
+
+                            {/* MESSAGE DETAIL MODAL --------------------------*/}
+
                              <Modal
                                   open={open}
                                   onClose={handleClose}
@@ -303,9 +289,11 @@ export default function MessagesOverview() {
                                    <div style={modalStyle} className={classes.paperModal}>
                                       <div className={classes.showDiv}>
                                       <h2 id="simple-modal-title"></h2>
-                                      <IconButton aria-label="delete" className={classes.close} size="small" onClick={handleClose}>
+                                      <div className={classes.closeDetailIcon}>
+                                      <IconButton aria-label="delete" size="small" onClick={handleClose}>
                                           <CloseIcon fontSize="inherit" />
                                         </IconButton>
+                                        </div>
                                       </div>
                                       <div>
                                         <div className={classes.subjectDiv}>
@@ -319,16 +307,6 @@ export default function MessagesOverview() {
                                         {currentMessage.subject}
                                         </Typography>
                                         </div>
-                                      {/* <TextField
-                                        className={classes.textfield}
-                                        id="message-subject"
-                                        label="Subject"
-                                        defaultValue={currentMessage.subject}
-                                        disabled
-                                        fullWidth
-                                        multiline
-                                        variant="outlined"
-                                      /> */}
                                       <TextField
                                         className={classes.textfield}
                                         id="message-text"
