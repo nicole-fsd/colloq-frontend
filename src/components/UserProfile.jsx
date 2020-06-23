@@ -97,7 +97,7 @@ const useStyles = makeStyles(theme => ({
   },
   paperInfo: {
       backgroundColor: "#eeeeee",
-      minHeight: "400px",
+      minHeight: "500px",
       width: "400px",
       overflow: "auto"
   },
@@ -225,9 +225,15 @@ const [singleUserMessage, setSingleUserMessage] = useState("");
 const [singleUserFirstname, setSingleUserFirstname] = useState("");
 const [singleUserLastname, setSingleUserLastname] = useState("");
 const [singleUserAge, setSingleUserAge] = useState("");
-// const [singleUserLanguage, setSingleUserLanguage] = useState("");
+const [singleUserIsTourist, setSingleUserIsTourist] = useState("");
+const [singleUserIsTutor, setSingleUserIsTutor] = useState("");
+const [singleUserNatLanguage, setSingleUserNatLanguage] = useState("");
+const [singleUserTarLanguage, setSingleUserTarLanguage] = useState("");
 const [singleUserCity, setSingleUserCity] = useState("");
+const [singleUserMeetupCity, setSingleUserMeetupCity] = useState("");
 const [singleUserMeetupType, setSingleUserMeetupType] = useState("");
+const [singleUserStartDate, setSingleUserStartDate] = useState("");
+const [singleUserEndDate, setSingleUserEndDate] = useState("");
 const [singleUserPhoto, setSingleUserPhoto] = useState("");
 const [commentText, setCommentText] = useState("");
 
@@ -324,14 +330,21 @@ const getUser = async (id) => {
     }
    });
    
-    // console.log(user);
+    console.log(user);
     setSingleUserMessage(user.data.publicMessage);
     setSingleUserFirstname(user.data.firstname);
     setSingleUserLastname(user.data.lastname);
     setSingleUserAge(user.data.age);
+    setSingleUserIsTourist(user.data.isTourist);
+    setSingleUserIsTutor(user.data.isTutor);
     setSingleUserCity(user.data.city.name);
-    setSingleUserMeetupType(user.data.meetuptype);
+    setSingleUserMeetupCity(user.data.meetupCity.name);
+    setSingleUserMeetupType(user.data.meetupType);
     setSingleUserPhoto(user.data.images[0].filename);
+    setSingleUserNatLanguage(user.data.nativeLanguage.name);
+    setSingleUserTarLanguage(user.data.targetLanguage.name);
+    setSingleUserStartDate(user.data.availStartDate);
+    setSingleUserEndDate(user.data.availEndDate);
     // console.log(user.data.images[0].filename);
    
 }
@@ -397,10 +410,20 @@ const getUser = async (id) => {
                 <Typography className={classes.name}>{singleUserFirstname}  {singleUserLastname}</Typography>
                 <div className={classes.subDiv}>
                 <Typography className={classes.subInfo}>Age: {singleUserAge}</Typography>
-                <Typography className={classes.subInfo}>Native Language: English</Typography>
-                <Typography className={classes.subInfo}>Target Language: Spanish</Typography>
-                <Typography className={classes.subInfo}>City: {singleUserCity}</Typography>
-                <Typography className={classes.subInfo}>Meetup type: Park{singleUserMeetupType}</Typography>
+                <Typography className={classes.subInfo}>Speaks: {singleUserNatLanguage}</Typography>
+                {singleUserIsTourist ? 
+                <Typography className={classes.subInfo}>Learning: {singleUserTarLanguage}</Typography>
+                :
+                <Typography className={classes.subInfo}>Teaching: {singleUserTarLanguage}</Typography>
+                }
+                
+                <Typography className={classes.subInfo}>Lives in: {singleUserCity}</Typography>
+                <Typography className={classes.subInfo}>Wants to meet in: {singleUserMeetupCity}</Typography>
+                <Typography className={classes.subInfo}>Meetup type: {singleUserMeetupType}</Typography>
+                <Typography className={classes.subInfo}>Available: <br />
+                {new Date(singleUserStartDate).toLocaleString('en-GB', { timeZone: 'UTC' }).substr(0,10)} 
+                 - 
+                 {new Date(singleUserEndDate).toLocaleString('en-GB', { timeZone: 'UTC' }).substr(0,10)}</Typography>
               </div>
               
               </div>

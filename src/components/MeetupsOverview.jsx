@@ -88,7 +88,8 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         flexDirection: 'column',
         margin: 'auto',
-        width: 'fit-content',
+        width: 'fit-content'
+        
       },
       formControl: {
         marginTop: theme.spacing(2),
@@ -117,6 +118,9 @@ const useStyles = makeStyles(theme => ({
       },
       titleDialog: {
         margin: '.5rem'
+      },
+      formField: {
+        marginTop: '15px'
       }
     
   }));
@@ -289,6 +293,7 @@ export default function MeetupsOverview() {
                     <form className={classes.form} noValidate>
                       <div>
                             <TextField
+
                                 id="name"
                                 label="Name"
                                 type="text"
@@ -321,10 +326,9 @@ export default function MeetupsOverview() {
                             <FormControl>
                             <TextField
                                 id="date"
-                                
                                 type="date"
-                                autoComplete="current-password"
                                 value={date}
+                                className={classes.formField}
                                 onChange={(e) => {
                                 setDate(e.target.value);
                           }}
@@ -332,10 +336,9 @@ export default function MeetupsOverview() {
                             <FormHelperText id="component-helper-text">Date</FormHelperText>
                             <TextField
                                 id="start-time"
-                                
                                 type="time"
-                                autoComplete="current-password"
                                 value={startTime}
+                                className={classes.formField}
                                 onChange={(e) => {
                                 setStartTime(e.target.value);
                           }}
@@ -343,10 +346,9 @@ export default function MeetupsOverview() {
                             <FormHelperText id="component-helper-text">Start Time</FormHelperText>
                             <TextField
                                 id="end-time"
-                                
                                 type="time"
-                                autoComplete="current-password"
                                 value={endTime}
+                                className={classes.formField}
                                 onChange={(e) => {
                                 setEndTime(e.target.value);
                           }}

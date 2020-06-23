@@ -86,18 +86,20 @@ const useStyles = makeStyles(theme => ({
       sendDiv: {
         display: 'flex',
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        color: '#424242',
   
       },
       textarea: {
         width: '100%',
-        color: 'black',
+        color: '#424242',
         '&::placeholder': {
           fontFamily: "Arial"
         }
       },
       subjectDiv: {
-        marginLeft: '.5rem'
+        marginLeft: '.5rem',
+        color: '#424242'
       }
   }));
 
@@ -316,7 +318,7 @@ export default function MessagesOverview() {
                                         rows={4}
                                         InputProps={{
                                           style: {
-                                              color: "black"
+                                              color: "#424242"
                                           }
                                       }}
                                         defaultValue={currentMessage.text}

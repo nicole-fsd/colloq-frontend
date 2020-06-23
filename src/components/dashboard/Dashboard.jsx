@@ -70,7 +70,7 @@ const useStyles = makeStyles(theme => ({
     },
     paperInfo: {
         backgroundColor: "#eeeeee",
-        minHeight: "600px",
+        minHeight: "650px",
         width: "400px",
         
     },
@@ -108,6 +108,7 @@ const useStyles = makeStyles(theme => ({
       },
     form: {
           paddingTop: "50px",
+          paddingBottom: "26px",
         '& .MuiTextField-root': {
               margin: theme.spacing(1),
               width: '34ch',
@@ -169,8 +170,8 @@ export default function Dashboard() {
     const userEmail = useSelector((state) => state.auth.user.email);
     const userCity = useSelector((state) => state.auth.user.city);
     const userMeetupCity = useSelector((state) => state.auth.user.meetupCity);
-    // const userNativeLang = useSelector((state) => state.auth.user.nativeLang);
-    // const userTargetLang = useSelector((state) => state.auth.user.targetLang);
+    const userNativeLanguage = useSelector((state) => state.auth.user.nativeLanguage);
+    const userTargetLanguage = useSelector((state) => state.auth.user.targetLanguage);
     const userMeetupType = useSelector((state) => state.auth.user.meetupType);
     const userId = useSelector((state) => state.auth.user.id);
     // const userPhoto = useSelector((state) => state.auth.user.images[0].filename);
@@ -184,8 +185,8 @@ export default function Dashboard() {
     const [lastname, setLastName] = useState(userLastName);
     const [city, setCity] = useState(userCity);
     const [publicMessage, setPublicMessage] = useState(userPublicMessage);
-    // const [nativeLang, setNativeLang] = useState();
-    // const [targetLang, setTargetLang] = useState("");
+    const [nativeLanguage, setNativeLanguage] = useState(userNativeLanguage);
+    const [targetLanguage, setTargetLanguage] = useState(userTargetLanguage);
     const [meetupCity, setMeetupCity] = useState(userMeetupCity);
     const [meetupType, setMeetupType] = useState(userMeetupType);
     const [age, setAge] = useState(userAge);
@@ -415,6 +416,16 @@ export default function Dashboard() {
                         <TextField disabled={editOn} variant="standard" margin="normal" fullWidth name="meetup_type" label="Preferred type of meetup" type="text" id="meetup_type" value={meetupType}
                           onChange={(e) => {
                             setMeetupType(e.target.value);
+                          }}
+                          />
+                          <TextField disabled={editOn} variant="standard" margin="normal" fullWidth name="native_language" label="Native Language" type="text" id="native_language" value={nativeLanguage}
+                          onChange={(e) => {
+                            setNativeLanguage(e.target.value);
+                          }}
+                          />
+                          <TextField disabled={editOn} variant="standard" margin="normal" fullWidth name="target_language" label="Target Language" type="text" id="target_language" value={targetLanguage}
+                          onChange={(e) => {
+                            setTargetLanguage(e.target.value);
                           }}
                           />
                           <div>

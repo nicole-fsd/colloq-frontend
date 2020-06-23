@@ -17,6 +17,8 @@ export const initialState = {
     isTutor: "",
     meetupType: "",
     publicMessage: "",
+    nativeLanguage: "",
+    targetLanguage: ""
     // imageFile: ""
   },
   register: {
@@ -119,8 +121,8 @@ export const updateUser = (id, email, firstname, lastname, age, cityIri, meetupC
     firstName: firstname,
     lastName: lastname,
     age: parseInt(age),
-    // city: cityIri, 
-    // meetupCity: meetupCityIri,
+    city: cityIri, 
+    meetupCity: meetupCityIri,
     meetupType: meetupType,
     // startDate: startDate,
     // endDate: endDate,
@@ -197,7 +199,9 @@ export default (state = initialState, { type, payload }) => {
           meetupType: decoded.payload.meetupType,
           publicMessage: decoded.payload.publicMessage,
           isTourist: decoded.payload.isTourist,
-          isTutor: decoded.payload.isTutor
+          isTutor: decoded.payload.isTutor,
+          nativeLanguage: decoded.payload.nativeLanguage,
+          targetLanguage: decoded.payload.targetLanguage,
         },
         loggedIn: true,
       };
