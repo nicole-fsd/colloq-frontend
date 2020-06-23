@@ -119,7 +119,7 @@ const useStyles = makeStyles(theme => ({
       display: 'none',
     },
   form: {
-        paddingTop: "50px",
+        paddingTop: "0px",
       '& .MuiTextField-root': {
             margin: theme.spacing(1),
             width: '34ch',
@@ -177,6 +177,9 @@ const useStyles = makeStyles(theme => ({
       width: "400px",
       margin: "1rem",
       borderRadius: "25px"
+    },
+    titleDialog: {
+      marginBottom: 0
     }
 }));
 
@@ -320,12 +323,11 @@ const getUser = async (id) => {
 
  useEffect(() => {
   getUser(id);
-  getComments(id)
  }, [id]);
 
-//  useEffect(() => {
-//   getComments(id)
-//  }, []);
+ useEffect(() => {
+  dispatch(getComments(id))
+ }, []);
 
  
 
@@ -410,9 +412,9 @@ const getUser = async (id) => {
                   </Grid>
               ))}
             <Grid item xs>
-            <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleGetComments}>
+            {/* <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleGetComments}>
                 Get Comments
-              </Button> 
+              </Button>  */}
               <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleOpenCommentModal}>
                 Post Comment
               </Button> 
@@ -421,15 +423,18 @@ const getUser = async (id) => {
                 onClose={handleCloseCommentModal}
                 aria-labelledby="max-width-dialog-title"
               >
-                <DialogTitle id="max-width-dialog-title">Post a Comment</DialogTitle>
+                <DialogTitle className={classes.titleDialog} id="max-width-dialog-title">Post a Comment</DialogTitle>
                 <DialogContent>
                   <form className={classes.form} noValidate>
                     <TextField
                       id="text"
-                      label="Comment"
+                      label="Write something..."
                       type="text"
                       fullWidth
                       multiline
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
                       rows={4}
                       variant='filled'
                       value={commentText}

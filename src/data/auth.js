@@ -98,8 +98,8 @@ export const registerUser = (email, password, firstName, lastName, age, city, me
     }
     axios.post(`${process.env.REACT_APP_ENDPOINT}/register`, data, config)
     .then((response) => {
-      const resEmail = response.config.data.email
-      const resPassword = response.config.data.password
+      // const resEmail = response.config.data.email
+      // const resPassword = response.config.data.password
       dispatch(loginUser(email, password))
       dispatch(registerSuccess(response.data))
     console.log('email and password:' + email, password);

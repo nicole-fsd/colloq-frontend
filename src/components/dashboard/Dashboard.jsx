@@ -197,18 +197,18 @@ export default function Dashboard() {
 
     const handleUpdateDetails = async (e) => {
       e.preventDefault()
-      const requestOne = axios.get(`${process.env.REACT_APP_ENDPOINT}/cities?name=${city}`, {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem('token')}`
-        }})
-      const requestTwo = axios.get(`${process.env.REACT_APP_ENDPOINT}/cities?name=${meetupCity}`, {
-      headers: {
-        authorization: `Bearer ${localStorage.getItem('token')}`
-      }})
-      const [cityIriData, meetupCityIriData] = await axios.all([requestOne, requestTwo]);
+        const requestOne = axios.get(`${process.env.REACT_APP_ENDPOINT}/cities?name=${city}`, {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem('token')}`
+            }})
+        const requestTwo = axios.get(`${process.env.REACT_APP_ENDPOINT}/cities?name=${meetupCity}`, {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem('token')}`
+            }})
+        const [cityIriData, meetupCityIriData] = await axios.all([requestOne, requestTwo]);
 
-      const cityIri = (cityIriData.data['hydra:member'][0]['@id'])
-      const meetupCityIri = (meetupCityIriData.data['hydra:member'][0]['@id'])
+        const cityIri = (cityIriData.data['hydra:member'][0]['@id'])
+        const meetupCityIri = (meetupCityIriData.data['hydra:member'][0]['@id'])
       
 
       
@@ -237,10 +237,6 @@ export default function Dashboard() {
       // console.log(user.data.images[0].filename);
      
   }
-
-  // useEffect(() => {
-  //   getUser(userId);
-  //  }, []);
   
   
    useEffect(() => {
@@ -255,8 +251,6 @@ export default function Dashboard() {
     const files = Array.from(e.target.files)
     const filename = files[0].name
     // dispatch(setPhoto(filename))
-    
-
     const formData = new FormData()
 
     files.forEach((file, i) => {

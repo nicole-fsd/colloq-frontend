@@ -21,11 +21,11 @@ const useStyles = makeStyles((theme) => ({
       minWidth: 400,
       maxWidth: 600,
       height: 'auto',
-      position: 'absolute',
+      position: 'relative',
       top: '10%',
       left: 0,
       right: 0,
-      margin: 'auto',
+      margin: '15px auto',
 
     },
   paper: {
@@ -34,24 +34,24 @@ const useStyles = makeStyles((theme) => ({
     padding: 20,
     overflow: 'auto',
   },
-  gridTop: {
-    border: "1px solid black",
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    height: "80%",
-    alignContent: "center"
-  },
-  gridLeft: {
-    border: "1px solid blue",
-    height: "65ch",
-    width: "73ch"
-  },
-  gridRight: {
-    border: "1px solid red",
-    height: "65ch",
-    width: "73ch"
-  },
+  // gridTop: {
+  //   border: "1px solid black",
+  //   display: "flex",
+  //   flexDirection: "row",
+  //   justifyContent: "center",
+  //   height: "80%",
+  //   alignContent: "center"
+  // },
+  // gridLeft: {
+  //   border: "1px solid blue",
+  //   height: "65ch",
+  //   width: "73ch"
+  // },
+  // gridRight: {
+  //   border: "1px solid red",
+  //   height: "65ch",
+  //   width: "73ch"
+  // },
   title: {
     fontSize: "2.5rem",
     textAlign: "center",

@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: "30px",
     textAlign: "center",
-    color: '#757575'
+    color: '#757575',
+    margin: '15px'
   },
   toolbar: {
     color: "white",
@@ -50,8 +51,10 @@ const useStyles = makeStyles((theme) => ({
   },
   div: {
     margin: "20px auto",
-    
-
+  },
+  form: {
+    width: '80%',
+    margin: 'auto'
   }
 }));
 
@@ -102,7 +105,7 @@ const Login= () => {
               <Typography variant="h4" component="h2" className={classes.title}>
                  Login
               </Typography>
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} className={classes.form}>
           
                 <TextField 
                   variant="standard" 

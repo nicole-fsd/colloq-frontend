@@ -93,8 +93,8 @@ const useStyles = makeStyles(theme => ({
           fontFamily: "Arial"
         }
       },
-      inputRoot: {
-        color: 'black'
+      subjectDiv: {
+        marginLeft: '.5rem'
       }
   }));
 
@@ -249,7 +249,7 @@ export default function MessagesOverview() {
                             <ListItemIcon>
                             <SendIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Sent mail" />
+                            <ListItemText primary="Sent messages" />
                         </ListItem>
                         <ListItem button>
                             <ListItemIcon>
@@ -289,7 +289,7 @@ export default function MessagesOverview() {
                                     secondary={message.subject}
                                 />
                                 <ListItemSecondaryAction>
-                                    <Typography>{message.createdAt.substring(0,10)}</Typography>
+                                    <Typography>{new Date(message.createdAt).toDateString().substr(4)}</Typography>
                                 </ListItemSecondaryAction>
                                
                                 </ListItem>
@@ -308,6 +308,7 @@ export default function MessagesOverview() {
                                         </IconButton>
                                       </div>
                                       <div>
+                                        <div className={classes.subjectDiv}>
                                         <Typography variant="overline">
                                           Subject: 
                                         </Typography>
@@ -317,6 +318,7 @@ export default function MessagesOverview() {
                                         >
                                         {currentMessage.subject}
                                         </Typography>
+                                        </div>
                                       {/* <TextField
                                         className={classes.textfield}
                                         id="message-subject"
@@ -335,11 +337,10 @@ export default function MessagesOverview() {
                                         fullWidth
                                         rows={4}
                                         InputProps={{
-                                          classes:{
-                                            root: classes.inputRoot,
-                                            
+                                          style: {
+                                              color: "black"
                                           }
-                                        }}
+                                      }}
                                         defaultValue={currentMessage.text}
                                         disabled
                                         variant="outlined"
