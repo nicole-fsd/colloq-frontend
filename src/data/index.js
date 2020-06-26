@@ -9,12 +9,13 @@ import searchReducer from "./search"
 import messageReducer from "./messages"
 import meetupReducer from "./meetups"
 import commentReducer from "./comments"
+import contactReducer from "./contact"
 
 const persistConfig = {
   key: 'root',
   storage: storage,
   blacklist: [''],
-  whitelist: ['auth', 'photos', 'search', 'messages', 'meetups', 'comments']
+  whitelist: ['auth', 'photos', 'search', 'messages', 'meetups', 'comments', 'contact']
 };
 
 const appReducer = persistCombineReducers(persistConfig, {
@@ -24,6 +25,7 @@ const appReducer = persistCombineReducers(persistConfig, {
   messages: messageReducer,
   meetups: meetupReducer,
   comments: commentReducer,
+  contact: contactReducer
   
 });
 

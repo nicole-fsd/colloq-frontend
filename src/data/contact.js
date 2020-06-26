@@ -5,6 +5,7 @@ import axios from "axios";
 const initialState = {
     error: null,
     loading: false,
+    successMessage: "",
     mail: {
         name: "",
         email: "",
@@ -34,24 +35,24 @@ export const postMail = (name, email, message) => (dispatch) => {
       message: message
     }
     axios.post(`https://wdev.be/wdev_nicole/eindwerk/api/contact`, data, config)
-    // axios.post(`http://localhost:8000/api/contact`, data, config)
     .then((response) => {
     //   dispatch(postCommentSuccess(response.data))
       console.log('post mail success' + response.data)
+      dispatch(postMailSuccess("Your mail has been sent!"))
     })
     .catch((error) => console.log(error));
 };
 
  
 
-export const postMailSuccess = (data) => ({
+export const postMailSuccess = (msg) => ({
     type: POST_MAIL_SUCCESS,
-    payload: data,
+    payload: msg,
   })
 
- export const postMailError = (message) => ({
+ export const postMailError = (msg) => ({
    type: POST_MAIL_ERROR,
-   payload: message,
+   payload: msg,
  })
 
 /* REDUCER *////////////////////////////////////
@@ -68,7 +69,8 @@ export const postMailSuccess = (data) => ({
         return {
             ...state,
             error: null,
-            loading: false
+            loading: false,
+            successMessage: payload
         };
      
       default:
