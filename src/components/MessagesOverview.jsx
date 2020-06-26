@@ -20,6 +20,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Modal from '@material-ui/core/Modal';
 import { postUserMessage } from '../data/messages';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -28,8 +30,6 @@ const useStyles = makeStyles(theme => ({
         alignItems: "center",
         minHeight: "100vh",
         backgroundColor: "gray",
-        
-
       },
       paper: {
         padding: theme.spacing(5),
@@ -103,6 +103,10 @@ const useStyles = makeStyles(theme => ({
       }
   }));
 
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
+
 export default function MessagesOverview() {
     const classes = useStyles()
     const dispatch = useDispatch();
@@ -121,6 +125,8 @@ export default function MessagesOverview() {
     const [text, setText] = useState('');
     const authUserId = useSelector((state) => state.auth.user.id);
     const [recipientId, setRecipientId] = useState('');
+    const [snackBarOpen, setSnackBarOpen] = useState(false);
+    const [successMessage, setSuccessMessage] = useState("");
 
 
 
@@ -169,9 +175,6 @@ export default function MessagesOverview() {
         dispatch(getMessages(userId));
       }, [dispatch, userId])
 
-      // function handleMessageDelete(e) {
-      //   console.log('handlemessagedelete:' + e.target.parentNode.parentNode)
-      // }
 
       const handleMessageDelete = id => () => {
         axios.delete(`${process.env.REACT_APP_ENDPOINT}/messages/${id}`, {
@@ -194,8 +197,16 @@ export default function MessagesOverview() {
         console.log('form submit')
         dispatch(postUserMessage(subject, text, recipientId, authUserId))
         setOpenReply(false)
+        setSuccessMessage("Your message has been sent!")
+        setSnackBarOpen(true);
       }
 
+      const handleSnackBarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setSnackBarOpen(false);
+      };
       
 
 
@@ -343,6 +354,11 @@ export default function MessagesOverview() {
                                 >
                                   {replyBody}
                                 </Modal>
+                                <Snackbar open={snackBarOpen} autoHideDuration={6000} onClose={handleSnackBarClose}>
+                                  <Alert onClose={handleSnackBarClose} severity="success">
+                                    {successMessage}
+                                  </Alert>
+                                </Snackbar>
                         </List>
                     </div>
                 </Grid>

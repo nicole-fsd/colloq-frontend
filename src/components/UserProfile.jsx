@@ -18,6 +18,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { postComment, getComments } from '../data/comments';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 
 ///Modal Calculations /////////////////////////
@@ -34,6 +36,10 @@ function getModalStyle() {
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
   };
+}
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 //STYLE //////////////////////////////////////
@@ -236,17 +242,10 @@ const [singleUserStartDate, setSingleUserStartDate] = useState("");
 const [singleUserEndDate, setSingleUserEndDate] = useState("");
 const [singleUserPhoto, setSingleUserPhoto] = useState("");
 const [commentText, setCommentText] = useState("");
+const [message, setMessage] = useState("");
+const [snackBarOpen, setSnackBarOpen] = useState(false);
 
-//HANDLERS
-  //   const handleChange = (event) => {
-  //   setName(event.target.value);
-  // };
-
-  // MODAL //////////////////
-  // const handleOpen = () => {
-  //   setOpen(true);
-  // };
-
+//HANDLERS ///////////////////////////////
   const handleClose = () => {
     setOpen(false);
   };
@@ -260,6 +259,8 @@ const [commentText, setCommentText] = useState("");
     console.log('message form submit')
     dispatch(postUserMessage(subject, text, id, authUserId))
     handleClose()
+    setMessage("Message has been sent!")
+    setSnackBarOpen(true)
   }
 
   const handleOpenCommentModal = () => {
@@ -280,6 +281,10 @@ const [commentText, setCommentText] = useState("");
   const handleGetComments = () => {
     dispatch(getComments(id))
     
+  }
+
+  const handleSnackBarClose = () => {
+    setSnackBarOpen(false)
   }
 
 /////MODAL BODY ///////////////////////
@@ -318,10 +323,10 @@ const [commentText, setCommentText] = useState("");
   
 
 
-//get user id
+//get user id //////////////////////
 var n = str.lastIndexOf('/');
 var id = str.substring(n + 1);
-// console.log('userprofile result:' + id)
+
 
 const getUser = async (id) => {
   const user = await axios.get(`${process.env.REACT_APP_ENDPOINT}/users/${id}`, {
@@ -359,12 +364,6 @@ const getUser = async (id) => {
  }, []);
 
 
-
-// useEffect(() => {
-//     dispatch(getUser(id));
-//     // dispatch(getPhoto(id));
-//   }, [])
-
   
 
   return (
@@ -396,7 +395,11 @@ const getUser = async (id) => {
                 >
                   {body}
                 </Modal>
-
+                <Snackbar open={snackBarOpen} autoHideDuration={6000} onClose={handleSnackBarClose}>
+                    <Alert onClose={handleSnackBarClose} severity="success">
+                      {message}
+                    </Alert>
+                  </Snackbar>
                 </Grid>
               <Grid item>
               <Paper className={classes.paperAbout} elevation={3}><Typography className={classes.typeAbout}>{singleUserMessage}</Typography></Paper>
@@ -437,8 +440,6 @@ const getUser = async (id) => {
               {comments.map(comment => (
                   <Grid item xs={6}>
                   <Paper className={classes.paperComment} elevation={1}>
-                    {/* {const eStartTime = new Date(comment.createdAt).toDateString()
-                    const startString = eStartTime.toTimeString().substr(0,5)} */}
                     <Typography variant="overline">{new Date(comment.createdAt).toDateString()}</Typography>
                     <Typography variant="h6">{comment.text}</Typography>
                     <Typography variant="overline">- {comment.commentAuthor.firstname} {comment.commentAuthor.lastname}</Typography>
@@ -446,9 +447,6 @@ const getUser = async (id) => {
                   </Grid>
               ))}
             <Grid item xs>
-            {/* <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleGetComments}>
-                Get Comments
-              </Button>  */}
               <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleOpenCommentModal}>
                 Post Comment
               </Button> 
