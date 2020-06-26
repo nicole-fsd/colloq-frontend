@@ -18,7 +18,8 @@ export const initialState = {
     meetupType: "",
     publicMessage: "",
     nativeLanguage: "",
-    targetLanguage: ""
+    targetLanguage: "",
+    image: ""
     // imageFile: ""
   },
   register: {
@@ -46,9 +47,9 @@ export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS"
 
 /* ACTION CREATORS *//////////////////////////////////////
 
-export const loginUser = (username, password) => (dispatch) => {
-  // axios.post(`https://wdev.be/wdev_nicole/eindwerk/api/login_check`, {
+export const loginUser = (username, password, registeredResponse = null) => (dispatch) => {
     axios.post(`${process.env.REACT_APP_ENDPOINT}/login_check`, {
+      // axios.post(`http://localhost:8000/api/login_check`, {
       username: username,
       password: password,
     })
@@ -100,10 +101,7 @@ export const registerUser = (email, password, firstName, lastName, age, city, me
     }
     axios.post(`${process.env.REACT_APP_ENDPOINT}/register`, data, config)
     .then((response) => {
-      // const resEmail = response.config.data.email
-      // const resPassword = response.config.data.password
-      dispatch(loginUser(email, password))
-      dispatch(registerSuccess(response.data))
+    dispatch(loginUser(email, password, response.data))
     console.log('email and password:' + email, password);
     })
     .catch((error) => console.log(error));
@@ -157,6 +155,25 @@ export const updatePublicMessage = (id, publicMessage) => (dispatch) => {
 };
 
 
+export const updateUserPhoto = (id, imageIri) => (dispatch) => {
+  const config = {
+    headers: {
+    'Content-Type': "application/json;charset=UTF-8",
+    'Authorization': `Bearer ${localStorage.getItem('token')}`
+    },
+  };
+  const data = {
+    image: imageIri
+  }
+  axios.put(`${process.env.REACT_APP_ENDPOINT}/users/${id}`, data, config)
+  .then((response) => {
+    // dispatch(updateUserSuccess(response.data))
+    console.log('update user image success' + response.data)
+  })
+  .catch((error) => console.log(error));
+};
+
+
 export const registerSuccess = (data) => ({
   type: REGISTER_SUCCESS,
   payload: data,
@@ -182,7 +199,7 @@ export default (state = initialState, { type, payload }) => {
       // const user = jwt_decode(payload);
       localStorage.setItem('token', payload)
       const decoded = JWT.decode(payload, { complete: true })
-      // console.log(decoded)
+      console.log(decoded.payload.image)
       return {
         ...state,
         user: {
@@ -202,6 +219,7 @@ export default (state = initialState, { type, payload }) => {
           isTutor: decoded.payload.isTutor,
           nativeLanguage: decoded.payload.nativeLanguage,
           targetLanguage: decoded.payload.targetLanguage,
+          image: decoded.payload.image
         },
         loggedIn: true,
       };

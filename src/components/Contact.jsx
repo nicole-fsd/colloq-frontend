@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { Grid, Typography, TextField, Container, Button, Paper, TextareaAutosize } from "@material-ui/core";
+import { postMail } from "../data/contact";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,6 +36,16 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid #bdbdbd',
     padding: 20,
     overflow: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      width: '95%',
+      margin: 'auto',
+    },
+    [theme.breakpoints.up('md')]: {
+      width: '100%',
+      margin: 'auto',
+      padding: '10px'
+      
+    },
   },
   link: {
     textDecoration: "none",
@@ -49,11 +60,15 @@ const useStyles = makeStyles((theme) => ({
     margin: "20px auto",
   },
   form: {
-    width: '80%',
+    width: '90%',
     margin: 'auto'
   },
   textarea: {
-      width: '100%'
+      width: '100%',
+      marginTop: '15px'
+  },
+  submitmsgBtn: {
+    marginTop: '10px'
   }
 }))
 
@@ -69,7 +84,7 @@ export default function Contact() {
     
     const submitHandler = (e) => {
       e.preventDefault();
-       
+      dispatch(postMail(name, email, message))
       }
   
 
@@ -89,7 +104,7 @@ export default function Contact() {
                   <form onSubmit={submitHandler}>
                     <TextField variant="standard" type='text' margin="normal" required fullWidth id="name" label="Name" name="name" value={name} onChange={(e) => {setName(e.target.value);}}/>
                     <TextField variant="standard" type='email' margin="normal" required fullWidth id="email" label="Email" name="email" autoComplete="email" value={email} onChange={(e) => {setEmail(e.target.value);}}/>
-                    <TextareaAutosize className={classes.textarea} aria-label="message textarea" required fullWidth rowsMin={8} placeholder="Write a message..." id="text" label="Message" name="text" value={message}
+                    <TextareaAutosize className={classes.textarea} aria-label="message textarea" required rowsMin={8} placeholder="Write a message..." id="text" label="Message" name="text" value={message}
                         onChange={(e) => {
                         setMessage(e.target.value);
                         }} />

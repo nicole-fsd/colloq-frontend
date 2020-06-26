@@ -26,13 +26,20 @@ const useStyles = makeStyles(theme => ({
   gridList: {
     justifyContent: "center",
     width: 1200, 
+    [theme.breakpoints.down('sm')]: {
+      width: '100%'
+    },
   },
   heading: {
     paddingBottom: '1rem',
     marginBottom: "1.8rem",
     width: '60%',
     textAlign: 'center',
-    lineHeight: '4rem'
+    lineHeight: '4rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '2rem',
+      width: '90%'
+    },
   },
   grid: {
     justifyContent:"center"

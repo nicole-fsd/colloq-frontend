@@ -6,7 +6,7 @@ import { Container , Paper, Grid, Typography, Button, TextField, IconButton} fro
 import Footer from '../landing/Footer'
 import Avatar from '@material-ui/core/Avatar';
 import { getPhoto } from "../../data/photos";
-import { updateUser, setPhoto, updatePublicMessage } from "../../data/auth";
+import { updateUser, updateUserPhoto, updatePublicMessage } from "../../data/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from 'react-router-dom'
 import EditIcon from '@material-ui/icons/Edit';
@@ -174,6 +174,7 @@ export default function Dashboard() {
     const userTargetLanguage = useSelector((state) => state.auth.user.targetLanguage);
     const userMeetupType = useSelector((state) => state.auth.user.meetupType);
     const userId = useSelector((state) => state.auth.user.id);
+    const userImage = useSelector((state) => state.auth.user.image);
     // const userPhoto = useSelector((state) => state.auth.user.images[0].filename);
     const userPublicMessage = useSelector((state) => state.auth.user.publicMessage);
     const authUserPhoto = useSelector((state) => state.auth.user.imageFile);
@@ -265,7 +266,7 @@ export default function Dashboard() {
       },
     };
     axios.post(`${process.env.REACT_APP_ENDPOINT}/media_objects`, formData, config)
-    .then((response) => console.log('post photo success' + response.data))
+    .then((response) => dispatch(updateUserPhoto(response.data['@id'])))
     .catch((error) => console.log('error:' + error));
   }
 
@@ -282,7 +283,7 @@ export default function Dashboard() {
       <Grid className={classes.grid1} justify="space-evenly" container spacing={4}>
         <Grid item>
           <Paper className={classes.photo} elevation={3}>
-          <Avatar alt="user profile photo" src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${singleUserPhoto}.jpg&height=200&image=/wdev_nicole/eindwerk/images/${singleUserPhoto}.jpg`} className={classes.large} />
+          <Avatar alt="user profile photo" src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${userImage}&height=200&image=/wdev_nicole/eindwerk/images/${userImage}`} className={classes.large} />
               </Paper>
               <input
                 accept="image/*"

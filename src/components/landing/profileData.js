@@ -1,7 +1,7 @@
 import profile1 from './images/profile1.JPG';
-import profile2 from './images/profile2.JPG';
+import profile2 from './images/person25.jpg';
 import profile3 from './images/profile3.JPG';
-import profile4 from './images/profile4.JPG';
+import profile4 from './images/person9.jpg';
 
  
 const profileData = [
@@ -15,11 +15,11 @@ const profileData = [
     },
     {
         img: profile4,
-        title: 'Celine Dubois'
+        title: 'Heather Shepard'
     },
     {
         img: profile2,
-        title: 'Karl Brandt'
+        title: 'Carlo Ribeiro'
     },
   ];
 

@@ -206,7 +206,6 @@ export default function MeetupsOverview() {
 
       const handleEventSelect = (e) => {
         setOpenDetail(true);
-        console.log(e)
         setNameDetail(e.name)
         const eDate = new Date(e.date)
         const dateString = eDate.toDateString()

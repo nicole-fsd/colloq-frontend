@@ -19,21 +19,33 @@ const useStyles = makeStyles((theme) => ({
     width: "70vw",
     // border: "1px solid black",
     paddingTop: "60px",
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      spacing: '0'
+    },
   },
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
   },
+  gridListTile: {
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      
+    },
+  }
 
 }));
 
 export default function TitlebarGridList() {
   const classes = useStyles();
 
+  const spacing = window.innerWidth < 800 ? 10 : 60;
+
   return (
     <Container className={classes.root}>
-      <GridList spacing={60} cellHeight={250} className={classes.gridList}>
+      <GridList spacing={spacing} cellHeight={250} className={classes.gridList}>
         {tileData.map((tile) => (
-          <GridListTile xs={12} key={tile.img}>
+          <GridListTile className={classes.gridListTile} xs={12} key={tile.img}>
             <img src={tile.img} alt={tile.title} />
             <GridListTileBar
               title={tile.title}
