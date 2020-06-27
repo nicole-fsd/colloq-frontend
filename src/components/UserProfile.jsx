@@ -345,12 +345,13 @@ const getUser = async (id) => {
     setSingleUserCity(user.data.city.name);
     setSingleUserMeetupCity(user.data.meetupCity.name);
     setSingleUserMeetupType(user.data.meetupType);
-    setSingleUserPhoto(user.data.images[0].filename);
+    setSingleUserPhoto(user.data.image.filePath);
     setSingleUserNatLanguage(user.data.nativeLanguage.name);
     setSingleUserTarLanguage(user.data.targetLanguage.name);
     setSingleUserStartDate(user.data.availStartDate);
     setSingleUserEndDate(user.data.availEndDate);
-    // console.log(user.data.images[0].filename);
+    console.log(user.data);
+    
    
 }
 
@@ -381,7 +382,7 @@ const getUser = async (id) => {
                   </div>
                 
                 <Paper className={classes.photo} elevation={3}>
-                  <Avatar alt="user profile photo" src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${singleUserPhoto}.jpg&height=200&image=/wdev_nicole/eindwerk/images/${singleUserPhoto}.jpg`} className={classes.large} />
+                  <Avatar alt="user profile photo" src={`https://wdev.be/wdev_nicole/eindwerk/images/${singleUserPhoto}`} className={classes.large} />
                   {/* <img src={`http://localhost:8000/image.php?${photos.image}&height=200&image=/wdev_nicole/eindwerk/system/img/albums/${photos.image}`} />) */}
                 </Paper>
                 <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleSendMessageClick}>

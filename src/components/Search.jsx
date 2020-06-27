@@ -149,6 +149,7 @@ export default function Search() {
       setSearchInput(e.target.value)
     }
     
+    console.log('users: ' + users)
 
     return (
         
@@ -199,7 +200,8 @@ export default function Search() {
                         <CardMedia
                               className={classes.cover}
                               component="img"
-                              src={user.images.length > 0 ? `https://wdev.be/wdev_nicole/eindwerk/image.php?${user.images[0].filename}.jpg&width=200&height=200&&cropratio=4:3&image=/wdev_nicole/eindwerk/images/${user.images[0].filename}.jpg` : ""}
+                              src={user.image != null ? `https://wdev.be/wdev_nicole/eindwerk/images/${user.image.filePath}` : ""}
+                              // src={user.images.length > 0 ? `https://wdev.be/wdev_nicole/eindwerk/image.php?${user.images[0].filename}.jpg&width=200&height=200&&cropratio=4:3&image=/wdev_nicole/eindwerk/images/${user.images[0].filename}.jpg` : ""}
                               title="profile photo"
                               height="220"
                               
@@ -210,7 +212,7 @@ export default function Search() {
                             />
                             <CardContent className={classes.cardContent}>
                             <Typography variant='subtitle1'></Typography>
-                              <Link className={classes.link} to={`/profile/${idArray[index]}`}>
+                              <Link style={{ textDecoration: 'none' }} className={classes.link} to={`/profile/${idArray[index]}`}>
                                 <Typography className={classes.linkText}>View Profile</Typography>
                                 </Link>
                             </CardContent>

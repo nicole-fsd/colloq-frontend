@@ -107,8 +107,6 @@ export default function Register() {
     const [meetupType, setMeetupType] = useState("");
     const [age, setAge] = useState("");
     const [radioValue, setRadioValue] = useState('');
-    // const [isTourist, setIsTourist] = useState(false);
-    // const [isTutor, setIsTutor] = useState(false);
     const [startDate, setStartDate] = useState(Date.now());
     const [endDate, setEndDate] = useState(Date.now());
     

@@ -23,7 +23,7 @@ function App() {
     <>
        <Layout>
        <Helmet>
-          <title>Colloq | Meet, Learn, Explore</title>
+          <title>Colloq | Meet • Learn • Explore</title>
           <meta name="title" content="Colloq | Meet - Learn - Explore" />
           <meta name="description" content="A fun way to meet travelers and locals around the world, improving language skills while exploring cultures." />
         </Helmet>

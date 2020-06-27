@@ -28,42 +28,30 @@ const useStyles = makeStyles(theme => ({
         width: "400px",
         margin: "30px"
       },
-    // root: {
-    //   padding: "250px",
-    //   // border: "solid 1px black",
-    //   minHeight: "850px",
-    //   // backgroundImage: `url(${Background})`,
-    //   color: "#424242"
-    // },
     container: {
         backgroundColor: "#E1E2E1",
         width: "100vw",
         minHeight: "100vh",
         [theme.breakpoints.down('xs')]: {
           width: '100%',
-        },
-        
-    },
-    grid1: {
-        // border: "1px solid black",
-        paddingTop: "80px",
-        alignItems: "center",
-        marginLeft: "20px",
-        [theme.breakpoints.down('xs')]: {
-          marginLeft: "-15px",
-          marginBottom: ".5rem"
-        },
-    
-    },
+        },  
+      },
+      grid1: {
+          paddingTop: "80px",
+          alignItems: "center",
+          marginLeft: "20px",
+          [theme.breakpoints.down('xs')]: {
+            marginLeft: "-15px",
+            marginBottom: ".5rem"
+          },
+      },
     grid2: {
-        // border: "1px solid blue",
         minHeight: "800px"
     },
     gridBottomLeft: {
         // border: "1px solid red"
     },
     gridBottomRight: {
-        // border: "1px solid green"
         marginLeft: "90px",
         [theme.breakpoints.down('xs')]: {
           marginLeft: "0px",
@@ -182,7 +170,6 @@ export default function Dashboard() {
     // const photos = useSelector((state) => state.photos.photos);
     const [singleUserPhoto, setSingleUserPhoto] = useState("");
     const [email, setEmail] = useState(userEmail);
-    // const [password, setPassword] = useState();
     const [firstname, setFirstName] = useState(userFirstName);
     const [lastname, setLastName] = useState(userLastName);
     const [city, setCity] = useState(userCity);
@@ -267,7 +254,7 @@ export default function Dashboard() {
       },
     };
     axios.post(`${process.env.REACT_APP_ENDPOINT}/media_objects`, formData, config)
-    .then((response) => dispatch(updateUserPhoto(response.data['@id'])))
+    .then((response) => dispatch(updateUserPhoto(userId, response.data['@id'], userEmail, "password1234")))
     .catch((error) => console.log('error:' + error));
   }
 
@@ -284,7 +271,8 @@ export default function Dashboard() {
       <Grid className={classes.grid1} justify="space-evenly" container spacing={4}>
         <Grid item>
           <Paper className={classes.photo} elevation={3}>
-          <Avatar alt="user profile photo" src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${userImage}&height=200&image=/wdev_nicole/eindwerk/images/${userImage}`} className={classes.large} />
+          {/* <Avatar alt="user profile photo" src={`https://wdev.be/wdev_nicole/eindwerk/image.php?${userImage}&height=200&image=/wdev_nicole/eindwerk/images/${userImage}`} className={classes.large} /> */}
+          <Avatar alt="user profile photo" src={`https://wdev.be/wdev_nicole/eindwerk/images/${userImage}`} className={classes.large} />
               </Paper>
               <input
                 accept="image/*"

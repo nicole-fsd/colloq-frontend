@@ -71,7 +71,8 @@ const useStyles = makeStyles((theme) => ({
       marginTop: '15px'
   },
   submitmsgBtn: {
-    marginTop: '10px'
+    marginTop: '15px',
+    marginBottom: '15px'
   },
   messageField: {
     marginTop: '10px'

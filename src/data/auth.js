@@ -155,7 +155,7 @@ export const updatePublicMessage = (id, publicMessage) => (dispatch) => {
 };
 
 
-export const updateUserPhoto = (id, imageIri) => (dispatch) => {
+export const updateUserPhoto = (id, imageIri, email, password) => (dispatch) => {
   const config = {
     headers: {
     'Content-Type': "application/json;charset=UTF-8",
@@ -169,6 +169,7 @@ export const updateUserPhoto = (id, imageIri) => (dispatch) => {
   .then((response) => {
     // dispatch(updateUserSuccess(response.data))
     console.log('update user image success' + response.data)
+    dispatch(loginUser(email, password))
   })
   .catch((error) => console.log(error));
 };
