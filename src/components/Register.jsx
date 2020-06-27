@@ -9,6 +9,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { registerUser } from '../data/auth';
+import { Formik } from "formik";
+import * as Yup from "yup";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -131,6 +133,95 @@ export default function Register() {
     };
 
     return (
+      <Formik
+      initialValues={{ 
+        email: "", 
+        password: "",
+        firstName: "",
+        lastName: "",
+        age: "",
+        city: "",
+        meetupCity: "",
+        nativeLanguage: "",
+        targetLanguage: "",
+        meetupType: "",
+        startDate: Date.now(),
+        endDate: Date.now(),
+        role: ""
+
+      }}
+      onSubmit={(values, { setSubmitting }) => {
+        setTimeout(() => {
+          console.log("Registration in progress", values);
+          dispatch(registerUser(
+            values.email, 
+            values.password, 
+            values.firstName, 
+            values.lastName, 
+            values.age, 
+            values.city, 
+            values.meetupCity, 
+            values.nativeLanguage, 
+            values.targetLanguage, 
+            values.meetupType, 
+            values.startDate, 
+            values.endDate, 
+            values.role))
+
+          setSubmitting(false);
+        }, 500);
+        }}
+
+      validationSchema={Yup.object().shape({
+        email: Yup.string()
+          .email()
+          .required("Required"),
+        password: Yup.string()
+          .required("No password provided")
+          .min(8, "Password is too short - should be 8 characters minimum")
+          .matches(/(?=.*[0-9])/, "Password must contain a number"),
+        firstName: Yup.string()
+          .matches(/^[a-zA-Z\s]+$/, 'Input is not valid - must only contain letters'),
+        lastName: Yup.string()
+          .matches(/^[a-zA-Z]+$/, 'Input is not valid - must only contain letters'),
+        age: Yup.number()
+          .typeError("Age must be a number")
+          .positive("Age must be greater than 0")
+          .integer(),
+        city: Yup.string()
+          .matches(/^[a-zA-Z\s]+$/, 'Input is not valid - must only contain letters')
+          .required("Required"),
+        meetupCity: Yup.string()
+          .matches(/^[a-zA-Z]+$/, 'Input is not valid - must only contain letters')
+          .required("Required"),
+        nativeLanguage: Yup.string()
+          .matches(/^[a-zA-Z]+$/, 'Input is not valid - must only contain letters')
+          .required("Required"),
+        targetLanguage: Yup.string()
+          .matches(/^[a-zA-Z]+$/, 'Input is not valid - must only contain letters')
+          .required("Required"),
+        meetupType: Yup.string()
+          .matches(/^[a-zA-Z]+$/, 'Input is not valid - must only contain letters')
+          .required("Required"),
+        startDate: Yup.string(),
+        endDate: Yup.string()
+
+      })}
+    >
+      {props => {
+      const {
+        values,
+        touched,
+        errors,
+        isSubmitting,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+      } = props;
+
+      return (
+
+
       <>
       <div>
         <div className={classes.root}>
@@ -138,57 +229,153 @@ export default function Register() {
             <Typography variant="h4" component="h2" className={classes.title}>
               Register
             </Typography>
-            <form className={classes.form} method="POST" onSubmit={submitHandler}>
-                          <TextField variant="standard" margin="normal" type="email" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" value={email}
-                          onChange={(e) => {
-                            setEmail(e.target.value);
-                          }}
+            <form className={classes.form} method="POST" onSubmit={handleSubmit}>
+                        <TextField 
+                          variant="standard" 
+                          margin="normal" type="email" 
+                          required fullWidth id="email" 
+                          label="Email Address" 
+                          name="email" 
+                          autoComplete="email" 
+                          value={values.email}
+                          onChange={handleChange}
                         />
-                        <TextField variant="standard" margin="normal" required fullWidth name="password" label="Password" type="password" id="password" autoComplete="current-password" value={password}
-                          onChange={(e) => {
-                            setPassword(e.target.value);
-                          }}
+                        {errors.email && touched.email && (
+                          <div style={{color: "red"}} className="input-feedback">{errors.email}</div>
+                        )}
+                        <TextField 
+                          variant="standard" 
+                          margin="normal" 
+                          required 
+                          fullWidth 
+                          name="password" 
+                          label="Password" 
+                          type="password" 
+                          id="password" 
+                          autoComplete="password" 
+                          value={values.password}
+                          onChange={handleChange}
                         />
-                        <TextField variant="standard" margin="normal" required fullWidth id="firstname" label="First name" name="firstname" autoComplete="firstname" value={firstname}
-                          onChange={(e) => {
-                            setFirstName(e.target.value);
-                          }}
+                        {errors.password && touched.password && (
+                          <div style={{color: "red"}} className="input-feedback">{errors.password}</div>
+                        )}
+                        <TextField 
+                          variant="standard" 
+                          margin="normal" 
+                          required 
+                          fullWidth 
+                          id="firstName" 
+                          label="First name" 
+                          name="firstName"  
+                          value={values.firstName}
+                          onChange={handleChange}
                         />
-                        <TextField variant="standard" margin="normal" required fullWidth id="lastname" label="Last name" name="lastname" autoComplete="lastname" value={lastname}
-                          onChange={(e) => {
-                            setLastName(e.target.value);
-                          }}
+                        {errors.firstName && touched.firstName && (
+                          <div className="input-feedback">{errors.firstName}</div>
+                        )}
+                        <TextField 
+                          variant="standard" 
+                          margin="normal" 
+                          required 
+                          fullWidth 
+                          id="lastName" 
+                          label="Last name" 
+                          name="lastName" 
+                          value={values.lastName}
+                          onChange={handleChange}
                         />
-                        <TextField variant="standard" margin="normal" fullWidth id="age" label="Age" name="age" autoComplete="age" value={age}
-                          onChange={(e) => {
-                            setAge(e.target.value);
-                          }}
+                        {errors.lastName && touched.lastName && (
+                          <div className="input-feedback">{errors.lastName}</div>
+                        )}
+                        <TextField 
+                          variant="standard" 
+                          margin="normal" 
+                          fullWidth 
+                          id="age" 
+                          label="Age" 
+                          name="age" 
+                          autoComplete="age" 
+                          value={values.age}
+                          onChange={handleChange}
                         />
-                        <TextField variant="standard" margin="normal" required fullWidth name="city" label="City" type="text" id="city" value={city}
-                          onChange={(e) => {
-                            setCity(e.target.value);
-                          }}
+                        {errors.age && touched.age && (
+                          <div className="input-feedback">{errors.age}</div>
+                        )}
+                        <TextField 
+                          variant="standard" 
+                          margin="normal" 
+                          required 
+                          fullWidth 
+                          name="city" 
+                          label="City" 
+                          type="text" 
+                          id="city" 
+                          value={values.city}
+                          onChange={handleChange}
                         />
-                        <TextField variant="standard" margin="normal" required fullWidth name="nativeLang" label="Native Language" type="text" id="nativeLang" value={nativeLang}
-                          onChange={(e) => {
-                            setNativeLang(e.target.value);
-                          }}
+                        {errors.city && touched.city && (
+                          <div className="input-feedback">{errors.city}</div>
+                        )}
+                        <TextField 
+                          variant="standard" 
+                          margin="normal" 
+                          required 
+                          fullWidth 
+                          name="nativeLanguage" 
+                          label="Native Language" 
+                          type="text" 
+                          id="nativeLanguage" 
+                          value={values.nativeLanguage}
+                          onChange={handleChange}
                         />
-                        <TextField variant="standard" margin="normal" required fullWidth name="targetLang" label="Meetup Language" type="text" id="targetLang" value={targetLang}
-                          onChange={(e) => {
-                            setTargetLang(e.target.value);
-                          }}
+                        {errors.nativeLanguage && touched.nativeLanguage && (
+                          <div className="input-feedback">{errors.nativeLanguage}</div>
+                        )}
+                        <TextField 
+                          variant="standard" 
+                          margin="normal" 
+                          required 
+                          fullWidth 
+                          name="targetLanguage" 
+                          label="Meetup Language" 
+                          type="text" 
+                          id="targetLanguage" 
+                          value={values.targetLanguage}
+                          onChange={handleChange}
                         />
-                        <TextField variant="standard" margin="normal" required fullWidth name="meetup_city" label="City of meetup" type="text" id="meetup_city" value={meetupCity}
-                          onChange={(e) => {
-                            setMeetupCity(e.target.value);
-                          }}
+                        {errors.targetLanguage && touched.targetLanguage && (
+                          <div className="input-feedback">{errors.targetLanguage}</div>
+                        )}
+                        <TextField 
+                          variant="standard" 
+                          margin="normal" 
+                          required 
+                          fullWidth 
+                          name="meetupCity" 
+                          label="City of meetup" 
+                          type="text" 
+                          id="meetupCity" 
+                          value={values.meetupCity}
+                          onChange={handleChange}
                         />
-                        <TextField variant="standard" margin="normal" fullWidth name="meetup_type" label="Preferred type of meetup" type="text" id="meetup_type" value={meetupType}
-                          onChange={(e) => {
-                            setMeetupType(e.target.value);
-                          }}
+                        {errors.meetupCity && touched.meetupCity && (
+                          <div className="input-feedback">{errors.meetupCity}</div>
+                        )}
+                        <TextField 
+                          variant="standard" 
+                          margin="normal" 
+                          required
+                          fullWidth 
+                          name="meetupType" 
+                          label="Preferred type of meetup" 
+                          type="text" 
+                          id="meetupType" 
+                          value={values.meetupType}
+                          onChange={handleChange}
                         />
+                        {errors.meetupType && touched.meetupType && (
+                          <div className="input-feedback">{errors.meetupType}</div>
+                        )}
                   <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <Grid container justify="start">
                     {/* <TextField
@@ -209,46 +396,57 @@ export default function Register() {
                       variant="inline"
                       format="MM/dd/yyyy"
                       margin="normal"
-                      id="date-picker-inline"
+                      id="startDate"
                       label="Available start date"
-                      value={startDate}
-                      onChange={handleStartDateChange}
+                      value={values.startDate}
+                      onChange={handleChange}
                       KeyboardButtonProps={{
                         'aria-label': 'change date',
                       }}
                     />
+                    {errors.startDate && touched.startDate && (
+                      <div className="input-feedback">{errors.startDate}</div>
+                    )}
                     <KeyboardDatePicker
                       disableToolbar
                       variant="inline"
                       format="MM/dd/yyyy"
                       margin="normal"
-                      id="date-picker-inline2"
+                      id="endDate"
                       label="Available end date"
-                      value={endDate}
-                      onChange={handleEndDateChange}
+                      value={values.endDate}
+                      onChange={handleChange}
                       KeyboardButtonProps={{
                         'aria-label': 'change date',
                       }}
                     />
+                    {errors.endDate && touched.endDate && (
+                      <div className="input-feedback">{errors.endDate}</div>
+                    )}
                       
                       <FormControl className={classes.formControl}>
                       <InputLabel id="simple-select-label">Role: </InputLabel>
                       <Select
                         className={classes.roleSelect}
                         labelId="simple-select-label"
-                        id="simple-select"
-                        value={radioValue}
-                        onChange={handleRoleChange}
+                        id="role"
+                        name="role"
+                        value={values.role}
+                        onChange={handleChange}
                       >
-                        <MenuItem value={"tourist"}>Tourist</MenuItem>
-                        <MenuItem value={"tutor"}>Tutor</MenuItem>
+                        <MenuItem id="tourist" name="tourist" value={"tourist"}>Tourist</MenuItem>
+                        <MenuItem id="tutor" name="tutor" value={"tutor"}>Tutor</MenuItem>
                         
                       </Select>
+                      {errors.role && touched.role && (
+                      <div className="input-feedback">{errors.role}</div>
+                    )}
                     </FormControl>
                         </Grid>
                       </MuiPickersUtilsProvider>
+                      {/* {errors.length > 0 && <p>Please correct errors in the form</p>} */}
                       <div className={classes.submitDiv}>
-                        <Button type="submit" variant="contained" color="secondary">
+                        <Button type="submit" variant="contained" color="secondary" disabled={isSubmitting}>
                           Submit
                         </Button>
                         <Link className={classes.link} to="/login">Already have an account? </Link>
@@ -259,4 +457,7 @@ export default function Register() {
         </div>
       </>
     );
+  }}
+  </Formik>
+    )
   }

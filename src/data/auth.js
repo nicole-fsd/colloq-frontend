@@ -93,8 +93,8 @@ export const registerUser = (email, password, firstName, lastName, age, city, me
       city: city,
       meetupCity: meetupCity,
       meetupType: meetupType,
-      startDate: startDate,
-      endDate: endDate,
+      startDate: new Date(startDate*1000),
+      endDate: new Date(endDate*1000),
       nativeLanguage: nativeLang,
       targetLanguage: targetLang,
       role: role
