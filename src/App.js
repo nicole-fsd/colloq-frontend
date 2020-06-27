@@ -90,21 +90,21 @@ function App() {
             exact
             path="/privacy"
             render={() => {
-              return <Privacy />;
+              return !Authenticated ? <Redirect to="/" /> : <Privacy />;
             }}
           />
           <Route
             exact
             path="/terms"
             render={() => {
-              return <Terms />;
+              return !Authenticated ? <Redirect to="/" /> : <Terms />;
             }}
           />
           <Route
             exact
             path="/contact"
             render={() => {
-              return <Contact />;
+              return !Authenticated ? <Redirect to="/" /> : <Contact />;
             }}
           />
             

@@ -187,13 +187,14 @@ export default function MeetupsOverview() {
         const languageIdData = (language.data['hydra:member'][0].id)
         const participantData = (participant.data['hydra:member'])
         const participantResult = participantData.find(user => user.email === participantEmail)
-        
+        console.log('participantData: ' + participantData[0].email)
         // setLanguageId(languageIdData)
         // setCityId(cityIdData)
         const participantId = participantResult.id
 
         dispatch(addMeetup(name, cityIdData, date, startTime, endTime, type, languageIdData, description, userId, participantId))
         setOpen(false);
+        
       };
 
       // const handleGetMeetups = () => {

@@ -62,6 +62,7 @@ export const addMeetup = (name, city, date, startTime, endTime, type, language, 
     .then((response) => {
     //   dispatch(addMeetupSuccess(response.data))
       console.log('addmeetupsuccess')
+      dispatch(getMeetups(userId))
     })
     .catch((error) => console.log('addmeetuperror:' + error));
 };
