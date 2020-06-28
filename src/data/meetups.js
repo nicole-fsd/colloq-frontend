@@ -26,8 +26,6 @@ const initialState = {
     }
    })
    .then((response) => {
-    //  console.log(result)
-    
     const meetups = response.data['hydra:member']
     const userMeetups = meetups.filter(meetup => meetup.creator === `/wdev_nicole/eindwerk/api/users/${userId}`)
     console.log('getmeetups successful' + userMeetups[0].name)
@@ -36,7 +34,6 @@ const initialState = {
   .catch((error) => console.log('getmeetupserror:' + error));
 
  }  
-
 
 
 export const addMeetup = (name, city, date, startTime, endTime, type, language, description, userId, participantId) => (dispatch) => {
@@ -66,21 +63,7 @@ export const addMeetup = (name, city, date, startTime, endTime, type, language, 
     })
     .catch((error) => console.log('addmeetuperror:' + error));
 };
-
-//  export const getMessages = (id) => (dispatch) => {
-//     axios.get(`${process.env.REACT_APP_ENDPOINT}/messages?messageRecipient=${id}`, {
-//      headers: {
-//        authorization: `Bearer ${localStorage.getItem('token')}`
-//      }
-//     })
-//     .then((response) => {
-//     //   console.log(response)
-//      dispatch(addMessages(response.data['hydra:member']))
-//      console.log('get messages fetch successful' + response.data['hydra:member'])
-//    })
-//    .catch((error) => console.log(error));
  
-//   }  
 
 export const addMeetupSuccess = (data) => ({
     type: ADD_MEETUP_SUCCESS,
@@ -102,7 +85,6 @@ export const addMeetupSuccess = (data) => ({
   export default (state = initialState, { type, payload }) => {
     switch (type) {
       case GET_MEETUPS_SUCCESS:
-        // console.log(payload)
         return {
           error: null,
           meetups: [...payload],

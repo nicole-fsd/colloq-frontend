@@ -29,14 +29,11 @@ const appReducer = persistCombineReducers(persistConfig, {
   
 });
 
-// const pReducer = persistCombineReducers(persistConfig, rootReducer);
 
 const rootReducer = (state, action) => {
   if (action.type === "LOGOUT") {
       // for all keys defined in your persistConfig(s)
       storage.removeItem('persist:root')
-      
-      // storage.removeItem('persist:otherKey')
 
       state = undefined;
   }

@@ -46,7 +46,6 @@ export const postComment = (text, userId, authUserId) => (dispatch) => {
      }
     })
     .then((response) => {
-    //   console.log(response)
      dispatch(getCommentsSuccess(response.data['hydra:member']))
      console.log('get comments fetch successful' + response.data['hydra:member'])
    })

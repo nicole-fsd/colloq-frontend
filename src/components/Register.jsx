@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import axios from 'axios'
+// import axios from 'axios'
 import 'date-fns';
 import {useDispatch} from 'react-redux'
 import { Link } from "react-router-dom";
@@ -10,6 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import Tooltip from '@material-ui/core/Tooltip';
 import { registerUser } from '../data/auth';
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -19,6 +20,7 @@ import {
 } from '@material-ui/pickers';
 import {Grid, Typography, TextField, Button, Paper, FormControl } from "@material-ui/core";
 
+//STYLE //////////////////////////////////
 const useStyles = makeStyles((theme) => ({
     root: {
       backgroundColor: "#E1E2E1",
@@ -38,24 +40,6 @@ const useStyles = makeStyles((theme) => ({
     padding: 20,
     overflow: 'auto',
   },
-  // gridTop: {
-  //   border: "1px solid black",
-  //   display: "flex",
-  //   flexDirection: "row",
-  //   justifyContent: "center",
-  //   height: "80%",
-  //   alignContent: "center"
-  // },
-  // gridLeft: {
-  //   border: "1px solid blue",
-  //   height: "65ch",
-  //   width: "73ch"
-  // },
-  // gridRight: {
-  //   border: "1px solid red",
-  //   height: "65ch",
-  //   width: "73ch"
-  // },
   title: {
     fontSize: "2.5rem",
     textAlign: "center",
@@ -101,46 +85,47 @@ const useStyles = makeStyles((theme) => ({
 export default function Register() {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [firstname, setFirstName] = useState("");
-    const [lastname, setLastName] = useState("");
-    const [city, setCity] = useState("");
-    const [nativeLang, setNativeLang] = useState("");
-    const [targetLang, setTargetLang] = useState("");
-    const [meetupCity, setMeetupCity] = useState("");
-    const [meetupType, setMeetupType] = useState("");
-    const [age, setAge] = useState("");
-    const [radioValue, setRadioValue] = useState('');
-    const [startDate, setStartDate] = useState(Date.now());
-    const [endDate, setEndDate] = useState(Date.now());
-    const [checked, setChecked] = useState(false);
+    // const [email, setEmail] = useState("");
+    // const [password, setPassword] = useState("");
+    // const [firstname, setFirstName] = useState("");
+    // const [lastname, setLastName] = useState("");
+    // const [city, setCity] = useState("");
+    // const [nativeLang, setNativeLang] = useState("");
+    // const [targetLang, setTargetLang] = useState("");
+    // const [meetupCity, setMeetupCity] = useState("");
+    // const [meetupType, setMeetupType] = useState("");
+    // const [age, setAge] = useState("");
+    // const [radioValue, setRadioValue] = useState('');
+    // const [startDate, setStartDate] = useState(Date.now());
+    // const [endDate, setEndDate] = useState(Date.now());
+    // const [checked, setChecked] = useState(false);
     
     
-    const handleStartDateChange = (date) => {
-      setStartDate(date);
-    };
+    // const handleStartDateChange = (date) => {
+    //   setStartDate(date);
+    // };
 
-    const handleEndDateChange = (date) => {
-      setEndDate(date);
-    };
+    // const handleEndDateChange = (date) => {
+    //   setEndDate(date);
+    // };
     
-    const handleRoleChange = (event) => {
-        setRadioValue(event.target.value)
-        console.log(radioValue)
-      };
+    // const handleRoleChange = (event) => {
+    //     setRadioValue(event.target.value)
+    //     console.log(radioValue)
+    //   };
 
-    const submitHandler = async (e) => {
-      e.preventDefault();
-      // console.log(email, password, firstname, lastname, age, meetupType, startDate, endDate, cityIri, meetupCityIri, radioValue)
-      dispatch(registerUser(email, password, firstname, lastname, age, city, meetupCity, nativeLang, targetLang, meetupType, startDate, endDate, radioValue))
-    };
+    // const submitHandler = async (e) => {
+    //   e.preventDefault();
+    //   // console.log(email, password, firstname, lastname, age, meetupType, startDate, endDate, cityIri, meetupCityIri, radioValue)
+    //   dispatch(registerUser(email, password, firstname, lastname, age, city, meetupCity, nativeLang, targetLang, meetupType, startDate, endDate, radioValue))
+    // };
 
-    const handleCheckBoxChange = (event) => {
-      setChecked(event.target.checked);
-    };
+    // const handleCheckBoxChange = (event) => {
+    //   setChecked(event.target.checked);
+    // };
 
     return (
+      //VALIDATION ////////////////////
       <Formik
       initialValues={{ 
         email: "", 
@@ -215,7 +200,7 @@ export default function Register() {
         startDate: Yup.string(),
         endDate: Yup.string(),
         terms: Yup.boolean()
-            .oneOf([true], 'Must Accept Terms and Conditions'),
+            .oneOf([true], 'Must accept Terms and Conditions'),
 
       })}
     >
@@ -226,21 +211,19 @@ export default function Register() {
         errors,
         isSubmitting,
         handleChange,
-        handleBlur,
         handleSubmit,
       } = props;
 
       return (
-
-
-      <>
-      <div>
-        <div className={classes.root}>
-          <Paper className={classes.paper} component="div" elevation={3}>
-            <Typography variant="h4" component="h2" className={classes.title}>
-              Register
-            </Typography>
-            <form className={classes.form} method="POST" onSubmit={handleSubmit}>
+        // REGISTER FORM //////////////////////////////////
+          <>
+            <div>
+              <div className={classes.root}>
+                <Paper className={classes.paper} component="div" elevation={3}>
+                  <Typography variant="h4" component="h2" className={classes.title}>
+                    Register
+                  </Typography>
+                  <form className={classes.form} method="POST" onSubmit={handleSubmit}>
                         <TextField 
                           variant="standard" 
                           margin="normal" type="email" 
@@ -372,6 +355,7 @@ export default function Register() {
                         {errors.meetupCity && touched.meetupCity && (
                           <div style={{color: "red"}} className="input-feedback">{errors.meetupCity}</div>
                         )}
+                        <Tooltip title="Park, cafe, city tour, etc.">
                         <TextField 
                           variant="standard" 
                           margin="normal" 
@@ -384,118 +368,114 @@ export default function Register() {
                           value={values.meetupType}
                           onChange={handleChange}
                         />
+                        </Tooltip>
                         {errors.meetupType && touched.meetupType && (
                           <div style={{color: "red"}} className="input-feedback">{errors.meetupType}</div>
                         )}
-                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <Grid container justify="start">
-                    {/* <TextField
-                    id="startdate"
-                    label="Start Date"
-                    type="date"
-                    defaultValue="2017-05-24"
-                    value={startDate}
-                    onChange={handleStartDateChange}
-                    className={classes.textField}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  /> */}
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <Grid container justify="start">
+                        {/* <TextField
+                        id="startdate"
+                        label="Start Date"
+                        type="date"
+                        defaultValue="2017-05-24"
+                        value={startDate}
+                        onChange={handleStartDateChange}
+                        className={classes.textField}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                      /> */}
                   
-                    <KeyboardDatePicker
-                      disableToolbar
-                      variant="inline"
-                      format="MM/dd/yyyy"
-                      margin="normal"
-                      id="startDate"
-                      label="Available start date"
-                      value={values.startDate}
-                      onChange={handleChange}
-                      KeyboardButtonProps={{
-                        'aria-label': 'change date',
-                      }}
-                    />
-                    {errors.startDate && touched.startDate && (
-                      <div style={{color: "red"}} className="input-feedback">{errors.startDate}</div>
-                    )}
-                    <KeyboardDatePicker
-                      disableToolbar
-                      variant="inline"
-                      format="MM/dd/yyyy"
-                      margin="normal"
-                      id="endDate"
-                      label="Available end date"
-                      value={values.endDate}
-                      onChange={handleChange}
-                      KeyboardButtonProps={{
-                        'aria-label': 'change date',
-                      }}
-                    />
-                    {errors.endDate && touched.endDate && (
-                      <div style={{color: "red"}} className="input-feedback">{errors.endDate}</div>
-                    )}
+                        <KeyboardDatePicker
+                          disableToolbar
+                          variant="inline"
+                          format="MM/dd/yyyy"
+                          margin="normal"
+                          id="startDate"
+                          label="Available start date"
+                          value={values.startDate}
+                          onChange={handleChange}
+                          KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                          }}
+                        />
+                        {errors.startDate && touched.startDate && (
+                          <div style={{color: "red"}} className="input-feedback">{errors.startDate}</div>
+                        )}
+                        <KeyboardDatePicker
+                          disableToolbar
+                          variant="inline"
+                          format="MM/dd/yyyy"
+                          margin="normal"
+                          id="endDate"
+                          label="Available end date"
+                          value={values.endDate}
+                          onChange={handleChange}
+                          KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                          }}
+                        />
+                        {errors.endDate && touched.endDate && (
+                          <div style={{color: "red"}} className="input-feedback">{errors.endDate}</div>
+                        )}
                       
                       <FormControl className={classes.formControl}>
-                      <InputLabel id="simple-select-label">Role: </InputLabel>
-                      <Select
-                        className={classes.roleSelect}
-                        labelId="simple-select-label"
-                        id="role"
-                        name="role"
-                        value={values.role}
-                        onChange={handleChange}
-                      >
-                        <MenuItem id="tourist" name="tourist" value={"tourist"}>Tourist</MenuItem>
-                        <MenuItem id="tutor" name="tutor" value={"tutor"}>Tutor</MenuItem>
-                        
-                      </Select>
-                      {errors.role && touched.role && (
-                      <div style={{color: "red"}} className="input-feedback">{errors.role}</div>
-                    )}
-                    </FormControl>
-                    <div>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          name="terms"
-                          id="terms"
-                          checked={values.terms}
+                        <InputLabel id="simple-select-label">Role: </InputLabel>
+                        <Select
+                          className={classes.roleSelect}
+                          labelId="simple-select-label"
+                          id="role"
+                          name="role"
+                          value={values.role}
                           onChange={handleChange}
-                          color="secondary"
-                        />
-                      }
-                      label={
-                        <div>
-                           <span>I accept the </span>
-                           <Link to={'/terms'}>terms of use</Link>
-                           <span> and </span>
-                           <Link to={'/privacy'}>privacy policy</Link>
-                        </div>
+                        >
+                          <MenuItem id="tourist" name="tourist" value={"tourist"}>Tourist</MenuItem>
+                          <MenuItem id="tutor" name="tutor" value={"tutor"}>Tutor</MenuItem>
+                        </Select>
+                        {errors.role && touched.role && (
+                        <div style={{color: "red"}} className="input-feedback">{errors.role}</div>
+                        )}
+                      </FormControl>
+                      <div>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            name="terms"
+                            id="terms"
+                            checked={values.terms}
+                            onChange={handleChange}
+                            color="secondary"
+                          />
                         }
-                    />
-                    {errors.terms && touched.terms && (
-                      <div style={{color: "red"}} className="input-feedback">{errors.terms}</div>
-                    )}
-                      
-
+                        label={
+                          <div>
+                            <span>I accept the </span>
+                            <Link to={'/terms'}>terms of use</Link>
+                            <span> and </span>
+                            <Link to={'/privacy'}>privacy policy</Link>
+                          </div>
+                          }
+                      />
+                      {errors.terms && touched.terms && (
+                        <div style={{color: "red"}} className="input-feedback">{errors.terms}</div>
+                      )}
                     </div>
-                   
-                        </Grid>
-                      </MuiPickersUtilsProvider>
-                      {/* {errors.length > 0 && <p>Please correct errors in the form</p>} */}
-                      <div className={classes.submitDiv}>
-                        <Button type="submit" variant="contained" color="secondary" disabled={isSubmitting}>
-                          Submit
-                        </Button>
-                        <Link className={classes.link} to="/login">Already have an account? </Link>
-                        </div>
-              </form>
-          </Paper>
-        </div>
-        </div>
-      </>
-    );
-  }}
-  </Formik>
-    )
-  }
+                    </Grid>
+                    </MuiPickersUtilsProvider>
+                    <div className={classes.submitDiv}>
+                      <Button type="submit" variant="contained" color="secondary" disabled={isSubmitting}>
+                        Submit
+                      </Button>
+                      <Link className={classes.link} to="/login">Already have an account? </Link>
+                    </div>
+                  </form>
+                </Paper>
+              </div>
+            </div>
+          </>
+        );
+      }}
+    </Formik>
+  )
+}

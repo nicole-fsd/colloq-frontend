@@ -15,11 +15,8 @@ const initialState = {
   
   /* ACTION TYPES */////////////////////////////
   
- 
   const POST_MAIL_ERROR = "POST_MAIL_ERROR"
   const POST_MAIL_SUCCESS = "POST_MAIL_SUCCESS"
-  
-  
   
  /* ACTION CREATORS */////////////////////////// 
 

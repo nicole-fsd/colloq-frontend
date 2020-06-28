@@ -9,8 +9,7 @@ const initialState = {
   };
   
   /* ACTION TYPES */////////////////////////////
-  
-  // const GET_PHOTOS = "GET_PHOTOS"
+ 
   const GET_PHOTO_ERROR = "GET_PHOTO_ERROR"
   const ADD_PHOTO = "ADD_PHOTO"
   
@@ -46,7 +45,6 @@ const initialState = {
   export default (state = initialState, { type, payload }) => {
     switch (type) {
       case ADD_PHOTO:
-        // console.log(payload)
         return {
           error: null,
           photos: [...payload],
@@ -57,7 +55,6 @@ const initialState = {
           ...state,
           error: payload
         }
-     
       default:
         return state;
     }

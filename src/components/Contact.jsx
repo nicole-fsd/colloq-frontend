@@ -1,13 +1,12 @@
 import React, {useState} from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import { Grid, Typography, TextField, Container, Button, Paper, TextareaAutosize } from "@material-ui/core";
+import { Grid, Typography, TextField, Container, Button, Paper } from "@material-ui/core";
 import { postMail } from "../data/contact";
-import { useEffect } from "react";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
+//STYLE //////////////////////////////////
 const useStyles = makeStyles((theme) => ({
     root: {
       backgroundColor: "#E1E2E1",
@@ -47,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
       margin: 'auto',
       padding: '10px'
-      
     },
   },
   link: {
@@ -78,11 +76,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '10px'
   }
 }))
+//////////////////////////////////////////////
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-
 
 
 export default function Contact() {
@@ -96,7 +94,8 @@ export default function Contact() {
 
     
   
-    
+   //HANDLERS ///////////////////////////////// 
+   // form submit
     const submitHandler = (e) => {
       e.preventDefault();
       dispatch(postMail(name, email, message))
@@ -107,96 +106,95 @@ export default function Contact() {
       setOpen(true);
       }
 
-
-      const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-          return;
-        }
-    
-        setOpen(false);
-      };
+    // snackbar close
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      setOpen(false);
+    };
     
     
   
-
+    //CONTACT FORM /////////////////////////////////
     return (
       <>
       <div>
-      <div className={classes.root}>
-      <Paper className={classes.paper} component="div" elevation={3}>
-        <Grid container direction="column" className={classes.container}>
-          <Grid item container xs={12} sm={10} direction="column">
-            <Grid item xs={12}>
-              <Typography variant="h4" component="h2" className={classes.title}>
-                Contact Us
-              </Typography>
-              <Container component="main" maxWidth="xs">
-                <div>
-                  <form onSubmit={submitHandler}>
-                    <TextField 
-                      variant="standard" 
-                      type='text' 
-                      margin="normal" 
-                      required 
-                      fullWidth 
-                      id="name" 
-                      label="Name"
-                      name="name" 
-                      value={name} 
-                      onChange={
-                        (e) => {setName(e.target.value);
-                        }}/>
-                    <TextField 
-                      variant="standard" 
-                      type='email' 
-                      margin="normal" 
-                      required 
-                      fullWidth 
-                      id="email" 
-                      label="Email" 
-                      name="email" 
-                      autoComplete="email" 
-                      value={email} 
-                      onChange={
-                        (e) => {setEmail(e.target.value);
-                        }}/>
-
-                    <TextField
-                        className={classes.messageField}
-                        id="message"
-                        label="Message"
-                        type="message"
-                        fullWidth
-                        multiline
-                        InputProps={{
-                          disableUnderline: true,
-                        }}
-                        rows={4}
-                        variant='outlined'
-                        value={message}
-                        onChange={(e) => {
-                        setMessage(e.target.value);
-                        }}
-                    />
-                        
-                    <Button type="submit" className={classes.submitmsgBtn} variant="contained" color="secondary">
+        <div className={classes.root}>
+          <Paper className={classes.paper} component="div" elevation={3}>
+            <Grid container direction="column" className={classes.container}>
+              <Grid item container xs={12} sm={10} direction="column">
+              <Grid item xs={12}>
+                <Typography variant="h4" component="h2" className={classes.title}>
+                  Contact Us
+                </Typography>
+                <Container component="main" maxWidth="xs">
+                  <div>
+                    <form onSubmit={submitHandler}>
+                      <TextField 
+                        variant="standard" 
+                        type='text' 
+                        margin="normal" 
+                        required 
+                        fullWidth 
+                        id="name" 
+                        label="Name"
+                        name="name" 
+                        value={name} 
+                        onChange={
+                          (e) => {setName(e.target.value);
+                          }}
+                          />
+                      <TextField 
+                        variant="standard" 
+                        type='email' 
+                        margin="normal" 
+                        required 
+                        fullWidth 
+                        id="email" 
+                        label="Email" 
+                        name="email" 
+                        autoComplete="email" 
+                        value={email} 
+                        onChange={
+                          (e) => {setEmail(e.target.value);
+                          }}
+                          />
+                      <TextField
+                          className={classes.messageField}
+                          id="message"
+                          label="Message"
+                          type="message"
+                          fullWidth
+                          multiline
+                          InputProps={{
+                            disableUnderline: true,
+                          }}
+                          rows={4}
+                          variant='outlined'
+                          value={message}
+                          onChange={(e) => {
+                          setMessage(e.target.value);
+                          }}
+                        /> 
+                      <Button type="submit" className={classes.submitmsgBtn} variant="contained" color="secondary">
                         Send
-                    </Button>
-                  </form>
-                  <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                    <Alert onClose={handleClose} severity="success">
-                      {successMessage}
-                    </Alert>
-                  </Snackbar>
-                </div>
+                      </Button>
+                    </form>
+                    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                      <Alert onClose={handleClose} severity="success">
+                        {successMessage}
+                      </Alert>
+                    </Snackbar>
+                  </div>
               </Container>
             </Grid>
           </Grid>
         </Grid>
-        </Paper>
-        </div>
-        </div>
-      </>
-    );
-  }
+      </Paper>
+    </div>
+    </div>
+    </>
+  );
+}
   

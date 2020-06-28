@@ -8,17 +8,12 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import { Link } from "react-router-dom";
 
 
-
+//STYLE ////////////////////////////////
 const useStyles = makeStyles(theme => ({
   container: {
     minHeight: "20vh",
     flexGrow: 1,
     alignContent: "center"
-  },
-  copy: {
-    textAlign: "center",
-    marginTop: "90px"
-    
   },
   topGrid: {
     // border: "solid 1px black",
@@ -42,7 +37,9 @@ const useStyles = makeStyles(theme => ({
   },
   copy: {
     marginBottom: '0',
-    color: '#616161'
+    color: '#616161',
+    textAlign: "center",
+    marginTop: "90px"
   },
   copyDiv: {
     marginTop: 50,
@@ -50,45 +47,49 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+//FOOTER //////////////////////////
 const Footer = () => {
   const classes = useStyles()
+
   return (
     <Container className={classes.container}>
       <Grid container className={classes.topGrid} spacing={3}>
+
+      {/* SOCIAL MEDIA ------------------- */}
       <Grid item container xs={12} sm={6} className={classes.socialGrid} spacing={3}>
         <Grid item>
-        <IconButton color="primary" aria-label="Facebook" component="span">
-          <FacebookIcon fontSize="large"/>
-        </IconButton>
+          <IconButton color="primary" aria-label="Facebook" component="span">
+            <FacebookIcon fontSize="large"/>
+          </IconButton>
         </Grid>
         <Grid item>
-        <IconButton color="primary" aria-label="Instagram" component="span">
-          <InstagramIcon fontSize="large"/>
-        </IconButton>
+          <IconButton color="primary" aria-label="Instagram" component="span">
+            <InstagramIcon fontSize="large"/>
+          </IconButton>
         </Grid>
         <Grid item >
-        <IconButton color="primary" aria-label="Twitter" component="span" >
-          <TwitterIcon fontSize="large"/>
-        </IconButton>
+          <IconButton color="primary" aria-label="Twitter" component="span" >
+            <TwitterIcon fontSize="large"/>
+          </IconButton>
         </Grid>
       </Grid>
+      
+      {/* TERMS, CONTACT AND PRIVACY ------------------*/}
       <Grid item container xs={12} sm={6} className={classes.termsGrid} spacing={6}>
         <Grid item>
-        <Link style={{ textDecoration: 'none' }} to="/contact"><Typography className={classes.textLink}>Contact</Typography></Link>
+          <Link style={{ textDecoration: 'none' }} to="/contact"><Typography className={classes.textLink}>Contact</Typography></Link>
         </Grid>
         <Grid item>
           <Link style={{ textDecoration: 'none' }} to="/privacy"><Typography className={classes.textLink}>Privacy</Typography></Link>
         </Grid>
         <Grid item>
-        <Link style={{ textDecoration: 'none' }} to="/terms"><Typography className={classes.textLink}>Terms and Conditions</Typography></Link>
+          <Link style={{ textDecoration: 'none' }} to="/terms"><Typography className={classes.textLink}>Terms and Conditions</Typography></Link>
         </Grid>
       </Grid>
-      
       </Grid>
-     <div className={classes.copyDiv}>
-       <Typography className={classes.copy}>©2020 Colloq, Inc. All Rights Reserved</Typography> 
-     </div>
-      
+      <div className={classes.copyDiv}>
+        <Typography className={classes.copy}>©2020 Colloq, Inc. All Rights Reserved</Typography> 
+      </div>
     </Container>
   );
 };

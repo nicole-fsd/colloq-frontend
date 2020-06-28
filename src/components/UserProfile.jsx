@@ -7,7 +7,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Container , Paper, Grid, Typography, Button, TextField, IconButton } from '@material-ui/core';
 import Footer from './landing/Footer'
 import Avatar from '@material-ui/core/Avatar';
-import getPhoto from '../data/photos'
 import { postUserMessage } from '../data/messages';
 import Modal from '@material-ui/core/Modal';
 import CloseIcon from '@material-ui/icons/Close';
@@ -38,6 +37,7 @@ function getModalStyle() {
   };
 }
 
+// Snackbar
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -84,7 +84,6 @@ const useStyles = makeStyles(theme => ({
         marginLeft: "0px",
         width: '100%'
       },
-  
   },
   grid2: {
       // border: "1px solid blue",
@@ -179,7 +178,6 @@ const useStyles = makeStyles(theme => ({
       display: 'flex',
       flexDirection: "row",
       justifyContent: "space-between"
-
     },
     textarea: {
       width: '100%',
@@ -205,45 +203,45 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-//COMPONENT
+// PUBLIC PROFILE /////////////////////////////
 const UserProfile = () => {
-const dispatch = useDispatch();
-let location = useLocation()
-const classes = useStyles()
-// const [name, setName] = useState('');
-const [subject, setSubject] = useState('');
-const [text, setText] = useState('');
-// const photos = useSelector((state) => state.photos.photos);
-const comments = useSelector((state) => state.comments.comments);
-// const userFirstName = useSelector((state) => state.auth.user.firstName);
-// const userAge = useSelector((state) => state.auth.user.age);
-// const userMeetupType = useSelector((state) => state.auth.user.meetupType);
-// const userPublicMessage = useSelector((state) => state.auth.user.publicMessage);
-const str = location.pathname
-const user = useSelector((state) => state.search.singleUser);
-// const userId = useSelector((state) => state.search.singleUser.id);
-const authUserId = useSelector((state) => state.auth.user.id);
-const [modalStyle] = React.useState(getModalStyle);
-const [open, setOpen] = React.useState(false);
-const [openCommentModal, setOpenCommentModal] = useState(false);
-const loading = useSelector((state) => state.search.loading);
-const [singleUserMessage, setSingleUserMessage] = useState("");
-const [singleUserFirstname, setSingleUserFirstname] = useState("");
-const [singleUserLastname, setSingleUserLastname] = useState("");
-const [singleUserAge, setSingleUserAge] = useState("");
-const [singleUserIsTourist, setSingleUserIsTourist] = useState("");
-const [singleUserIsTutor, setSingleUserIsTutor] = useState("");
-const [singleUserNatLanguage, setSingleUserNatLanguage] = useState("");
-const [singleUserTarLanguage, setSingleUserTarLanguage] = useState("");
-const [singleUserCity, setSingleUserCity] = useState("");
-const [singleUserMeetupCity, setSingleUserMeetupCity] = useState("");
-const [singleUserMeetupType, setSingleUserMeetupType] = useState("");
-const [singleUserStartDate, setSingleUserStartDate] = useState("");
-const [singleUserEndDate, setSingleUserEndDate] = useState("");
-const [singleUserPhoto, setSingleUserPhoto] = useState("");
-const [commentText, setCommentText] = useState("");
-const [message, setMessage] = useState("");
-const [snackBarOpen, setSnackBarOpen] = useState(false);
+  const dispatch = useDispatch();
+  let location = useLocation()
+  const classes = useStyles()
+  // const [name, setName] = useState('');
+  const [subject, setSubject] = useState('');
+  const [text, setText] = useState('');
+  // const photos = useSelector((state) => state.photos.photos);
+  const comments = useSelector((state) => state.comments.comments);
+  // const userFirstName = useSelector((state) => state.auth.user.firstName);
+  // const userAge = useSelector((state) => state.auth.user.age);
+  // const userMeetupType = useSelector((state) => state.auth.user.meetupType);
+  // const userPublicMessage = useSelector((state) => state.auth.user.publicMessage);
+  const str = location.pathname
+  // const user = useSelector((state) => state.search.singleUser);
+  // const userId = useSelector((state) => state.search.singleUser.id);
+  const authUserId = useSelector((state) => state.auth.user.id);
+  const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
+  const [openCommentModal, setOpenCommentModal] = useState(false);
+  const loading = useSelector((state) => state.search.loading);
+  const [singleUserMessage, setSingleUserMessage] = useState("");
+  const [singleUserFirstname, setSingleUserFirstname] = useState("");
+  const [singleUserLastname, setSingleUserLastname] = useState("");
+  const [singleUserAge, setSingleUserAge] = useState("");
+  const [singleUserIsTourist, setSingleUserIsTourist] = useState("");
+  const [singleUserIsTutor, setSingleUserIsTutor] = useState("");
+  const [singleUserNatLanguage, setSingleUserNatLanguage] = useState("");
+  const [singleUserTarLanguage, setSingleUserTarLanguage] = useState("");
+  const [singleUserCity, setSingleUserCity] = useState("");
+  const [singleUserMeetupCity, setSingleUserMeetupCity] = useState("");
+  const [singleUserMeetupType, setSingleUserMeetupType] = useState("");
+  const [singleUserStartDate, setSingleUserStartDate] = useState("");
+  const [singleUserEndDate, setSingleUserEndDate] = useState("");
+  const [singleUserPhoto, setSingleUserPhoto] = useState("");
+  const [commentText, setCommentText] = useState("");
+  const [message, setMessage] = useState("");
+  const [snackBarOpen, setSnackBarOpen] = useState(false);
 
 //HANDLERS ///////////////////////////////
   const handleClose = () => {
@@ -278,10 +276,10 @@ const [snackBarOpen, setSnackBarOpen] = useState(false);
     handleCloseCommentModal()
   }
 
-  const handleGetComments = () => {
-    dispatch(getComments(id))
+  // const handleGetComments = () => {
+  //   dispatch(getComments(id))
     
-  }
+  // }
 
   const handleSnackBarClose = () => {
     setSnackBarOpen(false)
@@ -291,30 +289,43 @@ const [snackBarOpen, setSnackBarOpen] = useState(false);
   const body = (
     <div style={modalStyle} className={classes.paperModal}>
       <div className={classes.sendDiv}>
-      <h2 id="simple-modal-title">Send Message</h2>
-      <IconButton aria-label="delete" className={classes.close} size="small" onClick={handleClose}>
-          <CloseIcon fontSize="inherit" />
-        </IconButton>
+        <h2 id="simple-modal-title">Send Message</h2>
+          <IconButton aria-label="delete" className={classes.close} size="small" onClick={handleClose}>
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
       </div>
-      
       <form method="POST" onSubmit={handleMessageFormSubmit}>
-      <TextField variant="standard" margin="normal" required fullWidth id="subject" label="Subject" name="subject" value={subject}
-        onChange={(e) => {
-          setSubject(e.target.value);
-        }}
-      />
-      {/* <TextField variant="standard" margin="normal" required fullWidth id="text" label="Message" name="text" value={text}
-        onChange={(e) => {
-          setText(e.target.value);
-        }}
-      /> */}
-      <TextareaAutosize className={classes.textarea} aria-label="message textarea" required fullWidth rowsMin={8} placeholder="Write a message..." id="text" label="Message" name="text" value={text}
-        onChange={(e) => {
-          setText(e.target.value);
-        }} />
-      <Button type="submit" className={classes.submitmsgBtn} variant="contained" color="secondary">
-        Send
-      </Button>
+        <TextField 
+          variant="standard" 
+          margin="normal" 
+          required 
+          fullWidth 
+          id="subject" 
+          label="Subject" 
+          name="subject" 
+          value={subject}
+          onChange={(e) => {
+            setSubject(e.target.value);
+          }}
+        />
+        <TextareaAutosize 
+          className={classes.textarea} 
+          aria-label="message textarea" 
+          required 
+          fullWidth 
+          rowsMin={8} 
+          placeholder="Write a message..." 
+          id="text" 
+          label="Message" 
+          name="text" 
+          value={text}
+          onChange={(e) => {
+            setText(e.target.value);
+            }} 
+        />
+        <Button type="submit" className={classes.submitmsgBtn} variant="contained" color="secondary">
+          Send
+        </Button>
       </form>
     </div>
   );
@@ -328,6 +339,7 @@ var n = str.lastIndexOf('/');
 var id = str.substring(n + 1);
 
 
+//GET single user data based on ID ////////////////////////
 const getUser = async (id) => {
   const user = await axios.get(`${process.env.REACT_APP_ENDPOINT}/users/${id}`, {
     headers: {
@@ -350,9 +362,6 @@ const getUser = async (id) => {
     setSingleUserTarLanguage(user.data.targetLanguage.name);
     setSingleUserStartDate(user.data.availStartDate);
     setSingleUserEndDate(user.data.availEndDate);
-    console.log(user.data);
-    
-   
 }
 
 
@@ -366,28 +375,28 @@ const getUser = async (id) => {
 
 
   
-
   return (
     <>
       <div className={classes.root}>
-      
         <Container className={classes.container}>
           {loading && <h2>Profile is loading...</h2>}
-            
-              <Grid className={classes.grid1} justify="space-evenly" container spacing={4}>
-        
-                <Grid item>
-                  <div className={classes.backDiv}>
+            <Grid className={classes.grid1} justify="space-evenly" container spacing={4}>
+              <Grid item>
+                {/* BACK LINK ----------*/}
+                <div className={classes.backDiv}>
                   <Link className={classes.backLink} to='/search'><ArrowBackIosIcon className={classes.backIcon}/>Back to search results</Link>
-                  </div>
-                
+                </div>
+
+                {/* PHOTO --------------*/}
                 <Paper className={classes.photo} elevation={3}>
                   <Avatar alt="user profile photo" src={`https://wdev.be/wdev_nicole/eindwerk/images/${singleUserPhoto}`} className={classes.large} />
                   {/* <img src={`http://localhost:8000/image.php?${photos.image}&height=200&image=/wdev_nicole/eindwerk/system/img/albums/${photos.image}`} />) */}
                 </Paper>
+                {/* SEND MESSAGE BTN --*/}
                 <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleSendMessageClick}>
                   Send message
                 </Button>  
+                {/* MESSAGE MODAL ----*/}
                 <Modal
                   open={open}
                   onClose={handleClose}
@@ -396,107 +405,103 @@ const getUser = async (id) => {
                 >
                   {body}
                 </Modal>
+                {/* SNACKBAR --------*/}
                 <Snackbar open={snackBarOpen} autoHideDuration={6000} onClose={handleSnackBarClose}>
-                    <Alert onClose={handleSnackBarClose} severity="success">
-                      {message}
-                    </Alert>
-                  </Snackbar>
+                  <Alert onClose={handleSnackBarClose} severity="success">
+                    {message}
+                  </Alert>
+                </Snackbar>
                 </Grid>
-              <Grid item>
-              <Paper className={classes.paperAbout} elevation={3}><Typography className={classes.typeAbout}>{singleUserMessage}</Typography></Paper>
-            </Grid>
-          </Grid>
-          <Grid className={classes.grid2} justify="center" alignItems="center" container direction="row" spacing={0}>
-            <Grid className={classes.gridBottomLeft}>
-              <Grid item xs>
-                <Paper className={classes.paperInfo} elevation={3}>
-                <div className={classes.infoDiv}>
-                <Typography className={classes.name}>{singleUserFirstname}  {singleUserLastname}</Typography>
-                <div className={classes.subDiv}>
-                <Typography className={classes.subInfo}>Age: {singleUserAge}</Typography>
-                <Typography className={classes.subInfo}>Speaks: {singleUserNatLanguage}</Typography>
-                {singleUserIsTourist ? 
-                <Typography className={classes.subInfo}>Learning: {singleUserTarLanguage}</Typography>
-                :
-                <Typography className={classes.subInfo}>Teaching: {singleUserTarLanguage}</Typography>
-                }
-                
-                <Typography className={classes.subInfo}>Lives in: {singleUserCity}</Typography>
-                <Typography className={classes.subInfo}>Wants to meet in: {singleUserMeetupCity}</Typography>
-                <Typography className={classes.subInfo}>Meetup type: {singleUserMeetupType}</Typography>
-                <Typography className={classes.subInfo}>Available: <br />
-                {new Date(singleUserStartDate).toLocaleString('en-GB', { timeZone: 'UTC' }).substr(0,10)} 
-                 - 
-                 {new Date(singleUserEndDate).toLocaleString('en-GB', { timeZone: 'UTC' }).substr(0,10)}</Typography>
-              </div>
-              
-              </div>
-              
-            
-            </Paper>
-            </Grid>
-          </Grid>
-            <Grid className={classes.gridBottomRight}>
-            {comments.length === 0 && <p>No comments to display</p>}
-              {comments.map(comment => (
-                  <Grid item xs={6}>
-                  <Paper className={classes.paperComment} elevation={1}>
-                    <Typography variant="overline">{new Date(comment.createdAt).toDateString()}</Typography>
-                    <Typography variant="h6">{comment.text}</Typography>
-                    <Typography variant="overline">- {comment.commentAuthor.firstname} {comment.commentAuthor.lastname}</Typography>
-                    </Paper>
+                <Grid item>
+                  <Paper className={classes.paperAbout} elevation={3}><Typography className={classes.typeAbout}>{singleUserMessage}</Typography></Paper>
+                </Grid>
+                </Grid>
+                {/* INFO SECTION ---------*/}
+                <Grid className={classes.grid2} justify="center" alignItems="center" container direction="row" spacing={0}>
+                  <Grid className={classes.gridBottomLeft}>
+                    <Grid item xs>
+                      <Paper className={classes.paperInfo} elevation={3}>
+                        <div className={classes.infoDiv}>
+                          <Typography className={classes.name}>{singleUserFirstname}  {singleUserLastname}</Typography>
+                            <div className={classes.subDiv}>
+                              <Typography className={classes.subInfo}>Age: {singleUserAge}</Typography>
+                              <Typography className={classes.subInfo}>Speaks: {singleUserNatLanguage}</Typography>
+                              {singleUserIsTourist ? 
+                                <Typography className={classes.subInfo}>Learning: {singleUserTarLanguage}</Typography>
+                                :
+                                <Typography className={classes.subInfo}>Teaching: {singleUserTarLanguage}</Typography>
+                                }
+                              <Typography className={classes.subInfo}>Lives in: {singleUserCity}</Typography>
+                              <Typography className={classes.subInfo}>Wants to meet in: {singleUserMeetupCity}</Typography>
+                              <Typography className={classes.subInfo}>Meetup type: {singleUserMeetupType}</Typography>
+                              <Typography className={classes.subInfo}>Available: <br />
+                                {new Date(singleUserStartDate).toLocaleString('en-GB', { timeZone: 'UTC' }).substr(0,10)} 
+                                - 
+                                {new Date(singleUserEndDate).toLocaleString('en-GB', { timeZone: 'UTC' }).substr(0,10)}</Typography>
+                            </div>
+                        </div>
+                      </Paper>
+                    </Grid>
                   </Grid>
-              ))}
-            <Grid item xs>
-              <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleOpenCommentModal}>
-                Post Comment
-              </Button> 
-              <Dialog
-                open={openCommentModal}
-                onClose={handleCloseCommentModal}
-                aria-labelledby="max-width-dialog-title"
-              >
-                <DialogTitle className={classes.titleDialog} id="max-width-dialog-title">Post a Comment</DialogTitle>
-                <DialogContent>
-                  <form className={classes.form} noValidate>
-                    <TextField
-                      id="text"
-                      label="Write something..."
-                      type="text"
-                      fullWidth
-                      multiline
-                      InputProps={{
-                        disableUnderline: true,
-                      }}
-                      rows={4}
-                      variant='filled'
-                      value={commentText}
-                      onChange={(e) => {
-                      setCommentText(e.target.value);
-                      }}
-                    />
-                      
-                  </form>
-                </DialogContent>
-                <DialogActions>
-                <Button onClick={handleSubmitComment} color="primary">
-                    Post
-                  </Button>
-                  <Button onClick={handleCloseCommentModal} color="primary">
-                    Cancel
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </Grid>
-          </Grid>
-        
-      </Grid>
-      </Container>
-      <Footer />
-    </div>
-      
-      
-    </>
+                  {/* COMMENT SECTION ----------------*/}
+                  <Grid className={classes.gridBottomRight}>
+                    {comments.length === 0 && <p>No comments to display</p>}
+                    {comments.map((comment, index) => (
+                      <Grid item key={index} xs={6}>
+                        <Paper className={classes.paperComment} elevation={1}>
+                          <Typography variant="overline">{new Date(comment.createdAt).toDateString()}</Typography>
+                          <Typography variant="h6">{comment.text}</Typography>
+                          <Typography variant="overline">- {comment.commentAuthor.firstname} {comment.commentAuthor.lastname}</Typography>
+                        </Paper>
+                      </Grid>
+                    ))}
+                    {/* POST COMMENT DIALOG -------*/}
+                    <Grid item xs>
+                      <Button  className={classes.msgBtn} variant="contained" color="secondary" component="span" onClick={handleOpenCommentModal}>
+                        Post Comment
+                      </Button> 
+                      <Dialog
+                        open={openCommentModal}
+                        onClose={handleCloseCommentModal}
+                        aria-labelledby="max-width-dialog-title"
+                      >
+                      <DialogTitle className={classes.titleDialog} id="max-width-dialog-title">Post a Comment</DialogTitle>
+                      <DialogContent>
+                        <form className={classes.form} noValidate>
+                          <TextField
+                            id="text"
+                            label="Write something..."
+                            type="text"
+                            fullWidth
+                            multiline
+                            InputProps={{
+                              disableUnderline: true,
+                            }}
+                            rows={4}
+                            variant='filled'
+                            value={commentText}
+                            onChange={(e) => {
+                            setCommentText(e.target.value);
+                            }}
+                          />
+                        </form>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={handleSubmitComment} color="primary">
+                          Post
+                        </Button>
+                        <Button onClick={handleCloseCommentModal} color="primary">
+                          Cancel
+                        </Button>
+                      </DialogActions>
+                      </Dialog>
+                    </Grid>
+                  </Grid>
+                </Grid>
+        </Container>
+        <Footer />
+    </div>  
+  </>
   )
 }
 

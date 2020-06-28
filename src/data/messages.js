@@ -14,7 +14,6 @@ const initialState = {
         msgRecipient: "",
         createdAt: ""
     },
-    
   };
   
   /* ACTION TYPES */////////////////////////////
@@ -100,7 +99,6 @@ export const postMessageSuccess = (data) => ({
   export default (state = initialState, { type, payload }) => {
     switch (type) {
       case ADD_MESSAGES:
-        // console.log(payload)
         return {
           error: null,
           messages: [...payload],

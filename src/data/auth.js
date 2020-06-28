@@ -1,7 +1,5 @@
 import axios from "axios";
-// import jwt_decode from "jwt-decode";
 import JWT from 'jsonwebtoken'
-
 
 
 /* INITIAL STATE *////////////////////////////
@@ -20,7 +18,6 @@ export const initialState = {
     nativeLanguage: "",
     targetLanguage: "",
     image: ""
-    // imageFile: ""
   },
   register: {
     error: false,
@@ -42,8 +39,6 @@ export const LOGOUT = "LOGOUT";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_ERROR = "REGISTER_ERROR"
 export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS"
-// export const SET_PHOTO = "SET_PHOTO"
-
 
 /* ACTION CREATORS *//////////////////////////////////////
 
@@ -56,11 +51,6 @@ export const loginUser = (username, password, registeredResponse = null) => (dis
     .then((response) => dispatch(loginSuccess(response.data.token)))
     .catch((error) => console.log(error));
 };
-
-// export const setPhoto = (filename) => ({
-//   type: SET_PHOTO,
-//   payload: filename,
-// });
 
 
 export const loginSuccess = (data) => ({
@@ -241,16 +231,6 @@ export default (state = initialState, { type, payload }) => {
       },
       loggedIn: true,
     };
-
-    // case SET_PHOTO:
-    //   const filename = payload.substring(0, payload.length-4);
-    //   return {
-    //     ...state,
-    //     user: {
-    //       ...state.auth,
-    //       imageFile: filename
-    //     }
-    //   }
 
     default:
       return state;

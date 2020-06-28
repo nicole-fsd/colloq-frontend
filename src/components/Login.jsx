@@ -1,14 +1,13 @@
-import React, {useState} from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-import { Grid, Typography, TextField, Container, Button, Paper } from "@material-ui/core";
+import { Typography, TextField, Button, Paper } from "@material-ui/core";
 import { loginUser } from "../data/auth";
 import { Formik } from "formik";
-import * as EmailValidator from "email-validator";
 import * as Yup from "yup";
 
-
+// STYLE //////////////////////////////
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: "#E1E2E1",
@@ -57,12 +56,14 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto'
   }
 }));
+//////////////////////////////////////////
 
 const Login= () => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
   return(
+    //VALIDATION/////////////////////////////////
     <Formik
       initialValues={{ email: "", password: "" }}
       onSubmit={(values, { setSubmitting }) => {
@@ -91,13 +92,12 @@ const Login= () => {
         errors,
         isSubmitting,
         handleChange,
-        handleBlur,
         handleSubmit,
       } = props;
 
       
 
-      
+      //LOGIN FORM //////////////////////////////
       return(
         <div>
           <div className={classes.root}>
@@ -106,7 +106,6 @@ const Login= () => {
                  Login
               </Typography>
               <form onSubmit={handleSubmit} className={classes.form}>
-          
                 <TextField 
                   variant="standard" 
                   type='email' 
@@ -123,7 +122,6 @@ const Login= () => {
                   {errors.email && touched.email && (
                     <div className="input-feedback">{errors.email}</div>
                   )}
-
                   <TextField 
                     variant="standard" 
                     margin="normal" 
@@ -144,12 +142,9 @@ const Login= () => {
                        <Button color="secondary" type="submit" disabled={isSubmitting} variant="contained">Log In</Button>
                        <Link className={classes.link} to="/register">Not yet registered? </Link>
                   </div>
-                  {/* <button type="submit" disabled={isSubmitting}>
-                    Login
-                  </button> */}
               </form>
-        </Paper>
-        </div>
+            </Paper>
+          </div>
         </div>
       );
     }}
