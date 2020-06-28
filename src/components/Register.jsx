@@ -8,6 +8,8 @@ import DateFnsUtils from '@date-io/date-fns';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import { registerUser } from '../data/auth';
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -88,6 +90,9 @@ const useStyles = makeStyles((theme) => ({
   },
   roleSelect: {
     paddingRight: '18px'
+  },
+  agreeText: {
+    fontSize: '12px'
   }
 }));
 
@@ -109,6 +114,7 @@ export default function Register() {
     const [radioValue, setRadioValue] = useState('');
     const [startDate, setStartDate] = useState(Date.now());
     const [endDate, setEndDate] = useState(Date.now());
+    const [checked, setChecked] = useState(false);
     
     
     const handleStartDateChange = (date) => {
@@ -130,6 +136,10 @@ export default function Register() {
       dispatch(registerUser(email, password, firstname, lastname, age, city, meetupCity, nativeLang, targetLang, meetupType, startDate, endDate, radioValue))
     };
 
+    const handleCheckBoxChange = (event) => {
+      setChecked(event.target.checked);
+    };
+
     return (
       <Formik
       initialValues={{ 
@@ -145,7 +155,8 @@ export default function Register() {
         meetupType: "",
         startDate: Date.now(),
         endDate: Date.now(),
-        role: ""
+        role: "",
+        terms: false
 
       }}
       onSubmit={(values, { setSubmitting }) => {
@@ -181,7 +192,7 @@ export default function Register() {
         firstName: Yup.string()
           .matches(/^[a-zA-Z\s]+$/, 'Input is not valid - must only contain letters'),
         lastName: Yup.string()
-          .matches(/^[a-zA-Z]+$/, 'Input is not valid - must only contain letters'),
+          .matches(/^[a-zA-Z\s]+$/, 'Input is not valid - must only contain letters'),
         age: Yup.number()
           .typeError("Age must be a number")
           .positive("Age must be greater than 0")
@@ -190,19 +201,21 @@ export default function Register() {
           .matches(/^[a-zA-Z\s]+$/, 'Input is not valid - must only contain letters')
           .required("Required"),
         meetupCity: Yup.string()
-          .matches(/^[a-zA-Z]+$/, 'Input is not valid - must only contain letters')
+          .matches(/^[a-zA-Z\s]+$/, 'Input is not valid - must only contain letters')
           .required("Required"),
         nativeLanguage: Yup.string()
-          .matches(/^[a-zA-Z]+$/, 'Input is not valid - must only contain letters')
+          .matches(/^[a-zA-Z\s]+$/, 'Input is not valid - must only contain letters')
           .required("Required"),
         targetLanguage: Yup.string()
-          .matches(/^[a-zA-Z]+$/, 'Input is not valid - must only contain letters')
+          .matches(/^[a-zA-Z\s]+$/, 'Input is not valid - must only contain letters')
           .required("Required"),
         meetupType: Yup.string()
-          .matches(/^[a-zA-Z]+$/, 'Input is not valid - must only contain letters')
+          .matches(/^[a-zA-Z\s]+$/, 'Input is not valid - must only contain letters')
           .required("Required"),
         startDate: Yup.string(),
-        endDate: Yup.string()
+        endDate: Yup.string(),
+        terms: Yup.boolean()
+            .oneOf([true], 'Must Accept Terms and Conditions'),
 
       })}
     >
@@ -269,7 +282,7 @@ export default function Register() {
                           onChange={handleChange}
                         />
                         {errors.firstName && touched.firstName && (
-                          <div className="input-feedback">{errors.firstName}</div>
+                          <div style={{color: "red"}} className="input-feedback">{errors.firstName}</div>
                         )}
                         <TextField 
                           variant="standard" 
@@ -283,7 +296,7 @@ export default function Register() {
                           onChange={handleChange}
                         />
                         {errors.lastName && touched.lastName && (
-                          <div className="input-feedback">{errors.lastName}</div>
+                          <div style={{color: "red"}} className="input-feedback">{errors.lastName}</div>
                         )}
                         <TextField 
                           variant="standard" 
@@ -297,7 +310,7 @@ export default function Register() {
                           onChange={handleChange}
                         />
                         {errors.age && touched.age && (
-                          <div className="input-feedback">{errors.age}</div>
+                          <div style={{color: "red"}} className="input-feedback">{errors.age}</div>
                         )}
                         <TextField 
                           variant="standard" 
@@ -312,7 +325,7 @@ export default function Register() {
                           onChange={handleChange}
                         />
                         {errors.city && touched.city && (
-                          <div className="input-feedback">{errors.city}</div>
+                          <div style={{color: "red"}} className="input-feedback">{errors.city}</div>
                         )}
                         <TextField 
                           variant="standard" 
@@ -327,7 +340,7 @@ export default function Register() {
                           onChange={handleChange}
                         />
                         {errors.nativeLanguage && touched.nativeLanguage && (
-                          <div className="input-feedback">{errors.nativeLanguage}</div>
+                          <div style={{color: "red"}} className="input-feedback">{errors.nativeLanguage}</div>
                         )}
                         <TextField 
                           variant="standard" 
@@ -342,7 +355,7 @@ export default function Register() {
                           onChange={handleChange}
                         />
                         {errors.targetLanguage && touched.targetLanguage && (
-                          <div className="input-feedback">{errors.targetLanguage}</div>
+                          <div style={{color: "red"}} className="input-feedback">{errors.targetLanguage}</div>
                         )}
                         <TextField 
                           variant="standard" 
@@ -357,7 +370,7 @@ export default function Register() {
                           onChange={handleChange}
                         />
                         {errors.meetupCity && touched.meetupCity && (
-                          <div className="input-feedback">{errors.meetupCity}</div>
+                          <div style={{color: "red"}} className="input-feedback">{errors.meetupCity}</div>
                         )}
                         <TextField 
                           variant="standard" 
@@ -365,14 +378,14 @@ export default function Register() {
                           required
                           fullWidth 
                           name="meetupType" 
-                          label="Preferred type of meetup" 
+                          label="Preferred type of meetup (park, café, city tour, etc)" 
                           type="text" 
                           id="meetupType" 
                           value={values.meetupType}
                           onChange={handleChange}
                         />
                         {errors.meetupType && touched.meetupType && (
-                          <div className="input-feedback">{errors.meetupType}</div>
+                          <div style={{color: "red"}} className="input-feedback">{errors.meetupType}</div>
                         )}
                   <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <Grid container justify="start">
@@ -403,7 +416,7 @@ export default function Register() {
                       }}
                     />
                     {errors.startDate && touched.startDate && (
-                      <div className="input-feedback">{errors.startDate}</div>
+                      <div style={{color: "red"}} className="input-feedback">{errors.startDate}</div>
                     )}
                     <KeyboardDatePicker
                       disableToolbar
@@ -419,7 +432,7 @@ export default function Register() {
                       }}
                     />
                     {errors.endDate && touched.endDate && (
-                      <div className="input-feedback">{errors.endDate}</div>
+                      <div style={{color: "red"}} className="input-feedback">{errors.endDate}</div>
                     )}
                       
                       <FormControl className={classes.formControl}>
@@ -437,9 +450,36 @@ export default function Register() {
                         
                       </Select>
                       {errors.role && touched.role && (
-                      <div className="input-feedback">{errors.role}</div>
+                      <div style={{color: "red"}} className="input-feedback">{errors.role}</div>
                     )}
                     </FormControl>
+                    <div>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          name="terms"
+                          id="terms"
+                          checked={values.terms}
+                          onChange={handleChange}
+                          color="secondary"
+                        />
+                      }
+                      label={
+                        <div>
+                           <span>I accept the </span>
+                           <Link to={'/terms'}>terms of use</Link>
+                           <span> and </span>
+                           <Link to={'/privacy'}>privacy policy</Link>
+                        </div>
+                        }
+                    />
+                    {errors.terms && touched.terms && (
+                      <div style={{color: "red"}} className="input-feedback">{errors.terms}</div>
+                    )}
+                      
+
+                    </div>
+                   
                         </Grid>
                       </MuiPickersUtilsProvider>
                       {/* {errors.length > 0 && <p>Please correct errors in the form</p>} */}
