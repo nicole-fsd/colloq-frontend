@@ -166,8 +166,8 @@ export default function Dashboard() {
     // const photos = useSelector((state) => state.photos.photos);
     const [singleUserPhoto, setSingleUserPhoto] = useState("");
     const [email, setEmail] = useState(userEmail);
-    const [firstname, setFirstName] = useState(userFirstName);
-    const [lastname, setLastName] = useState(userLastName);
+    const [firstName, setFirstName] = useState(userFirstName);
+    const [lastName, setLastName] = useState(userLastName);
     const [city, setCity] = useState(userCity);
     const [publicMessage, setPublicMessage] = useState(userPublicMessage);
     const [nativeLanguage, setNativeLanguage] = useState(userNativeLanguage);
@@ -194,14 +194,24 @@ export default function Dashboard() {
             headers: {
               authorization: `Bearer ${localStorage.getItem('token')}`
             }})
-        const [cityIriData, meetupCityIriData] = await axios.all([requestOne, requestTwo]);
+        const requestThree = axios.get(`${process.env.REACT_APP_ENDPOINT}/languages?name=${nativeLanguage}`, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`
+          }})
+        const requestFour = axios.get(`${process.env.REACT_APP_ENDPOINT}/languages?name=${targetLanguage}`, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`
+          }})
+        const [cityIriData, meetupCityIriData, nativeLanguageIriData, targetLanguageIriData] = await axios.all([requestOne, requestTwo, requestThree, requestFour]);
 
         const cityIri = (cityIriData.data['hydra:member'][0]['@id'])
         const meetupCityIri = (meetupCityIriData.data['hydra:member'][0]['@id'])
+        const nativeLanguageIri = (nativeLanguageIriData.data['hydra:member'][0]['@id'])
+        const targetLanguageIri = (targetLanguageIriData.data['hydra:member'][0]['@id'])
       
         // .then((res) => console.log(res.data['hydra:member'][0]['@id']))
       // console.log(userId, email, firstname, lastname, age, meetupType)
-      dispatch(updateUser(userId, email, firstname, lastname, age, cityIri, meetupCityIri, meetupType))
+      dispatch(updateUser(userId, firstName, lastName, age, cityIri, meetupCityIri, meetupType, nativeLanguageIri, targetLanguageIri))
       setEditOn(!editOn)
       };
 
@@ -335,17 +345,17 @@ export default function Dashboard() {
                       <IconButton className={classes.editIconBtnTag} onClick={() => setEditOn(!editOn)}><EditIcon className={classes.editIcon}/></IconButton>
                     </div>
                   </Container>
-                  <TextField disabled={editOn} variant="standard" margin="normal" type="email" fullWidth id="email" label="Email Address" name="email" autoComplete="email" value={email}
+                  {/* <TextField disabled={editOn} variant="standard" margin="normal" type="email" fullWidth id="email" label="Email Address" name="email" autoComplete="email" value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
                     }}
-                  />
-                  <TextField disabled={editOn} variant="standard" margin="normal" fullWidth id="firstname" label="First name" name="firstname" autoComplete="firstname" value={firstname}
+                  /> */}
+                  <TextField disabled={editOn} variant="standard" margin="normal" fullWidth id="firstName" label="First name" name="firstName" autoComplete="firstName" value={firstName}
                     onChange={(e) => {
                       setFirstName(e.target.value);
                     }}
                   />
-                  <TextField disabled={editOn} variant="standard" margin="normal" fullWidth id="lastname" label="Last name" name="lastname" autoComplete="lastname" value={lastname}
+                  <TextField disabled={editOn} variant="standard" margin="normal" fullWidth id="lastName" label="Last name" name="lastName" autoComplete="lastName" value={lastName}
                     onChange={(e) => {
                       setLastName(e.target.value);
                     }}
@@ -360,22 +370,22 @@ export default function Dashboard() {
                       setCity(e.target.value);
                     }}
                   />  
-                  <TextField disabled={editOn} variant="standard" margin="normal" fullWidth name="meetup_city" label="City of meetup" type="text" id="meetup_city" value={meetupCity}
+                  <TextField disabled={editOn} variant="standard" margin="normal" fullWidth name="meetupCity" label="City of meetup" type="text" id="meetupCity" value={meetupCity}
                     onChange={(e) => {
                       setMeetupCity(e.target.value);
                     }}
                   />
-                  <TextField disabled={editOn} variant="standard" margin="normal" fullWidth name="meetup_type" label="Preferred type of meetup" type="text" id="meetup_type" value={meetupType}
+                  <TextField disabled={editOn} variant="standard" margin="normal" fullWidth name="meetupType" label="Preferred type of meetup" type="text" id="meetupType" value={meetupType}
                     onChange={(e) => {
                       setMeetupType(e.target.value);
                     }}
                     />
-                    <TextField disabled={editOn} variant="standard" margin="normal" fullWidth name="native_language" label="Native Language" type="text" id="native_language" value={nativeLanguage}
+                    <TextField disabled={editOn} variant="standard" margin="normal" fullWidth name="nativeLanguage" label="Native Language" type="text" id="nativeLanguage" value={nativeLanguage}
                     onChange={(e) => {
                       setNativeLanguage(e.target.value);
                     }}
                     />
-                    <TextField disabled={editOn} variant="standard" margin="normal" fullWidth name="target_language" label="Target Language" type="text" id="target_language" value={targetLanguage}
+                    <TextField disabled={editOn} variant="standard" margin="normal" fullWidth name="targetLanguage" label="Target Language" type="text" id="targetLanguage" value={targetLanguage}
                     onChange={(e) => {
                       setTargetLanguage(e.target.value);
                     }}

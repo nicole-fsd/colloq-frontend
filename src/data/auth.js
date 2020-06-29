@@ -97,7 +97,7 @@ export const registerUser = (email, password, firstName, lastName, age, city, me
     .catch((error) => console.log(error));
 };
 
-export const updateUser = (id, email, firstname, lastname, age, cityIri, meetupCityIri, meetupType) => (dispatch) => {
+export const updateUser = (id, firstname, lastname, age, cityIri, meetupCityIri, meetupType, nativeLanguageIri, targetLanguageIri) => (dispatch) => {
   const config = {
     headers: {
     'Content-Type': "application/json;charset=UTF-8",
@@ -105,17 +105,16 @@ export const updateUser = (id, email, firstname, lastname, age, cityIri, meetupC
     },
   };
   const data = {
-    email: email,
-    firstName: firstname,
-    lastName: lastname,
+    firstname: firstname,
+    lastname: lastname,
     age: parseInt(age),
     city: cityIri, 
     meetupCity: meetupCityIri,
     meetupType: meetupType,
     // startDate: startDate,
     // endDate: endDate,
-    // nativeLang: nativeLang,
-    // targetLang: targetLang,
+    nativeLanguage: nativeLanguageIri,
+    targetLanguage: targetLanguageIri,
     
   }
   axios.put(`${process.env.REACT_APP_ENDPOINT}/users/${id}`, data, config)
