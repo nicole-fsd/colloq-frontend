@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 // import axios from 'axios'
 import 'date-fns';
@@ -95,9 +95,9 @@ export default function Register() {
     // const [meetupCity, setMeetupCity] = useState("");
     // const [meetupType, setMeetupType] = useState("");
     // const [age, setAge] = useState("");
-    // const [radioValue, setRadioValue] = useState('');
-    // const [startDate, setStartDate] = useState(Date.now());
-    // const [endDate, setEndDate] = useState(Date.now());
+    const [radioValue, setRadioValue] = useState('');
+    const [startDate, setStartDate] = useState(Date.now());
+    const [endDate, setEndDate] = useState(Date.now());
     // const [checked, setChecked] = useState(false);
     
     
@@ -109,10 +109,10 @@ export default function Register() {
     //   setEndDate(date);
     // };
     
-    // const handleRoleChange = (event) => {
-    //     setRadioValue(event.target.value)
-    //     console.log(radioValue)
-    //   };
+    const handleRoleChange = (event) => {
+        setRadioValue(event.target.value)
+        console.log(radioValue)
+      };
 
     // const submitHandler = async (e) => {
     //   e.preventDefault();
@@ -138,15 +138,15 @@ export default function Register() {
         nativeLanguage: "",
         targetLanguage: "",
         meetupType: "",
-        startDate: Date.now(),
-        endDate: Date.now(),
-        role: "",
+        // startDate: Date.now(),
+        // endDate: Date.now(),
+        // role: "",
         terms: false
 
       }}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          console.log("Registration in progress", values);
+          console.log("Registration in progress", values, radioValue);
           dispatch(registerUser(
             values.email, 
             values.password, 
@@ -158,9 +158,9 @@ export default function Register() {
             values.nativeLanguage, 
             values.targetLanguage, 
             values.meetupType, 
-            values.startDate, 
-            values.endDate, 
-            values.role))
+            startDate,
+            endDate,
+            radioValue))
 
           setSubmitting(false);
         }, 500);
@@ -197,8 +197,11 @@ export default function Register() {
         meetupType: Yup.string()
           .matches(/^[a-zA-Z\s]+$/, 'Input is not valid - must only contain letters')
           .required("Required"),
-        startDate: Yup.string(),
-        endDate: Yup.string(),
+        // startDate: Yup.string(),
+        // endDate: Yup.string(),
+        // role: Yup.string()
+        //   .matches(/^[a-zA-Z\s]+$/, 'Input is not valid - must only contain letters')
+        //   .required("Required"),
         terms: Yup.boolean()
             .oneOf([true], 'Must accept Terms and Conditions'),
 
@@ -355,7 +358,6 @@ export default function Register() {
                         {errors.meetupCity && touched.meetupCity && (
                           <div style={{color: "red"}} className="input-feedback">{errors.meetupCity}</div>
                         )}
-                        <Tooltip title="Park, cafe, city tour, etc.">
                         <TextField 
                           variant="standard" 
                           margin="normal" 
@@ -368,7 +370,6 @@ export default function Register() {
                           value={values.meetupType}
                           onChange={handleChange}
                         />
-                        </Tooltip>
                         {errors.meetupType && touched.meetupType && (
                           <div style={{color: "red"}} className="input-feedback">{errors.meetupType}</div>
                         )}
@@ -389,13 +390,14 @@ export default function Register() {
                   
                         <KeyboardDatePicker
                           disableToolbar
+                          disablePast
                           variant="inline"
                           format="MM/dd/yyyy"
                           margin="normal"
                           id="startDate"
                           label="Available start date"
-                          value={values.startDate}
-                          onChange={handleChange}
+                          value={startDate}
+                          onChange={(e) => setStartDate(e)}
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
                           }}
@@ -404,14 +406,15 @@ export default function Register() {
                           <div style={{color: "red"}} className="input-feedback">{errors.startDate}</div>
                         )}
                         <KeyboardDatePicker
+                          disablePast
                           disableToolbar
                           variant="inline"
                           format="MM/dd/yyyy"
                           margin="normal"
                           id="endDate"
                           label="Available end date"
-                          value={values.endDate}
-                          onChange={handleChange}
+                          value={endDate}
+                          onChange={(e) => setEndDate(e)}
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
                           }}
@@ -427,8 +430,8 @@ export default function Register() {
                           labelId="simple-select-label"
                           id="role"
                           name="role"
-                          value={values.role}
-                          onChange={handleChange}
+                          value={radioValue}
+                          onChange={handleRoleChange}
                         >
                           <MenuItem id="tourist" name="tourist" value={"tourist"}>Tourist</MenuItem>
                           <MenuItem id="tutor" name="tutor" value={"tutor"}>Tutor</MenuItem>

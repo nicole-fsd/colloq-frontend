@@ -491,6 +491,7 @@ export default function Dashboard() {
                   <KeyboardDatePicker
                           disabled={editDatesOn}
                           disableToolbar
+                          disablePast
                           variant="inline"
                           format="MM/dd/yyyy"
                           margin="normal"
@@ -504,6 +505,7 @@ export default function Dashboard() {
                     />
                     <KeyboardDatePicker
                           disabled={editDatesOn}
+                          disablePast
                           disableToolbar
                           variant="inline"
                           format="MM/dd/yyyy"
