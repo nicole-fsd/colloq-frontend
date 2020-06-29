@@ -141,7 +141,7 @@ export default function Search() {
     const handleSearchFormSubmit = (e) => {
       e.preventDefault();
       dispatch(getUsers(searchInput, userIsTourist))
-      setTimeout(function(){ setSearched(true); }, 2000);
+      setTimeout(function(){ setSearched(true); }, 3000);
       
     }
 

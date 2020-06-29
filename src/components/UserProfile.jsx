@@ -82,29 +82,45 @@ const useStyles = makeStyles(theme => ({
       marginLeft: "20px",
       [theme.breakpoints.down('xs')]: {
         marginLeft: "0px",
-        width: '100%'
+        width: '100%',
+        marginBottom: '50px'
+      },
+      [theme.breakpoints.down('md')]: {
+        marginLeft: "0px",
+        width: '100%',
+        marginBottom: '50px'
+      },
+      [theme.breakpoints.up('lg')]: {
+        marginBottom: '0px'
       },
   },
   grid2: {
-      // border: "1px solid blue",
       minHeight: "800px"
   },
   gridBottomLeft: {
       // border: "1px solid red"
   },
   gridBottomRight: {
-      // border: "1px solid green",
+      minWidth: "400px",
       marginLeft: "90px",
       [theme.breakpoints.down('xs')]: {
-        marginLeft: "0px",
+        marginLeft: "70px",
         width: '100%'
+      },
+      [theme.breakpoints.down('md')]: {
+        marginRight: "100px",
       },
   },
   paperInfo: {
+    // border: 'solid 1px red',
       backgroundColor: "#eeeeee",
       minHeight: "500px",
       width: "400px",
-      overflow: "auto"
+      overflow: "auto",
+      marginRight: '2rem',
+      [theme.breakpoints.down('xs')]: {
+        marginLeft: "35px",
+      },
   },
   paperAbout: {
       backgroundColor: "#eeeeee",
@@ -114,7 +130,11 @@ const useStyles = makeStyles(theme => ({
       overflow: "auto",
       [theme.breakpoints.down('xs')]: {
         width: "400px",
-        marginLeft: "0px",
+        marginLeft: "50px",
+      },
+      [theme.breakpoints.down('md')]: {
+        width: "400px",
+        marginRight: "50px",
       },
   },
   typeAbout: {
@@ -195,7 +215,7 @@ const useStyles = makeStyles(theme => ({
       margin: "1rem",
       borderRadius: "25px",
       [theme.breakpoints.down('xs')]: {
-        marginLeft: "30px",
+        marginRight: "80px",
       },
     },
     titleDialog: {

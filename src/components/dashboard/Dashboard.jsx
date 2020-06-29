@@ -41,17 +41,21 @@ const useStyles = makeStyles(theme => ({
           marginLeft: "-15px",
           marginBottom: ".5rem"
         },
+        [theme.breakpoints.down('md')]: {
+          marginBottom: "1rem"
+        },
       },
     grid2: {
-        minHeight: "800px"
-    },
-    gridBottomLeft: {
-        // border: "1px solid red"
+        minHeight: "800px",
     },
     gridBottomRight: {
         marginLeft: "90px",
         [theme.breakpoints.down('xs')]: {
-          marginLeft: "0px",
+          marginLeft: "80px",
+          marginRight: "0px",
+        },
+        [theme.breakpoints.down('md')]: {
+          marginRight: "80px",
         },
     },
     paperInfo: {
@@ -69,7 +73,11 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'column',
         [theme.breakpoints.down('xs')]: {
           width: "400px",
-          marginLeft: "0px",
+          marginLeft: "100px",
+        },
+        [theme.breakpoints.down('md')]: {
+          width: "400px",
+          marginRight: "100px"
         },
     },
     typeAbout: {
@@ -81,7 +89,13 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: "#eeeeee",
         height: "200px",
         width: "200px",
-        borderRadius: "50%"
+        borderRadius: "50%",
+        [theme.breakpoints.down('md')]: {
+          marginRight: "100px"
+        },
+        [theme.breakpoints.down('xs')]: {
+          marginLeft: "100px"
+        },
     },
     large: {
         width: theme.spacing(25),
@@ -138,7 +152,13 @@ const useStyles = makeStyles(theme => ({
         marginBottom: ".8rem"
       },
     uploadBtn: {
-        marginTop: '.8rem'
+        marginTop: '.8rem',
+        [theme.breakpoints.down('md')]: {
+          marginRight: "100px"
+        },
+        [theme.breakpoints.down('xs')]: {
+          marginLeft: "100px"
+        },
       }
   }));
 
