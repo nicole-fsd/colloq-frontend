@@ -4,10 +4,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Container , Paper, Grid, Typography, Button, TextField, IconButton} from '@material-ui/core';
 import Footer from '../landing/Footer'
 import Avatar from '@material-ui/core/Avatar';
-import { updateUser, updateUserPhoto, updatePublicMessage } from "../../data/auth";
+import { updateUser, updateUserPhoto, updatePublicMessage, updateDates } from "../../data/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from 'react-router-dom'
 import EditIcon from '@material-ui/icons/Edit';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import EmailIcon from '@material-ui/icons/Email';
+import EventIcon from '@material-ui/icons/Event';
 
 
 //STYLE ////////////////////////////////
@@ -23,7 +27,8 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: "#eeeeee",
         height: "150px",
         width: "400px",
-        margin: "30px"
+        margin: "30px",
+        alignItems: 'center'
       },
     container: {
         backgroundColor: "#E1E2E1",
@@ -122,7 +127,7 @@ const useStyles = makeStyles(theme => ({
         fontSize:'2rem',
         textDecoration: 'none',
         color: '#65499c',
-        fontFamily: 'Segoe UI'
+        fontFamily: 'Segoe UI',
       },
     editIconBtn: {
         textAlign: 'right',
@@ -135,7 +140,8 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        color: '#757575',
       },
     publicMessageText: {
         padding: '1rem',
@@ -146,7 +152,8 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: '.8rem'
+        marginTop: '.8rem',
+        color: '#757575',
       },
     saveBioBtn: {
         marginBottom: ".8rem"
@@ -159,7 +166,22 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down('xs')]: {
           marginLeft: "100px"
         },
-      }
+      },
+    paperDates: {
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        color: "#757575",
+        backgroundColor: "#eeeeee",
+        height: "290px",
+        width: "400px",
+        margin: "30px"
+      },
+    saveDatesBtn: {
+        marginTop: '10px'
+      },
+    linkIconDiv: {
+      marginTop: "15px"
+    }
   }));
 
 //USER DASHBOARD /////////////////////////////
@@ -168,6 +190,7 @@ export default function Dashboard() {
     // const [name, setName] = useState('');
     const [editOn, setEditOn] = useState(true);
     const [editMessageOn, setEditMessageOn] = useState(true);
+    const [editDatesOn, setEditDatesOn] = useState(true);
     const dispatch = useDispatch();
     const userFirstName = useSelector((state) => state.auth.user.firstName);
     const userAge = useSelector((state) => state.auth.user.age);
@@ -178,6 +201,8 @@ export default function Dashboard() {
     const userNativeLanguage = useSelector((state) => state.auth.user.nativeLanguage);
     const userTargetLanguage = useSelector((state) => state.auth.user.targetLanguage);
     const userMeetupType = useSelector((state) => state.auth.user.meetupType);
+    const userStartDate = useSelector((state) => state.auth.user.startDate);
+    const userEndDate = useSelector((state) => state.auth.user.endDate);
     const userId = useSelector((state) => state.auth.user.id);
     const userImage = useSelector((state) => state.auth.user.image);
     // const userPhoto = useSelector((state) => state.auth.user.images[0].filename);
@@ -195,14 +220,20 @@ export default function Dashboard() {
     const [meetupCity, setMeetupCity] = useState(userMeetupCity);
     const [meetupType, setMeetupType] = useState(userMeetupType);
     const [age, setAge] = useState(userAge);
+    const [startDate, setStartDate] = useState(userStartDate);
+    const [endDate, setEndDate] = useState(userEndDate);
     const [fileUploadError, setFileUploadError] = useState(false);
     
 
     //HANDLERS ///////////////////////////////
 
-    // const handleChange = (event) => {
-    // setName(event.target.value);
-    // };
+    const handleStartDateChange = (date) => {
+      setStartDate(date);
+    };
+
+    const handleEndDateChange = (date) => {
+      setEndDate(date);
+      };
 
     const handleUpdateDetails = async (e) => {
       e.preventDefault()
@@ -240,6 +271,13 @@ export default function Dashboard() {
       console.log(userId, publicMessage)
       dispatch(updatePublicMessage(userId, publicMessage))
       setEditMessageOn(!editMessageOn)
+      };
+
+    const handleUpdateDates = (e) => {
+      e.preventDefault()
+      console.log(startDate, endDate)
+      dispatch(updateDates(userId, startDate, endDate))
+      setEditDatesOn(!editDatesOn)
       };
 
 
@@ -426,16 +464,68 @@ export default function Dashboard() {
         <Grid className={classes.gridBottomRight}>
           <Grid item xs={12}>
               <Paper className={classes.paper} elevation={3}>
-                <Link className={classes.meetupLink} to='/meetups'>My Meetups </Link>
+                <Link className={classes.meetupLink} to='/meetups'>My Meetups </Link><br />
+                  <div className={classes.linkIconDiv}>
+                    <EventIcon color="secondary" fontSize="large"></EventIcon>
+                  </div>
               </Paper>
           </Grid>
           <Grid item xs={12}>
             <Paper className={classes.paper} elevation={3}>
-              <Link className={classes.messageLink} to='/messages'>My Messages </Link>
+              <Link className={classes.messageLink} to='/messages'>My Messages </Link><br />
+                <div className={classes.linkIconDiv}>
+                  <EmailIcon color="secondary" fontSize="large"></EmailIcon>
+                </div>
             </Paper>
           </Grid>
             <Grid item xs={12}>
-              <Paper className={classes.paper} elevation={3}>FAVORITES</Paper>
+              <Paper className={classes.paperDates} elevation={3}>
+              <Container className={classes.bioContainer}>
+                  <Typography variant='h6'>Availability</Typography>
+                  <div className={classes.editIconBtn}>
+                    <IconButton className={classes.editIconBtnTag} onClick={() => setEditDatesOn(!editDatesOn)}><EditIcon className={classes.editIcon}/></IconButton>
+                  </div>
+                </Container>
+                <form onSubmit={handleUpdateDates}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <KeyboardDatePicker
+                          disabled={editDatesOn}
+                          disableToolbar
+                          variant="inline"
+                          format="MM/dd/yyyy"
+                          margin="normal"
+                          id="startDate"
+                          label="Available start date"
+                          value={startDate}
+                          onChange={handleStartDateChange}
+                          KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                          }}
+                    />
+                    <KeyboardDatePicker
+                          disabled={editDatesOn}
+                          disableToolbar
+                          variant="inline"
+                          format="MM/dd/yyyy"
+                          margin="normal"
+                          id="startDate"
+                          label="Available end date"
+                          value={endDate}
+                          onChange={handleEndDateChange}
+                          KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                          }}
+                      />
+                      <div>
+                        {!editDatesOn && 
+                          <Button className={classes.saveDatesBtn} variant="outlined" color="secondary" component="button" type='submit'>
+                            Save
+                          </Button>
+                        }
+                      </div>
+                </MuiPickersUtilsProvider>
+                </form>
+              </Paper>
             </Grid>
           </Grid>
         </Grid>

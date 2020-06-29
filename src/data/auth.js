@@ -143,6 +143,25 @@ export const updatePublicMessage = (id, publicMessage) => (dispatch) => {
   .catch((error) => console.log(error));
 };
 
+export const updateDates = (id, startDate, endDate) => (dispatch) => {
+  const config = {
+    headers: {
+    'Content-Type': "application/json;charset=UTF-8",
+    'Authorization': `Bearer ${localStorage.getItem('token')}`
+    },
+  };
+  const data = {
+    availStartDate: new Date(startDate),
+    availEndDate: new Date(endDate)
+  }
+  axios.put(`${process.env.REACT_APP_ENDPOINT}/users/${id}`, data, config)
+  .then((response) => {
+    // dispatch(updateUserSuccess(response.data))
+    console.log('update dates success')
+  })
+  .catch((error) => console.log(error));
+};
+
 
 export const updateUserPhoto = (id, imageIri, email, password) => (dispatch) => {
   const config = {
@@ -209,6 +228,8 @@ export default (state = initialState, { type, payload }) => {
           isTutor: decoded.payload.isTutor,
           nativeLanguage: decoded.payload.nativeLanguage,
           targetLanguage: decoded.payload.targetLanguage,
+          startDate: decoded.payload.availStartDate.date,
+          endDate: decoded.payload.availEndDate.date,
           image: decoded.payload.image
         },
         loggedIn: true,
