@@ -21,5 +21,6 @@ Back
 - MySQL
 - Twig
 - Bootstrap
+- JSON Web Tokens
 
 
